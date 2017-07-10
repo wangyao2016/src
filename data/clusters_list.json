@@ -1,11 +1,14 @@
 {
     "clusters": {
-        "clusters": [{
+        "clusters": [
+            {
                 "status": "BUILD",
-                "instances": [{
+                "instances": [
+                    {
                         "status": "ERROR",
                         "name": "zgcl-1-member-1",
-                        "links": [{
+                        "links": [
+                            {
                                 "href": "https://rds.cmss.com:8779/v1.0/ecd91fd6ee9d4a07a846db2476699f22/instances/72714a5b-c2ab-41af-a679-7d512a7f9540",
                                 "rel": "self"
                             },
@@ -19,7 +22,8 @@
                         },
                         "flavor": {
                             "id": "310",
-                            "links": [{
+                            "links": [
+                                {
                                     "href": "https://rds.cmss.com:8779/v1.0/ecd91fd6ee9d4a07a846db2476699f22/flavors/310",
                                     "rel": "self"
                                 },
@@ -35,7 +39,8 @@
                     {
                         "status": "ERROR",
                         "name": "zgcl-1-member-2",
-                        "links": [{
+                        "links": [
+                            {
                                 "href": "https://rds.cmss.com:8779/v1.0/ecd91fd6ee9d4a07a846db2476699f22/instances/c973bbe1-2193-478e-9b25-a827efeb6ef3",
                                 "rel": "self"
                             },
@@ -49,7 +54,8 @@
                         },
                         "flavor": {
                             "id": "310",
-                            "links": [{
+                            "links": [
+                                {
                                     "href": "https://rds.cmss.com:8779/v1.0/ecd91fd6ee9d4a07a846db2476699f22/flavors/310",
                                     "rel": "self"
                                 },
@@ -70,7 +76,8 @@
                     "name": "BUILDING"
                 },
                 "name": "zgcl-1",
-                "links": [{
+                "links": [
+                    {
                         "href": "https://rds.cmss.com:8779/v1.0/ecd91fd6ee9d4a07a846db2476699f22/clusters/2c608d83-9118-4eb6-8a21-edf203df12de",
                         "rel": "self"
                     },
@@ -88,10 +95,12 @@
             },
             {
                 "status": "ACTIVE",
-                "instances": [{
+                "instances": [
+                    {
                         "status": "ACTIVE",
                         "name": "zgcl-10-member-1",
-                        "links": [{
+                        "links": [
+                            {
                                 "href": "https://rds.cmss.com:8779/v1.0/ecd91fd6ee9d4a07a846db2476699f22/instances/7a578d05-ec63-455c-9f2e-392ec663eb3c",
                                 "rel": "self"
                             },
@@ -108,7 +117,8 @@
                         },
                         "flavor": {
                             "id": "310",
-                            "links": [{
+                            "links": [
+                                {
                                     "href": "https://rds.cmss.com:8779/v1.0/ecd91fd6ee9d4a07a846db2476699f22/flavors/310",
                                     "rel": "self"
                                 },
@@ -124,7 +134,8 @@
                     {
                         "status": "ACTIVE",
                         "name": "zgcl-10-member-2",
-                        "links": [{
+                        "links": [
+                            {
                                 "href": "https://rds.cmss.com:8779/v1.0/ecd91fd6ee9d4a07a846db2476699f22/instances/98c7d434-6e69-44c5-a898-b7c0f7414e64",
                                 "rel": "self"
                             },
@@ -141,7 +152,8 @@
                         },
                         "flavor": {
                             "id": "310",
-                            "links": [{
+                            "links": [
+                                {
                                     "href": "https://rds.cmss.com:8779/v1.0/ecd91fd6ee9d4a07a846db2476699f22/flavors/310",
                                     "rel": "self"
                                 },
@@ -162,7 +174,8 @@
                     "name": "NONE"
                 },
                 "name": "zgcl-10",
-                "links": [{
+                "links": [
+                    {
                         "href": "https://rds.cmss.com:8779/v1.0/ecd91fd6ee9d4a07a846db2476699f22/clusters/4a476b4b-290a-402d-b017-b146f6c112fb",
                         "rel": "self"
                     },

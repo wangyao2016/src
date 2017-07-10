@@ -1,5 +1,5 @@
 //依赖注入ui.router。注入指令和控制器模块
-var mainApp = angular.module('mainApp', ['ui.router', 'mainAppDirectives', 'mainAppCtrls', 'mainAppServices']);
+var mainApp = angular.module('mainApp', ['ui.router', 'ui.bootstrap', 'mainAppDirectives', 'mainAppCtrls', 'mainAppServices']);
 /**
  * 由于整个应用都会和路由打交道，所以这里把$state和$stateParams这两个对象放到$rootScope上，方便其它地方引用和注入。
  * 这里的run方法只会在angular启动的时候运行一次。
