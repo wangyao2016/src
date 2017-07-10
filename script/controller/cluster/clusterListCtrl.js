@@ -25,6 +25,7 @@ angular.module('mainAppCtrls')
                             currentValue.flavor = flavor[currentValue.instances[0].flavor.id];
                         });
                         console.log(vm.clusters);
+
                     } else {
                         console.log("can't get json data form clusters list clusters");
                     }

@@ -94,7 +94,7 @@
                 <table class="table table-striped">
                     <tbody>
                         <tr>
-                            <td>0个</td>
+                            <td>备份数 : {{vm.backupList.backups.length}}个</td>
                         </tr>
                         <tr>
                             <td>创建备份</td>
@@ -169,7 +169,7 @@
                         </tr>
                         <tr>
                             <td>连接举例</td>
-                            <td id="ds_instance">mysql -h 192.168.40.86 -u 用户名 -p<br>用户名 -p mysql://用户名:密码@192.168.40.86:3306/数据库
+                            <td id="ds_instance">mysql -h{{vm.basicInfo.cluster.ip}} -P3306 -u用户名 -p密码<br>jdbc:mysql://{{vm.basicInfo.cluster.ip}}:3306/数据库
                             </td>
                         </tr>
                     </tbody>
