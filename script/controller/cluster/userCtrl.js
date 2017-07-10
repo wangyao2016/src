@@ -1,6 +1,6 @@
 angular.module('mainAppCtrls') //instance.user页面控制器
-    .controller('userCtrl', ['$scope', '$http', '$timeout', '$uibModal', 'dataService', 'httpService',
-        function($scope, $http, $timeout, $uibModal, dataService, httpService) {
+    .controller('userCtrl', ['$scope', '$http', '$timeout', '$uibModal', 'dataService', 'getService',
+        function($scope, $http, $timeout, $uibModal, dataService, getService) {
             var vm = $scope.vm = {};
             vm.user = [];
             vm.user_add = [];
@@ -24,7 +24,7 @@ angular.module('mainAppCtrls') //instance.user页面控制器
                     if (result.data == '' || result.data == undefined) {
                         vm.addAlert("alert_error", "创建用户错误--数据传输错误");
                     } else {
-                        httpService.getServiceResult("post", "data/user.json", result.data)
+                        getService.getServiceResult("data/user.json")
                             .then(function(data, status, headers, config) {
                                 //创建用户成功后，重新加载用户list
                                 if (data.status == '' || data.status == undefined) {
@@ -76,7 +76,7 @@ angular.module('mainAppCtrls') //instance.user页面控制器
                     if (result.data.name == '' || result.data.name == undefined) {
                         vm.addAlert("alert_error", "删除用户错误--数据result传输错误");
                     } else {
-                        httpService.getServiceResult("delete", "v1/oracle/instances/" + id + "/users/" + result.data.name + "", result.data)
+                        getService.getServiceResult("data/user.json")
                             .success(function(data, status, headers, config) {
                                 if (data.status == '' || data.status == 'undefined') {
                                     console.log("删除用户成功");
@@ -130,8 +130,8 @@ angular.module('mainAppCtrls') //instance.user页面控制器
                         vm.addAlert("alert_error", "更改密码错误--数据result传输错误");
                     } else {
                         //修改用户密码
-                        httpService.getServiceResult("put", "v1/oracle/instances/" + id + "/users/" + result.data.username + "/password", result.data)
-                            .success(function(data, status, headers, config) {
+                        getService.getServiceResult("data/user.json")
+                            .then(function(data, status, headers, config) {
                                 if (data.status == '' || data.status == 'undefined') {
                                     console.log("重置用户密码成功");
                                     //添加警示框
@@ -146,7 +146,7 @@ angular.module('mainAppCtrls') //instance.user页面控制器
                                     vm.addAlert("alert_fail", "重置用户密码失败，原因为： " + data.status);
                                 }
                             })
-                            .error(function(data, status, headers, config) {
+                            .catch(function(data, status, headers, config) {
                                 vm.addAlert("alert_error", "重置用户密码错误");
                             });
                     }
@@ -189,16 +189,17 @@ angular.module('mainAppCtrls') //instance.user页面控制器
             vm.userList = function() {
                 var id = dataService.getData();
                 var data = { "id": id };
-                httpService.getServiceResult("get", "v1/oracle/instances/" + id + "/users", data)
-                    .success(function(data, status, headers, config) {
-                        console.log(angular.fromJson(data.user_display).users);
+                getService.getServiceResult("data/user_list.json")
+                    .then(function(data, status, headers, config) {
+                        console.log(angular.fromJson(data.data).userdisplay);
                         //如果接口返回值有users信息，而不是badRequest或者error信息
-                        if (angular.fromJson(data.user_display).users != undefined) {
-                            vm.users = angular.fromJson(data.user_display).users;
+                        if (angular.fromJson(data.data).userdisplay != undefined) {
+                            vm.users = angular.fromJson(data.data).userdisplay.users;
+                            console.log(vm.users);
                         } else {
                             console.log("get instance user list error");
                         }
-                    }).error(function(data, status, headers, config) {
+                    }).catch(function(data, status, headers, config) {
                         console.log("connect error get instance user list");
                     });
             };

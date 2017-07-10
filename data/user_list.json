@@ -1,0 +1,26 @@
+{
+    "userdisplay": {
+        "users": [
+            {
+                "host": "%",
+                "name": "slave_9639d7f5",
+                "databases": []
+            },
+            {
+                "host": "%",
+                "name": "slave_d300cd94",
+                "databases": []
+            },
+            {
+                "host": "%",
+                "name": "zgone",
+                "databases": []
+            },
+            {
+                "host": "10.132.49.126",
+                "name": "zgone",
+                "databases": []
+            }
+        ]
+    }
+}

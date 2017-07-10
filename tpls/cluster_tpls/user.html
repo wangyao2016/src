@@ -1,12 +1,8 @@
 <div class="col-md-12 modal-demo">
     <!-- data-toggle="modal"
      data-target="#userModal"-->
-    <a type="button"
-       class="rds-btn buy-btn"
-       ng-click="vm.openAddUserModal()"
-            >
-        <span class="btn-icon new-user"></span>
-        添加用户
+    <a type="button" class="rds-btn buy-btn" ng-click="vm.openAddUserModal()">
+        <span class="btn-icon new-user"></span> 添加用户
     </a>
     <!--
         <dialog load-data="data"></dialog>
@@ -15,8 +11,7 @@
     -->
     <div ng-show="true" class="alert_div">
         <div ng-repeat="alert in vm.alerts" ng-class="['repeat','alert', 'alert-dismissable', alert.type]">
-            <button type="button" class="close" ng-click="vm.closeAlert($index)">&times;</button>
-            {{alert.msg}}
+            <button type="button" class="close" ng-click="vm.closeAlert($index)">&times;</button> {{alert.msg}}
         </div>
     </div>
 
@@ -24,43 +19,29 @@
     <div class="table-responsive">
         <table class="table table-hover">
             <thead>
-            <tr>
-                <th></th>
-                <th>用户名</th>
-                <th>状态</th>
-                <th>动作</th>
-            </tr>
+                <tr>
+                    <th></th>
+                    <th>用户名</th>
+                    <th>状态</th>
+                    <th>动作</th>
+                </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="user in vm.users">
-                <td>
-                    <input type="radio"
-                           name="userRadio"
-                           ng-model="vm.selection"
-                           ng-value="user"
-                            >
-                </td>
-                <td>{{user.name}}</td>
-                <td>已激活</td>
-                <td>
-                    <a type="button"
-                       class="rds-sm-btn normal-btn"
-                       id="userPassword"
-                       ng-click="vm.openUserPasswordModal()"
-                            >
-                        <span class="btn-icon new-compare"></span>
-                        重置密码
-                    </a>
-                    <a type="button"
-                       class="rds-sm-btn normal-btn"
-                       id="deleteUser"
-                       ng-click="vm.openDeleteUserModal()"
-                            >
-                        <span class="btn-icon new-delete"></span>
-                        删除用户
-                    </a>
-                </td>
-            </tr>
+                <tr ng-repeat="user in vm.users">
+                    <td>
+                        <input type="radio" name="userRadio" ng-model="vm.selection" ng-value="user">
+                    </td>
+                    <td>{{user.name}}</td>
+                    <td>已激活</td>
+                    <td>
+                        <a type="button" class="rds-sm-btn normal-btn" id="userPassword" ng-click="vm.openUserPasswordModal()">
+                            <span class="btn-icon new-compare"></span> 重置密码
+                        </a>
+                        <a type="button" class="rds-sm-btn normal-btn" id="deleteUser" ng-click="vm.openDeleteUserModal()">
+                            <span class="btn-icon new-delete"></span> 删除用户
+                        </a>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -72,36 +53,21 @@
         <h3 class="modal-title" id="userPasswordModal-title">重置用户{{vm.selection.name}}的密码</h3>
     </div>
     <div class="modal-body">
-        <div ng-show="!vm.selection.name"
-             class="alert alert-danger"
-             style="margin: 20px;padding: 40px;">
+        <div ng-show="!vm.selection.name" class="alert alert-danger" style="margin: 20px;padding: 40px;">
             请先选定一个用户!
         </div>
         <div ng-show="vm.selection.name">
-            <form class="form-horizontal user_form" role="form" id="changePsd_form" name="changePsd_form"
-                  novalidate="">
+            <form class="form-horizontal user_form" role="form" id="changePsd_form" name="changePsd_form" novalidate="">
                 <div class="form-group">
                     <label class="col-sm-3 control-label">新密码</label>
 
                     <div class="col-sm-9">
-                        <input type="password"
-                               name="changePsd"
-                               ng-model="vm.changePsd.password"
-                               required=""
-                               ng-maxlength="20"
-                               ng-minlength="6"
-                               class="form-control"
-                               placeholder="6-20个字符"
-                                >
+                        <input type="password" name="changePsd" ng-model="vm.changePsd.password" required="" ng-maxlength="20" ng-minlength="6" class="form-control" placeholder="6-20个字符">
 
-                        <p class="glyphicon glyphicon-ok input_result input_success"
-                           ng-if="changePsd_form.changePsd.$valid"
-                                >
+                        <p class="glyphicon glyphicon-ok input_result input_success" ng-if="changePsd_form.changePsd.$valid">
                         </p>
 
-                        <p class="glyphicon glyphicon-remove input_result input_error"
-                           ng-if="changePsd_form.changePsd.$invalid && changePsd_form.changePsd.$dirty"
-                                >
+                        <p class="glyphicon glyphicon-remove input_result input_error" ng-if="changePsd_form.changePsd.$invalid && changePsd_form.changePsd.$dirty">
                         </p>
                     </div>
                 </div>
@@ -109,33 +75,19 @@
                     <label class="col-sm-3 control-label">确认密码</label>
 
                     <div class="col-sm-9">
-                        <input type="password"
-                               name="repeat_changePsd"
-                               ng-model="vm.changePsd.repeat_password"
-                               required=""
-                               ng-maxlength="20"
-                               ng-minlength="6"
-                               repeat="changePsd"
-                               class="form-control"
-                               placeholder="再次输入新密码"
-                                >
+                        <input type="password" name="repeat_changePsd" ng-model="vm.changePsd.repeat_password" required="" ng-maxlength="20" ng-minlength="6" repeat="changePsd" class="form-control" placeholder="再次输入新密码">
 
-                        <p class="glyphicon glyphicon-ok input_result input_success"
-                           ng-if="changePsd_form.repeat_changePsd.$valid"
-                                >
+                        <p class="glyphicon glyphicon-ok input_result input_success" ng-if="changePsd_form.repeat_changePsd.$valid">
                         </p>
 
-                        <p class="glyphicon glyphicon-remove input_result input_error"
-                           ng-if="changePsd_form.repeat_changePsd.$invalid
-                                       && changePsd_form.repeat_changePsd.$dirty"
-                                >
+                        <p class="glyphicon glyphicon-remove input_result input_error" ng-if="changePsd_form.repeat_changePsd.$invalid
+                                       && changePsd_form.repeat_changePsd.$dirty">
                         </p>
                     </div>
                 </div>
 
                 <!--打印错误信息-->
-                <div class="form-group"
-                     ng-show="changePsd_form.$invalid && changePsd_form.$dirty">
+                <div class="form-group" ng-show="changePsd_form.$invalid && changePsd_form.$dirty">
                     <label class="col-sm-2 control-label"></label>
 
                     <div class="col-sm-10">
@@ -165,11 +117,7 @@
 
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="vm.cancel()">关闭</button>
-        <button type="button"
-                class="btn btn-primary"
-                ng-disabled="!vm.selection.name || changePsd_form.$invalid"
-                ng-click="vm.changePsdOk(vm.selection.name,vm.changePsd.password)"
-                >更改密码
+        <button type="button" class="btn btn-primary" ng-disabled="!vm.selection.name || changePsd_form.$invalid" ng-click="vm.changePsdOk(vm.selection.name,vm.changePsd.password)">更改密码
         </button>
     </div>
 </script>
@@ -193,11 +141,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="vm.cancel()">关闭</button>
-        <button type="button"
-                class="btn btn-primary"
-                ng-disabled="!vm.selection.name"
-                ng-click="vm.deleteUserOk(vm.selection.name)"
-                >删除用户
+        <button type="button" class="btn btn-primary" ng-disabled="!vm.selection.name" ng-click="vm.deleteUserOk(vm.selection.name)">删除用户
         </button>
     </div>
 </script>
@@ -214,22 +158,12 @@
                 <label class="col-sm-3 control-label">用户名</label>
 
                 <div class="col-sm-9">
-                    <input type="text"
-                           required=""
-                           ng-pattern="/^[A-Za-z]{1}[0-9A-Za-z_]{2,29}$/"
-                           name="user_name"
-                           ng-model="vm.user_add.name"
-                           class="form-control"
-                           placeholder="由字母、数字、下划线组成，以字母开头，3-30个字符">
+                    <input type="text" required="" ng-pattern="/^[A-Za-z]{1}[0-9A-Za-z_]{2,29}$/" name="user_name" ng-model="vm.user_add.name" class="form-control" placeholder="由字母、数字、下划线组成，以字母开头，3-30个字符">
 
-                    <p class="glyphicon glyphicon-ok input_result input_success"
-                       ng-if="user_form.user_name.$valid"
-                            >
+                    <p class="glyphicon glyphicon-ok input_result input_success" ng-if="user_form.user_name.$valid">
                     </p>
 
-                    <p class="glyphicon glyphicon-remove input_result input_error"
-                       ng-if="user_form.user_name.$invalid && user_form.user_name.$dirty"
-                            >
+                    <p class="glyphicon glyphicon-remove input_result input_error" ng-if="user_form.user_name.$invalid && user_form.user_name.$dirty">
                     </p>
                 </div>
             </div>
@@ -237,24 +171,12 @@
                 <label class="col-sm-3 control-label">密码</label>
 
                 <div class="col-sm-9">
-                    <input type="password"
-                           name="user_password"
-                           ng-model="vm.user_add.password"
-                           required=""
-                           ng-maxlength="20"
-                           ng-minlength="6"
-                           class="form-control"
-                           placeholder="6-20个字符"
-                            >
+                    <input type="password" name="user_password" ng-model="vm.user_add.password" required="" ng-maxlength="20" ng-minlength="6" class="form-control" placeholder="6-20个字符">
 
-                    <p class="glyphicon glyphicon-ok input_result input_success"
-                       ng-if="user_form.user_password.$valid"
-                            >
+                    <p class="glyphicon glyphicon-ok input_result input_success" ng-if="user_form.user_password.$valid">
                     </p>
 
-                    <p class="glyphicon glyphicon-remove input_result input_error"
-                       ng-if="user_form.user_password.$invalid && user_form.user_password.$dirty"
-                            >
+                    <p class="glyphicon glyphicon-remove input_result input_error" ng-if="user_form.user_password.$invalid && user_form.user_password.$dirty">
                     </p>
                 </div>
             </div>
@@ -262,31 +184,17 @@
                 <label class="col-sm-3 control-label">确认密码</label>
 
                 <div class="col-sm-9">
-                    <input type="password"
-                           name="user_repeat_password"
-                           ng-model="vm.user_add.repeat_password"
-                           required=""
-                           ng-maxlength="20"
-                           ng-minlength="6"
-                           repeat="user_password"
-                           class="form-control"
-                           placeholder="再次输入密码"
-                            >
+                    <input type="password" name="user_repeat_password" ng-model="vm.user_add.repeat_password" required="" ng-maxlength="20" ng-minlength="6" repeat="user_password" class="form-control" placeholder="再次输入密码">
 
-                    <p class="glyphicon glyphicon-ok input_result input_success"
-                       ng-if="user_form.user_repeat_password.$valid"
-                            >
+                    <p class="glyphicon glyphicon-ok input_result input_success" ng-if="user_form.user_repeat_password.$valid">
                     </p>
 
-                    <p class="glyphicon glyphicon-remove input_result input_error"
-                       ng-if="user_form.user_repeat_password.$invalid && user_form.user_repeat_password.$dirty"
-                            >
+                    <p class="glyphicon glyphicon-remove input_result input_error" ng-if="user_form.user_repeat_password.$invalid && user_form.user_repeat_password.$dirty">
                     </p>
                 </div>
             </div>
             <!--打印错误信息-->
-            <div class="form-group"
-                 ng-show="user_form.$invalid && user_form.$dirty">
+            <div class="form-group" ng-show="user_form.$invalid && user_form.$dirty">
                 <label class="col-sm-2 control-label"></label>
 
                 <div class="col-sm-10">
@@ -321,11 +229,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="vm.cancel()">关闭</button>
-        <button type="button"
-                class="btn btn-primary"
-                ng-disabled="user_form.$invalid"
-                ng-click="vm.addUserOk()"
-                >添加用户
+        <button type="button" class="btn btn-primary" ng-disabled="user_form.$invalid" ng-click="vm.addUserOk()">添加用户
         </button>
     </div>
 </script>
