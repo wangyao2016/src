@@ -1,0 +1,115 @@
+{
+  "clusterDetail": {
+    "cluster": {
+      "status": "ACTIVE",
+      "instances": [
+        {
+          "status": "ACTIVE",
+          "name": "zgcl-10-member-1",
+          "links": [
+            {
+              "href": "https://rds.cmss.com:8779/v1.0/ecd91fd6ee9d4a07a846db2476699f22/instances/7a578d05-ec63-455c-9f2e-392ec663eb3c",
+              "rel": "self"
+            },
+            {
+              "href": "https://rds.cmss.com:8779/instances/7a578d05-ec63-455c-9f2e-392ec663eb3c",
+              "rel": "bookmark"
+            }
+          ],
+          "ip": [
+            "10.132.49.127"
+          ],
+          "networks": {
+            "name": "private-share-v1249_10.132.49",
+            "id": "141ed22d-36ba-4436-af79-b05bbf9016e0"
+          },
+          "volume": {
+            "size": 1
+          },
+          "flavor": {
+            "id": "310",
+            "links": [
+              {
+                "href": "https://rds.cmss.com:8779/v1.0/ecd91fd6ee9d4a07a846db2476699f22/flavors/310",
+                "rel": "self"
+              },
+              {
+                "href": "https://rds.cmss.com:8779/flavors/310",
+                "rel": "bookmark"
+              }
+            ]
+          },
+          "type": "member",
+          "id": "7a578d05-ec63-455c-9f2e-392ec663eb3c"
+        },
+        {
+          "status": "ACTIVE",
+          "name": "zgcl-10-member-2",
+          "links": [
+            {
+              "href": "https://rds.cmss.com:8779/v1.0/ecd91fd6ee9d4a07a846db2476699f22/instances/98c7d434-6e69-44c5-a898-b7c0f7414e64",
+              "rel": "self"
+            },
+            {
+              "href": "https://rds.cmss.com:8779/instances/98c7d434-6e69-44c5-a898-b7c0f7414e64",
+              "rel": "bookmark"
+            }
+          ],
+          "ip": [
+            "10.132.49.129"
+          ],
+          "networks": {
+            "name": "private-share-v1249_10.132.49",
+            "id": "141ed22d-36ba-4436-af79-b05bbf9016e0"
+          },
+          "configurations": {
+            "name": "config1",
+            "id": "141ed22d-36ba-4436-af79-b05bbf9016e0"
+          },
+          "volume": {
+            "size": 1
+          },
+          "flavor": {
+            "id": "310",
+            "links": [
+              {
+                "href": "https://rds.cmss.com:8779/v1.0/ecd91fd6ee9d4a07a846db2476699f22/flavors/310",
+                "rel": "self"
+              },
+              {
+                "href": "https://rds.cmss.com:8779/flavors/310",
+                "rel": "bookmark"
+              }
+            ]
+          },
+          "type": "member",
+          "id": "98c7d434-6e69-44c5-a898-b7c0f7414e64"
+        }
+      ],
+      "updated": "2017-07-05T10:45:57",
+      "task": {
+        "description": "No tasks for the cluster.",
+        "id": 1,
+        "name": "NONE"
+      },
+      "name": "zgcl-10",
+      "links": [
+        {
+          "href": "https://rds.cmss.com:8779/v1.0/ecd91fd6ee9d4a07a846db2476699f22/clusters/4a476b4b-290a-402d-b017-b146f6c112fb",
+          "rel": "self"
+        },
+        {
+          "href": "https://rds.cmss.com:8779/clusters/4a476b4b-290a-402d-b017-b146f6c112fb",
+          "rel": "bookmark"
+        }
+      ],
+      "created": "2017-05-24T01:14:11",
+      "ip": "10.132.49.127",
+      "datastore": {
+        "version": "master-master-56-0524",
+        "type": "mysql"
+      },
+      "id": "4a476b4b-290a-402d-b017-b146f6c112fb"
+    }
+  }
+}

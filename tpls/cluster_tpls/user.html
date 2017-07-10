@@ -1,0 +1,467 @@
+<div class="col-md-12 modal-demo">
+    <!-- data-toggle="modal"
+     data-target="#userModal"-->
+    <a type="button"
+       class="rds-btn buy-btn"
+       ng-click="vm.openAddUserModal()"
+            >
+        <span class="btn-icon new-user"></span>
+        添加用户
+    </a>
+    <!--
+        <dialog load-data="data"></dialog>
+        <button ng-click="data.isShow=!data.isShow">点击按钮测试</button>
+        <alert load-data="data"></alert>
+    -->
+    <div ng-show="true" class="alert_div">
+        <div ng-repeat="alert in vm.alerts" ng-class="['repeat','alert', 'alert-dismissable', alert.type]">
+            <button type="button" class="close" ng-click="vm.closeAlert($index)">&times;</button>
+            {{alert.msg}}
+        </div>
+    </div>
+
+    <div style="height: 20px"></div>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th></th>
+                <th>用户名</th>
+                <th>状态</th>
+                <th>动作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="user in vm.users">
+                <td>
+                    <input type="radio"
+                           name="userRadio"
+                           ng-model="vm.selection"
+                           ng-value="user"
+                            >
+                </td>
+                <td>{{user.name}}</td>
+                <td>已激活</td>
+                <td>
+                    <a type="button"
+                       class="rds-sm-btn normal-btn"
+                       id="userPassword"
+                       ng-click="vm.openUserPasswordModal()"
+                            >
+                        <span class="btn-icon new-compare"></span>
+                        重置密码
+                    </a>
+                    <a type="button"
+                       class="rds-sm-btn normal-btn"
+                       id="deleteUser"
+                       ng-click="vm.openDeleteUserModal()"
+                            >
+                        <span class="btn-icon new-delete"></span>
+                        删除用户
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--重置密码模态框-->
+<script type="text/ng-template" id="userPasswordModal.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="vm.cancel()">&times;</button>
+        <h3 class="modal-title" id="userPasswordModal-title">重置用户{{vm.selection.name}}的密码</h3>
+    </div>
+    <div class="modal-body">
+        <div ng-show="!vm.selection.name"
+             class="alert alert-danger"
+             style="margin: 20px;padding: 40px;">
+            请先选定一个用户!
+        </div>
+        <div ng-show="vm.selection.name">
+            <form class="form-horizontal user_form" role="form" id="changePsd_form" name="changePsd_form"
+                  novalidate="">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">新密码</label>
+
+                    <div class="col-sm-9">
+                        <input type="password"
+                               name="changePsd"
+                               ng-model="vm.changePsd.password"
+                               required=""
+                               ng-maxlength="20"
+                               ng-minlength="6"
+                               class="form-control"
+                               placeholder="6-20个字符"
+                                >
+
+                        <p class="glyphicon glyphicon-ok input_result input_success"
+                           ng-if="changePsd_form.changePsd.$valid"
+                                >
+                        </p>
+
+                        <p class="glyphicon glyphicon-remove input_result input_error"
+                           ng-if="changePsd_form.changePsd.$invalid && changePsd_form.changePsd.$dirty"
+                                >
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">确认密码</label>
+
+                    <div class="col-sm-9">
+                        <input type="password"
+                               name="repeat_changePsd"
+                               ng-model="vm.changePsd.repeat_password"
+                               required=""
+                               ng-maxlength="20"
+                               ng-minlength="6"
+                               repeat="changePsd"
+                               class="form-control"
+                               placeholder="再次输入新密码"
+                                >
+
+                        <p class="glyphicon glyphicon-ok input_result input_success"
+                           ng-if="changePsd_form.repeat_changePsd.$valid"
+                                >
+                        </p>
+
+                        <p class="glyphicon glyphicon-remove input_result input_error"
+                           ng-if="changePsd_form.repeat_changePsd.$invalid
+                                       && changePsd_form.repeat_changePsd.$dirty"
+                                >
+                        </p>
+                    </div>
+                </div>
+
+                <!--打印错误信息-->
+                <div class="form-group"
+                     ng-show="changePsd_form.$invalid && changePsd_form.$dirty">
+                    <label class="col-sm-2 control-label"></label>
+
+                    <div class="col-sm-10">
+                        <div class="alert alert-danger" style="margin-bottom: 0px">
+                            <ul>
+                                <!--根据name来取得表格中的内容-->
+                                <li ng-show="changePsd_form.changePsd.$dirty && changePsd_form.changePsd.$error.required">
+                                    密码不能为空！
+                                </li>
+                                <li ng-show="changePsd_form.changePsd.$dirty && changePsd_form.changePsd.$error.maxlength">
+                                    密码长度不能大于20个字符！
+                                </li>
+                                <li ng-show="changePsd_form.changePsd.$dirty && changePsd_form.changePsd.$error.minlength">
+                                    密码长度不能小于6个字符！
+                                </li>
+                                <li ng-show="changePsd_form.repeat_changePsd.$dirty && changePsd_form.repeat_changePsd.$error.repeat">
+                                    两次密码输入不一致！
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--根据name来取得表格中的内容-->
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="vm.cancel()">关闭</button>
+        <button type="button"
+                class="btn btn-primary"
+                ng-disabled="!vm.selection.name || changePsd_form.$invalid"
+                ng-click="vm.changePsdOk(vm.selection.name,vm.changePsd.password)"
+                >更改密码
+        </button>
+    </div>
+</script>
+
+<!--删除用户模态框-->
+<script type="text/ng-template" id="deleteUserModal.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="vm.cancel()">&times;</button>
+        <h3 class="modal-title" id="deleteUserModal-title">删除用户</h3>
+    </div>
+    <div class="modal-body" id="deleteUserModal-body">
+        <div class="alert alert-danger" style="margin: 20px;padding: 40px;">
+            <div ng-show="vm.selection.name">
+                确定删除用户{{vm.selection.name}}吗？
+            </div>
+            <!--根据name来取得表格中的内容-->
+            <div ng-show="!vm.selection.name">
+                请先选定一个用户!
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="vm.cancel()">关闭</button>
+        <button type="button"
+                class="btn btn-primary"
+                ng-disabled="!vm.selection.name"
+                ng-click="vm.deleteUserOk(vm.selection.name)"
+                >删除用户
+        </button>
+    </div>
+</script>
+
+<!--创建用户模态框-->
+<script type="text/ng-template" id="addUserModal.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="vm.cancel()">&times;</button>
+        <h3 class="modal-title" id="addUserModal-title">添加用户</h3>
+    </div>
+    <div class="modal-body" id="addUserModal-body">
+        <form class="form-horizontal user_form" role="form" id="user_form" name="user_form" novalidate="">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">用户名</label>
+
+                <div class="col-sm-9">
+                    <input type="text"
+                           required=""
+                           ng-pattern="/^[A-Za-z]{1}[0-9A-Za-z_]{2,29}$/"
+                           name="user_name"
+                           ng-model="vm.user_add.name"
+                           class="form-control"
+                           placeholder="由字母、数字、下划线组成，以字母开头，3-30个字符">
+
+                    <p class="glyphicon glyphicon-ok input_result input_success"
+                       ng-if="user_form.user_name.$valid"
+                            >
+                    </p>
+
+                    <p class="glyphicon glyphicon-remove input_result input_error"
+                       ng-if="user_form.user_name.$invalid && user_form.user_name.$dirty"
+                            >
+                    </p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">密码</label>
+
+                <div class="col-sm-9">
+                    <input type="password"
+                           name="user_password"
+                           ng-model="vm.user_add.password"
+                           required=""
+                           ng-maxlength="20"
+                           ng-minlength="6"
+                           class="form-control"
+                           placeholder="6-20个字符"
+                            >
+
+                    <p class="glyphicon glyphicon-ok input_result input_success"
+                       ng-if="user_form.user_password.$valid"
+                            >
+                    </p>
+
+                    <p class="glyphicon glyphicon-remove input_result input_error"
+                       ng-if="user_form.user_password.$invalid && user_form.user_password.$dirty"
+                            >
+                    </p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">确认密码</label>
+
+                <div class="col-sm-9">
+                    <input type="password"
+                           name="user_repeat_password"
+                           ng-model="vm.user_add.repeat_password"
+                           required=""
+                           ng-maxlength="20"
+                           ng-minlength="6"
+                           repeat="user_password"
+                           class="form-control"
+                           placeholder="再次输入密码"
+                            >
+
+                    <p class="glyphicon glyphicon-ok input_result input_success"
+                       ng-if="user_form.user_repeat_password.$valid"
+                            >
+                    </p>
+
+                    <p class="glyphicon glyphicon-remove input_result input_error"
+                       ng-if="user_form.user_repeat_password.$invalid && user_form.user_repeat_password.$dirty"
+                            >
+                    </p>
+                </div>
+            </div>
+            <!--打印错误信息-->
+            <div class="form-group"
+                 ng-show="user_form.$invalid && user_form.$dirty">
+                <label class="col-sm-2 control-label"></label>
+
+                <div class="col-sm-10">
+                    <div class="alert alert-danger" style="margin-bottom: 0">
+                        <ul>
+                            <!--根据name来取得表格中的内容-->
+                            <li ng-show="user_form.user_name.$dirty && user_form.user_name.$error.required">
+                                用户名不能为空！
+                            </li>
+                            <li ng-show="user_form.user_name.$dirty && user_form.user_name.$error.pattern">
+                                用户名格式不正确！由字母、数字、下划线组成，3-30个字符
+                            </li>
+
+                            <li ng-show="user_form.user_password.$dirty && user_form.user_password.$error.required">
+                                密码不能为空！
+                            </li>
+                            <li ng-show="user_form.user_password.$dirty && user_form.user_password.$error.maxlength">
+                                密码长度不能大于20个字符！
+                            </li>
+                            <li ng-show="user_form.user_password.$dirty && user_form.user_password.$error.minlength">
+                                密码长度不能小于6个字符！
+                            </li>
+                            <li ng-show="user_form.user_repeat_password.$dirty && user_form.user_repeat_password.$error.repeat">
+                                两次密码输入不一致！
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="vm.cancel()">关闭</button>
+        <button type="button"
+                class="btn btn-primary"
+                ng-disabled="user_form.$invalid"
+                ng-click="vm.addUserOk()"
+                >添加用户
+        </button>
+    </div>
+</script>
+
+
+<!--添加用户模态框（Modal） -->
+<!--
+<div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">添加用户</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal user_form" role="form" id="user_form" name="user_form" novalidate="">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">用户名</label>
+
+                        <div class="col-sm-9">
+                            <input type="text"
+                                   required=""
+                                   ng-pattern="/^[A-Za-z]{1}[0-9A-Za-z_]{2,29}$/"
+                                   name="user_name"
+                                   ng-model="vm.user_add.name"
+                                   class="form-control"
+                                   placeholder="由字母、数字、下划线组成，以字母开头，3-30个字符">
+
+                            <p class="glyphicon glyphicon-ok input_result input_success"
+                               ng-if="user_form.user_name.$valid"
+                                    >
+                            </p>
+
+                            <p class="glyphicon glyphicon-remove input_result input_error"
+                               ng-if="user_form.user_name.$invalid && user_form.user_name.$dirty"
+                                    >
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">密码</label>
+
+                        <div class="col-sm-9">
+                            <input type="password"
+                                   name="user_password"
+                                   ng-model="vm.user_add.password"
+                                   required=""
+                                   ng-maxlength="20"
+                                   ng-minlength="6"
+                                   class="form-control"
+                                   placeholder="6-20个字符"
+                                    >
+
+                            <p class="glyphicon glyphicon-ok input_result input_success"
+                               ng-if="user_form.user_password.$valid"
+                                    >
+                            </p>
+
+                            <p class="glyphicon glyphicon-remove input_result input_error"
+                               ng-if="user_form.user_password.$invalid && user_form.user_password.$dirty"
+                                    >
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">确认密码</label>
+
+                        <div class="col-sm-9">
+                            <input type="password"
+                                   name="user_repeat_password"
+                                   ng-model="vm.user_add.repeat_password"
+                                   required=""
+                                   ng-maxlength="20"
+                                   ng-minlength="6"
+                                   repeat="user_password"
+                                   class="form-control"
+                                   placeholder="再次输入密码"
+                                    >
+
+                            <p class="glyphicon glyphicon-ok input_result input_success"
+                               ng-if="user_form.user_repeat_password.$valid"
+                                    >
+                            </p>
+
+                            <p class="glyphicon glyphicon-remove input_result input_error"
+                               ng-if="user_form.user_repeat_password.$invalid && user_form.user_repeat_password.$dirty"
+                                    >
+                            </p>
+                        </div>
+                    </div>
+
+                    &lt;!&ndash;打印错误信息&ndash;&gt;
+                    <div class="form-group"
+                         ng-show="user_form.$invalid && user_form.$dirty && vm.show_error">
+                        <label class="col-sm-2 control-label"></label>
+
+                        <div class="col-sm-10">
+                            <div class="alert alert-danger" style="margin-bottom: 0px">
+                                <ul>
+                                    &lt;!&ndash;根据name来取得表格中的内容&ndash;&gt;
+                                    <li ng-show="user_form.user_name.$dirty && user_form.user_name.$error.required">
+                                        用户名不能为空！
+                                    </li>
+                                    <li ng-show="user_form.user_name.$dirty && user_form.user_name.$error.pattern">
+                                        用户名格式不正确！由字母、数字、下划线组成，3-30个字符
+                                    </li>
+
+                                    <li ng-show="user_form.user_password.$dirty && user_form.user_password.$error.required">
+                                        密码不能为空！
+                                    </li>
+                                    <li ng-show="user_form.user_password.$dirty && user_form.user_password.$error.maxlength">
+                                        密码长度不能大于20个字符！
+                                    </li>
+                                    <li ng-show="user_form.user_password.$dirty && user_form.user_password.$error.minlength">
+                                        密码长度不能小于6个字符！
+                                    </li>
+                                    <li ng-show="user_form.user_repeat_password.$dirty && user_form.user_repeat_password.$error.repeat">
+                                        两次密码输入不一致！
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button"
+                        class="btn btn-primary"
+                        ng-click="vm.submit(user_form)"
+                        ng-disabled="user_form.$invalid"
+                        >添加用户
+                </button>
+            </div>
+        </div>
+        &lt;!&ndash; /.modal-content &ndash;&gt;
+    </div>
+    &lt;!&ndash; /.modal &ndash;&gt;
+</div>-->

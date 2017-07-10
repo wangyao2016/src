@@ -1,0 +1,180 @@
+<div class="col-md-8">
+    <div class="panel panel-default" ng-class="{hidden: vm.basicInfo.hidden}">
+        <div class="panel-heading">基本信息
+            <span class="pull-right">
+                <span class="glyphicon"
+                      ng-class="vm.basicInfo.collapsed?'glyphicon-chevron-down':'glyphicon-chevron-up'"
+                      ng-click="vm.basicInfo.collapsed = !vm.basicInfo.collapsed">
+
+                </span>
+            </span>
+            &nbsp;
+        </div>
+        <div class="panel-collapse collapse" ng-class="{in: !vm.basicInfo.collapsed}">
+            <div class="table-responsive">
+                <table class="table table-striped" id="instance-table-0">
+                    <tbody>
+                        <tr>
+                            <td style="width:40%;">名称</td>
+                            <td>{{vm.basicInfo.cluster.name}}</td>
+                        </tr>
+                        <tr>
+                            <td>ID</td>
+                            <td>{{vm.basicInfo.cluster.id}}
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>数据库类型</td>
+                            <td>
+                                {{vm.basicInfo.cluster.datastore.type}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>数据库版本</td>
+                            <td>
+                                {{vm.basicInfo.cluster.datastore.version}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>绑定参数组</td>
+                            <td>暂无</td>
+                        </tr>
+                        <tr>
+                            <td>子网名称</td>
+                            <td>{{vm.basicInfo.cluster.instances[0].networks.name}}</td>
+                        </tr>
+                        <tr>
+                            <td>状态</td>
+                            <td>{{vm.basicInfo.cluster.status}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-4">
+    <div class="panel panel-default" ng-class="{hidden: vm.readInstance.hidden}" style="margin-bottom: 68px;">
+        <div class="panel-heading">只读实例
+            <span class="pull-right">
+                <span class="glyphicon"
+                      ng-class="vm.readInstance.collapsed?'glyphicon-chevron-down':'glyphicon-chevron-up'"
+                      ng-click="vm.readInstance.collapsed = !vm.readInstance.collapsed">
+                </span>
+            </span>
+            &nbsp;
+        </div>
+        <div class="panel-collapse collapse" ng-class="{in: !vm.readInstance.collapsed}">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td>0个</td>
+                        </tr>
+                        <tr>
+                            <td>添加只读实例</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default" ng-class="{hidden: vm.backupInstance.hidden}">
+        <div class="panel-heading">备份实例
+            <span class="pull-right">
+                <span class="glyphicon"
+                      ng-class="vm.backupInstance.collapsed?'glyphicon-chevron-down':'glyphicon-chevron-up'"
+                      ng-click="vm.backupInstance.collapsed = !vm.backupInstance.collapsed">
+                </span>
+            </span>
+        </div>
+        <div class="panel-collapse collapse" ng-class="{in: !vm.backupInstance.collapsed}">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td>0个</td>
+                        </tr>
+                        <tr>
+                            <td>创建备份</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-11" style="width: 100%">
+    <div class="panel panel-default" ng-class="{hidden: vm.size.hidden}">
+        <div class="panel-heading">规格
+            <span class="pull-right">
+                <span class="glyphicon"
+                      ng-class="vm.size.collapsed?'glyphicon-chevron-down':'glyphicon-chevron-up'"
+                      ng-click="vm.size.collapsed = !vm.size.collapsed">
+                </span>
+            </span>
+        </div>
+        <div class="panel-collapse collapse" ng-class="{in: !vm.size.collapsed}">
+            <div class="table-responsive">
+                <table class="table table-striped" id="instance-table-1">
+                    <tbody>
+                        <tr>
+                            <td style="width:40%">云主机类型</td>
+                            <td>{{vm.basicInfo.cluster.instances[0].flavor.addflavor.name}}</td>
+                        </tr>
+                        <tr>
+                            <td>内存</td>
+                            <td>{{vm.basicInfo.cluster.instances[0].flavor.addflavor.ram}}MB</td>
+                        </tr>
+                        <tr>
+                            <td>云硬盘大小</td>
+                            <td>{{vm.basicInfo.cluster.instances[0].volume.size}}GB</td>
+                        </tr>
+                        <tr>
+                            <td>已创建</td>
+                            <td id="ds_cloud_create">{{vm.basicInfo.cluster.created}}</td>
+                        </tr>
+                        <tr>
+                            <td>已更新</td>
+                            <td id="ds_cloud_update">{{vm.basicInfo.cluster.updated}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-11" style="width: 100%">
+    <div class="panel panel-default" ng-class="{hidden: vm.connectInfo.hidden}">
+        <div class="panel-heading">连接信息
+            <span class="pull-right">
+                <span class="glyphicon"
+                      ng-class="vm.connectInfo.collapsed?'glyphicon-chevron-down':'glyphicon-chevron-up'"
+                      ng-click="vm.connectInfo.collapsed = !vm.connectInfo.collapsed">
+                </span>
+            </span>
+        </div>
+        <div class="panel-collapse collapse" ng-class="{in: !vm.connectInfo.collapsed}">
+            <div class="table-responsive">
+                <table class="table table-striped" id="instance-table-2">
+                    <tbody>
+                        <tr>
+                            <td style="width:40%;">主机</td>
+                            <td id="ds_main">{{vm.basicInfo.cluster.ip}}</td>
+                        </tr>
+                        <tr>
+                            <td>数据库端口</td>
+                            <td id="ds_port">3306</td>
+                        </tr>
+                        <tr>
+                            <td>连接举例</td>
+                            <td id="ds_instance">mysql -h 192.168.40.86 -u 用户名 -p<br>用户名 -p mysql://用户名:密码@192.168.40.86:3306/数据库
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

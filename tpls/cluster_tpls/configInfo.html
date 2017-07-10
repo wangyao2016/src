@@ -1,0 +1,140 @@
+<div class="col-md-12">
+    <a type="button"
+       class="rds-btn cancel-btn"
+       ui-sref="instance.configs"
+            >
+        <span class="btn-icon new-return"></span>
+        返回参数组
+    </a>
+    <a type="button"
+       class="rds-btn buy-btn"
+       id="submitConfig"
+       ng-click="vm.openSubmitConfigModal()"
+       ng-disabled="vm.submitConfigs.values.length==0"
+       ng-show="vm.addInputShow == false"
+            >
+        <span class="btn-icon new-submit"></span>
+        提交参数
+    </a>
+    <a type="button"
+       class="rds-btn normal-btn"
+       ng-click="vm.resetConfig()"
+            >
+        <span class="btn-icon new-refresh"></span>
+        重置参数
+    </a>
+    <!--<a type="button"
+       class="rds-btn normal-btn"
+       ng-click="vm.cancelEditConfig()"
+       ng-show="vm.addInputShow == true"
+            >
+        <span class="btn-icon new-cancel"></span>
+        取消
+    </a>
+    <a type="button"
+       class="rds-btn buy-btn"
+       ng-click="vm.saveEditConfig()"
+       ng-show="vm.addInputShow == true"
+            >
+        <span class="btn-icon new-save"></span>
+        保存
+    </a>-->
+    <a class="search-label">
+        <span class="btn-icon new-search"></span>
+        全局搜索
+    </a>
+    <input class="search-input" type="text" ng-model="vm.filter"/>
+    <div ng-show="true" class="alert_div">
+        <div ng-repeat="alert in vm.alerts" ng-class="['repeat','alert', 'alert-dismissable', alert.type]">
+            <button type="button" class="close" ng-click="vm.closeAlert($index)">&times;</button>
+            {{alert.msg}}
+        </div>
+    </div>
+    <div style="height: 20px"></div>
+    <div class="table-responsive">
+        <table class="table table-hover table-striped configTable" id="">
+            <thead>
+            <tr>
+                <th>序列号</th>
+                <th>参数名</th>
+                <th>参数值</th>
+                <th>可修改参数值</th>
+                <th>数据类型</th>
+                <th>是否重启</th>
+                <th>参数描述</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!--
+                在ng-repeat结束之后加载tooltip插件，通过指令repeat-done来实现
+            -->
+            <tr ng-repeat="config in vm.defaultConfigs | filter:vm.filter"
+                repeat-done="vm.tool();"
+                    >
+                <td>{{$index+1}}</td>
+                <td>{{config.name}}</td>
+                <td>
+                    <a class="glyphicon glyphicon-pencil"
+                       ng-click=vm.addInput()>
+                    </a>
+                        <span
+                                ng-show="vm.addInputShow == false"
+                                >
+                            {{vm.submitConfigs.values[$index]}}
+                        </span>
+                    <input ng-show="vm.addInputShow"
+                           style="display: inline-block; width: 100px;"
+                           type="number"
+                           ng-model="vm.submitConfigs.values[$index]"
+                            >
+                </td>
+                <td ng-if="config.min||config.max">{{config.min}}~~{{config.max}}</td>
+                <td ng-if="config.enumeration">{{config.enumeration}}</td>
+                <td ng-if="config.type == 'string'">""</td>
+                <td>{{config.type}}</td>
+<!--
+                <td>{{config.restart_required}}</td>
+-->
+                <td ng-if="config.restart_required == 0">否</td>
+                <td ng-if="config.restart_required == 1">是</td>
+
+                <td>
+                    <a class="glyphicon glyphicon-info-sign"
+                       tooltip-placement="{{vm.placement.selected}}"
+                       uib-tooltip="{{config.description}}"
+                            >
+                    </a>
+                    <!--<button tooltip-placement="{{placement.selected}}"
+                            uib-tooltip="On the {{placement.selected}}"
+                            type="button"
+                            class="btn btn-default">
+                        Tooltip {{placement.selected}}
+                    </button>-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--提交参数组模态框-->
+<script type="text/ng-template" id="submitConfigModal.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="vm.cancel()">&times;</button>
+        <h3 class="modal-title" id="submitConfigModal-title">提交参数组</h3>
+    </div>
+    <div class="modal-body" id="submitConfigModal-body">
+        确定提交更改参数组吗？
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="vm.cancel()">关闭</button>
+        <button type="button"
+                class="btn btn-primary"
+                ng-click="vm.submit()"
+                >提交更改
+        </button>
+    </div>
+</script>
+
+
+
+

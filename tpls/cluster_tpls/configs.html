@@ -1,0 +1,484 @@
+<div class="col-md-12">
+    <a type="button"
+       class="rds-btn buy-btn"
+       id="newConfigs"
+       ng-click="vm.openAddConfigsModal()"
+            >
+        <span class="btn-icon new-new"></span>
+        创建
+    </a>
+    <!--
+        比较参数组功能
+    <a type="button"
+       class="rds-btn normal-btn"
+       id="compareConfigs"
+       data-toggle="modal"
+       data-target="#compareConfigsModal"
+            >
+        <span class="btn-icon new-compare"></span>
+        比较
+    </a>
+    -->
+    <a type="button"
+       class="rds-btn normal-btn"
+       id="deleteConfigs"
+       ng-click="vm.openDeleteConfigModal()"
+            >
+        <span class="btn-icon new-delete"></span>
+        删除
+    </a>
+    <a class="search-label">
+        <span class="btn-icon new-search"></span>
+        全局搜索
+    </a>
+    <input class="search-input" type="text" ng-model="vm.filter"/>
+
+    <div ng-show="true" class="alert_div">
+        <div ng-repeat="alert in vm.alerts" ng-class="['repeat','alert', 'alert-dismissable', alert.type]">
+            <button type="button" class="close" ng-click="vm.closeAlert($index)">&times;</button>
+            {{alert.msg}}
+        </div>
+    </div>
+    <div style="height: 20px"></div>
+    <div class="table-responsive">
+        <table class="table table-hover table-striped configTable" id="">
+            <thead>
+            <tr>
+                <th></th>
+                <th>参数组名称</th>
+                <th>创建时间</th>
+                <th>修改时间</th>
+                <th>数据库类型</th>
+                <th>数据库版本</th>
+                <th>参数组描述</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="config in vm.configs |filter:vm.filter"
+                repeat-done="vm.tool();"
+                    >
+                <td>
+                    <input type="radio"
+                           name="configRadio"
+                           ng-model="vm.selection"
+                           ng-value="config"
+                            >
+                </td>
+                <td>
+                    <a ui-sref="instance.configInfo({configId:config.id})">
+                        {{config.name}}
+                    </a>
+                </td>
+                <td>{{config.created}}</td>
+                <td>{{config.updated}}</td>
+                <td>{{config.datastore_name}}</td>
+                <td>{{config.datastore_version_name}}</td>
+                <td>
+                    <!--<a class="glyphicon glyphicon-info-sign"
+                       data-toggle="tooltip"
+                       data-placement="left"
+                       data-original-title="{{config.description}}"
+                            >
+                    </a>-->
+                    <a class="glyphicon glyphicon-info-sign"
+                       tooltip-placement="{{vm.placement.selected}}"
+                       uib-tooltip="{{config.description}}"
+                            >
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--删除参数组模态框-->
+<script type="text/ng-template" id="deleteConfigModal.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="vm.cancel()">&times;</button>
+        <h3 class="modal-title" id="deleteConfigsModal-title">删除参数组</h3>
+    </div>
+    <div class="modal-body" id="deleteConfigsModal-body">
+        <div class="alert alert-danger" style="margin: 20px;padding: 40px;">
+            <div ng-show="vm.selection.name">
+                确定删除参数组{{vm.selection.name}}吗？
+            </div>
+            <!--根据name来取得表格中的内容-->
+            <div ng-show="!vm.selection.name">
+                请先选定一个参数组!
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="vm.cancel()">关闭</button>
+        <button type="button"
+                class="btn btn-primary"
+                ng-disabled="!vm.selection.name"
+                ng-click="vm.deleteConfigOk(vm.selection.id)"
+                >提交
+        </button>
+    </div>
+</script>
+
+<!--
+<div class="modal fade" id="deleteConfigsModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfigsLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="deleteConfigsModalLabel">删除参数组</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger" style="margin: 20px;padding: 40px;">
+                    <div ng-show="vm.selection.name">
+                        确定删除参数组{{vm.selection.name}}吗？
+                    </div>
+                    &lt;!&ndash;根据name来取得表格中的内容&ndash;&gt;
+                    <div ng-show="!vm.selection.name">
+                        请先选定一个参数组!
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary"
+                        ng-disabled="!vm.selection.name"
+                        ng-click="vm.deleteConfig(vm.selection.id)"
+                        >提交
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+        &lt;!&ndash; /.modal-content &ndash;&gt;
+    </div>
+    &lt;!&ndash; /.modal &ndash;&gt;
+</div>
+-->
+
+<!--比较参数组模态框-->
+<div class="modal fade" id="compareConfigsModal" tabindex="-1" role="dialog" aria-labelledby="compareConfigsLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="compareConfigsModalLabel">比较参数组</h4>
+            </div>
+            <div class="modal-body">
+                确定比较参数组吗？
+
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary"
+                        ng-click=""
+                        >提交
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal -->
+</div>
+
+<!--创建参数组模态框-->
+<!--
+<div class="modal fade" id="newConfigsModal" tabindex="-1" role="dialog" aria-labelledby="newConfigsLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="newConfigsModalLabel">创建参数组</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal user_form addConfig_form"
+                      role="form"
+                      id="addConfig_form"
+                      name="addConfig_form"
+                      novalidate=""
+                        >
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">名称</label>
+
+                        <div class="col-sm-9">
+                            <input type="text"
+                                   required=""
+                                   ng-pattern="/^[A-Za-z]{1}[0-9A-Za-z_]{2,29}$/"
+                                   name="addConfig_name"
+                                   ng-model="vm.addConfig.name"
+                                   class="form-control"
+                                   placeholder="由字母、数字、下划线组成，以字母开头，3-30个字符">
+
+                            <p class="glyphicon glyphicon-ok input_result input_success"
+                               ng-if="addConfig_form.addConfig_name.$valid"
+                                    >
+                            </p>
+
+                            <p class="glyphicon glyphicon-remove input_result input_error"
+                               ng-if="addConfig_form.addConfig_name.$invalid && addConfig_form.addConfig_name.$dirty"
+                                    >
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">描述 </label>
+
+                        <div class="col-sm-9">
+                            <input type="text"
+                                   required=""
+                                   ng-pattern="/^[0-9a-zA-Z_]{3,30}$/"
+                                   name="addConfig_des"
+                                   ng-model="vm.addConfig.des"
+                                   ng-maxlength="30"
+                                   ng-minlength="3"
+                                   class="form-control"
+                                   placeholder="由字母、数字、下划线组成，3-30个字符">
+
+                            <p class="glyphicon glyphicon-ok input_result input_success"
+                               ng-if="addConfig_form.addConfig_des.$valid"
+                                    >
+                            </p>
+
+                            <p class="glyphicon glyphicon-remove input_result input_error"
+                               ng-if="addConfig_form.addConfig_des.$invalid && addConfig_form.addConfig_des.$dirty"
+                                    >
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">数据库类型</label>
+
+                        <div class="col-sm-9">
+                            <label>
+                                <select class="form-control"
+                                        name="addConfig_dbtype"
+                                        ng-model="vm.addConfig.dbtype"
+                                        ng-options="dbtype for dbtype in vm.dbtypes"
+                                        required>
+                                    <option value="">&#45;&#45; 请选择数据库类型 &#45;&#45;</option>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">数据库版本</label>
+
+                        <div class="col-sm-9">
+                            <label>
+                                <select class="form-control" ng-model="vm.addConfig.dbversion"
+                                        ng-options="dbversion for dbversion in vm.dbversions">
+                                    <option value="">&#45;&#45; 请选择数据库版本 &#45;&#45;</option>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+
+                    &lt;!&ndash;打印错误信息&ndash;&gt;
+                    <div class="form-group"
+                         ng-show="addConfig_form.$invalid && addConfig_form.$dirty">
+                        <label class="col-sm-3 control-label"></label>
+
+                        <div class="col-sm-9">
+                            <div class="alert alert-danger" style="margin-bottom: 0">
+                                <ul>
+                                    &lt;!&ndash;根据name来取得表格中的内容&ndash;&gt;
+                                    <li ng-show="addConfig_form.addConfig_name.$dirty && addConfig_form.addConfig_name.$error.required">
+                                        参数名不能为空！
+                                    </li>
+                                    <li ng-show="addConfig_form.addConfig_name.$dirty && addConfig_form.addConfig_name.$error.pattern">
+                                        参数名格式不正确！由字母、数字、下划线组成，3-30个字符
+                                    </li>
+
+                                    <li ng-show="addConfig_form.addConfig_des.$dirty && addConfig_form.addConfig_des.$error.required">
+                                        描述不能为空！
+                                    </li>
+                                    <li ng-show="addConfig_form.addConfig_des.$dirty && addConfig_form.addConfig_des.$error.maxlength">
+                                        描述长度不能大于30个字符！
+                                    </li>
+                                    <li ng-show="addConfig_form.addConfig_des.$dirty && addConfig_form.addConfig_des.$error.minlength">
+                                        描述长度不能小于3个字符！
+                                    </li>
+
+                                    <li ng-show="addConfig_form.addConfig_dbtype.$dirty && addConfig_form.addConfig_dbtype.$error.required">
+                                        请选择数据库类型
+                                    </li>
+                                    <li ng-show="addConfig_form.addConfig_dbversion.$dirty && addConfig_form.addConfig_dbversion.$error.required">
+                                        请选择数据库版本
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary"
+                        ng-disabled="addConfig_form.$invalid"
+                        ng-click="vm.submit(addConfig_form)"
+                        >提交
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+        &lt;!&ndash; /.modal-content &ndash;&gt;
+    </div>
+    &lt;!&ndash; /.modal &ndash;&gt;
+</div>
+-->
+
+<!--创建参数组modal-->
+<script type="text/ng-template" id="addConfigsModal.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="vm.cancel()">&times;</button>
+        <h3 class="modal-title" id="addConfigsModal-title">创建参数组</h3>
+    </div>
+    <div class="modal-body" id="addConfigsModal-body">
+        <form class="form-horizontal user_form addConfig_form"
+              role="form"
+              id="addConfig_form"
+              name="addConfig_form"
+              novalidate=""
+                >
+            <div class="form-group">
+                <label class="col-sm-3 control-label">名称</label>
+
+                <div class="col-sm-9">
+                    <input type="text"
+                           required=""
+                           ng-pattern="/^[0-9a-zA-Z_]{3,30}$/"
+                           name="addConfig_name"
+                           ng-model="vm.addConfig.name"
+                           class="form-control"
+                           placeholder="由字母、数字、下划线组成，以字母开头，3-30个字符">
+
+                    <p class="glyphicon glyphicon-ok input_result input_success"
+                       ng-if="addConfig_form.addConfig_name.$valid"
+                            >
+                    </p>
+
+                    <p class="glyphicon glyphicon-remove input_result input_error"
+                       ng-if="addConfig_form.addConfig_name.$invalid && addConfig_form.addConfig_name.$dirty"
+                            >
+                    </p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">描述 </label>
+
+                <div class="col-sm-9">
+                    <input type="text"
+                           required=""
+                           ng-pattern="/^[0-9a-zA-Z_]{3,30}$/"
+                           name="addConfig_des"
+                           ng-model="vm.addConfig.des"
+                           ng-maxlength="30"
+                           ng-minlength="3"
+                           class="form-control"
+                           placeholder="由字母、数字、下划线组成，3-30个字符">
+
+                    <p class="glyphicon glyphicon-ok input_result input_success"
+                       ng-if="addConfig_form.addConfig_des.$valid"
+                            >
+                    </p>
+
+                    <p class="glyphicon glyphicon-remove input_result input_error"
+                       ng-if="addConfig_form.addConfig_des.$invalid && addConfig_form.addConfig_des.$dirty"
+                            >
+                    </p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">数据库类型</label>
+
+                <div class="col-sm-9">
+                    <label>
+                        <select class="form-control"
+                                name="addConfig_dbtype"
+                                ng-model="vm.addConfig.dbtype"
+                                ng-options="dbtype for dbtype in vm.dbtypes"
+                                required>
+                            <option value="">-- 请选择数据库类型 --</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+            <div class="form-group" ng-show="vm.addConfig.dbtype">
+                <label class="col-sm-3 control-label">数据库版本</label>
+
+                <div class="col-sm-9">
+                    <label>
+                        <select class="form-control"
+                                name="addConfig_dbversion"
+                                ng-show="vm.addConfig.dbtype == 'mysql'"
+                                ng-model="vm.addConfig.dbversion"
+                                ng-options="dbversion for dbversion in vm.mysqlVersions"
+                                required
+                                >
+                            <option value="">-- 请选择数据库版本 --</option>
+                        </select>
+                        <select class="form-control"
+                                name="addConfig_dbversion"
+                                ng-show="vm.addConfig.dbtype == 'oracle'"
+                                ng-model="vm.addConfig.dbversion"
+                                ng-options="dbversion for dbversion in vm.oracleVersions"
+                                required
+                                >
+                            <option value="">-- 请选择数据库版本 --</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+
+            <!--打印错误信息-->
+            <div class="form-group"
+                 ng-show="addConfig_form.$invalid && addConfig_form.$dirty">
+                <label class="col-sm-3 control-label"></label>
+
+                <div class="col-sm-9">
+                    <div class="alert alert-danger" style="margin-bottom: 0">
+                        <ul>
+                            <!--根据name来取得表格中的内容-->
+                            <li ng-show="addConfig_form.addConfig_name.$dirty && addConfig_form.addConfig_name.$error.required">
+                                参数名不能为空！
+                            </li>
+                            <li ng-show="addConfig_form.addConfig_name.$dirty && addConfig_form.addConfig_name.$error.pattern">
+                                参数名格式不正确！由字母、数字、下划线组成，3-30个字符
+                            </li>
+
+                            <li ng-show="addConfig_form.addConfig_des.$dirty && addConfig_form.addConfig_des.$error.required">
+                                描述不能为空！
+                            </li>
+                            <li ng-show="addConfig_form.addConfig_des.$dirty && addConfig_form.addConfig_des.$error.maxlength">
+                                描述长度不能大于30个字符！
+                            </li>
+                            <li ng-show="addConfig_form.addConfig_des.$dirty && addConfig_form.addConfig_des.$error.minlength">
+                                描述长度不能小于3个字符！
+                            </li>
+
+                            <li ng-show="addConfig_form.addConfig_dbtype.$dirty && addConfig_form.addConfig_dbtype.$error.required">
+                                请选择数据库类型
+                            </li>
+                            <li ng-show="addConfig_form.addConfig_dbversion.$dirty && addConfig_form.addConfig_dbversion.$error.required">
+                                请选择数据库版本
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="vm.cancel()">关闭</button>
+        <button type="button"
+                class="btn btn-primary"
+                ng-disabled="addConfig_form.$invalid"
+                ng-click="vm.addConfigsOk()"
+                >提交
+        </button>
+    </div>
+</script>

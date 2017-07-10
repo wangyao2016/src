@@ -1,0 +1,98 @@
+{
+  "configuration_parameters": [
+    {
+      "default_value": 500,
+      "max": 31536000,
+      "version": "1.0",
+      "name": "connect_timeout",
+      "restart_required": "FALSE",
+      "is_show": "TRUE",
+      "min": 2,
+      "type": "integer",
+      "enumeration": null,
+      "description": "连接超时时间"
+    },
+    {
+      "default_value": null,
+      "version": "1.0",
+      "name": "local_infile",
+      "restart_required": "FALSE",
+      "is_show": "TRUE",
+      "type": "integer",
+      "enumeration": "0,1",
+      "description": "设置LOAD DATA INFILE是否支持LOCAL"
+    },
+    {
+      "default_value": 3000,
+      "max": 1073741824,
+      "version": "1.0",
+      "name": "max_allowed_packet",
+      "restart_required": "FALSE",
+      "is_show": "TRUE",
+      "min": 1024,
+      "type": "integer",
+      "enumeration": null,
+      "description": "可接受的最大数据包大小"
+    },
+    {
+      "default_value": null,
+      "max": 18446744073709500000,
+      "version": "1.0",
+      "name": "max_connect_errors",
+      "restart_required": "FALSE",
+      "is_show": "TRUE",
+      "min": 1,
+      "type": "integer",
+      "enumeration": null,
+      "description": "如果一个host错误链接数超过该值，那么服务端会阻塞该host后面的连接请求"
+    },
+    {
+      "default_value": null,
+      "max": 100000,
+      "version": "1.0",
+      "name": "max_connections",
+      "restart_required": "FALSE",
+      "is_show": "TRUE",
+      "min": 1,
+      "type": "integer",
+      "enumeration": null,
+      "description": "设置最大连接数"
+    },
+    {
+      "default_value": null,
+      "max": 4294967295,
+      "version": "1.0",
+      "name": "max_user_connections",
+      "restart_required": "FALSE",
+      "is_show": "TRUE",
+      "min": 0,
+      "type": "integer",
+      "enumeration": null,
+      "description": "所有用户的最大连接数"
+    },
+    {
+      "default_value": null,
+      "max": 18446744073709500000,
+      "version": "1.0",
+      "name": "sort_buffer_size",
+      "restart_required": "FALSE",
+      "is_show": "TRUE",
+      "min": 32768,
+      "type": "integer",
+      "enumeration": null,
+      "description": "用于排序的缓冲池大小"
+    },
+    {
+      "default_value": null,
+      "max": 31536000,
+      "version": "1.0",
+      "name": "wait_timeout",
+      "restart_required": "FALSE",
+      "is_show": "TRUE",
+      "min": 1,
+      "type": "integer",
+      "enumeration": null,
+      "description": "等待超时时间"
+    }
+  ]
+}

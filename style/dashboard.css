@@ -1,0 +1,353 @@
+body {
+}
+
+/*表单验证相关css*/
+.user_form input.ng-dirty.ng-invalid {
+    border-color: #e9322d;
+    -webkit-box-shadow: 0 0 6px #f8b9b7;
+    -moz-box-shadow: 0 0 6px #f8b9b7;
+    box-shadow: 0 0 6px #f8b9b7;
+}
+
+.input_result {
+    position: relative;
+    top: -25px;
+    left: 370px;
+}
+
+.input_success {
+    color: #3c763d;
+}
+
+.input_error {
+    color: #e9322d;
+}
+
+/*表单验证相关css结束*/
+/*添加移动云样式开始*/
+.panel-heading {
+    background-color: #e5f0fa !important;
+}
+
+.pane {
+    height: 100%;
+    padding: 40px 30px;
+    min-width: 900px;
+}
+
+.instance-main-head {
+    margin-bottom: 20px;
+}
+
+.normal-btn {
+    background: #4f677e;
+    color: #fff;
+}
+
+.cancel-btn {
+    background: #778899;
+    color: #fff;
+}
+
+.buy-btn {
+    background: #3399E5;
+    color: #fff;
+}
+
+.rds-btn {
+    border-radius: 2px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 13px;
+    padding: 8px 15px;
+    margin-right: 8px;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
+    line-height: 18px;
+    font-family: "Microsoft YaHei", "Hiragino Sans GB";
+    border: none;
+}
+
+.rds-sm-btn {
+    border-radius: 2px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 5px 6px;
+    margin-right: 8px;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
+    line-height: 18px;
+    font-family: "Microsoft YaHei", "Hiragino Sans GB";
+    border: none;
+}
+
+.rds-btn:hover, .rds-sm-btn:hover {
+    background: #0080CE;
+    text-decoration: none;
+    color: #fff;
+}
+
+.configTable {
+}
+
+/*添加移动云样式结束*/
+/*表格table样式开始*/
+.table tbody td {
+    border-bottom: 1px solid #e2e2e2;
+    /*
+    padding: 12px 8px;
+    */
+    text-align: left;
+    word-wrap: break-word;
+    max-width: 240px;
+}
+
+.instance-table > tbody > tr > td, .configTable > tbody > tr > td {
+    padding: 13px;
+!important;
+}
+
+.table thead th {
+    text-align: left;
+    white-space: nowrap;
+    word-break: keep-all;
+    color: #4f677e;
+    cursor: pointer;
+    font-weight: normal;
+    background: #e5f0fa;
+    height: 40px;
+    border-right: 1px solid #fff;
+}
+
+.table input[type="checkbox"], .table input[type="radio"] {
+    margin: 0 4px;
+    font-size: 20px;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.table > thead > tr > th {
+    border-bottom: 0 !important;
+}
+
+.table > tbody > tr > th, .table > tfoot > tr > th, .table > tbody > tr > td, .table > tfoot > tr > td {
+    border-bottom: 1px solid #dddddd;
+!important;
+    border-top: 0;
+!important;
+    /*
+    line-height: 2.428571;!important;
+    */
+}
+
+.table > tbody > tr > td, .table > thead > tr > td {
+    vertical-align: middle;
+}
+
+.table {
+    margin-bottom: 0;
+!important;
+}
+
+/*表格table样式结束*/
+/*搜索框样式开始*/
+.search-label {
+    background-color: #4f677e;
+    color: #ffffff;
+    padding: 8px 15px;
+    border-radius: 2px;
+    font-size: 13px;
+    text-align: center;
+    font-family: "Microsoft YaHei", "Hiragino Sans GB";
+    vertical-align: middle;
+    display: inline-block;
+    line-height: 18px;
+    border: none;
+}
+
+.search-label:hover {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.search-input {
+    background-color: #ffffff;
+    padding: 6px 15px;
+    width: 25%;
+    border: 1px solid #778899;
+    border-radius: 1px;
+    vertical-align: middle;
+    margin-left: -5px;
+}
+
+/*搜索框样式结束*/
+/*icon相关开始*/
+.btn-icon {
+    display: block;
+    float: left;
+    margin-right: 5px;
+    font-size: 13px;
+    width: 14px;
+    height: 18px;
+}
+
+.new-user {
+    background: url(../image/rds-new/new-user.png) center no-repeat;
+}
+
+.new-new {
+    background: url(../image/rds-new/new.png) center no-repeat;
+}
+
+.new-detach {
+    background: url(../image/rds-new/unbind.png) center no-repeat;
+}
+
+.new-delete {
+    background: url(../image/rds-new/delete.png) center no-repeat;
+}
+
+.new-compare {
+    background: url(../image/rds-new/compare.png) center no-repeat;
+}
+
+.new-buy {
+    background: url(../image/rds-new/buy.png) center no-repeat;
+}
+
+.new-cancel {
+    background: url(../image/rds-new/cancel.png) center no-repeat;
+}
+
+.new-edit {
+    background: url(../image/rds-new/edit.png) center no-repeat;
+}
+
+.new-save {
+    background: url(../image/rds-new/save.png) center no-repeat;
+}
+
+.new-bind {
+    background: url(../image/rds-new/bind.png) center no-repeat;
+}
+
+.new-refresh {
+    background: url(../image/rds-new/refresh.png) center no-repeat;
+}
+
+.new-submit {
+    background: url(../image/rds-new/submit.png) center no-repeat;
+}
+
+.new-return {
+    background: url(../image/rds-new/return.png) center no-repeat;
+}
+
+.new-search {
+    background: url(../image/rds-new/search.png) center no-repeat;
+}
+
+/*icon相关结束*/
+/*tablist 样式开始*/
+#tablist {
+    border-bottom: 1px solid #e5f0fa;
+}
+
+#tablist a:hover {
+    text-decoration: none;
+    background-color: #c2e2f9;
+    border-bottom: none;
+}
+
+#tablist #backup_disabled:hover {
+    background-color: #eeeeee;
+}
+
+#backup_disabled {
+    color: #555555;
+}
+
+#tablist li {
+    cursor: pointer;
+    background: #e5f0fa;
+    border-radius: 5px 5px 0 0;
+    margin-right: 2px;
+}
+
+#tablist a {
+    margin-right: 0;
+    border-radius: 5px 5px 0 0;
+    border-top: 1px solid #e5f0fa;
+    border-left: 1px solid #e5f0fa;
+    border-right: 1px solid #e5f0fa;
+}
+
+#tablist .active a {
+    margin-right: 1px;
+}
+
+/*tablist 样式结束*/
+/*警示框相关开始*/
+.alert{
+    padding: 9px!important;
+}
+.alert-dismissable .close{
+    top:0;
+    right: 0;
+}
+.alert_div{
+    font-size: 14px;
+    color: #505050;
+    width: 400px;
+    float: right;
+    position: absolute;
+    top:-20px;
+    right: 16px;
+    z-index: 999;
+}
+.alert_success{
+    border:1px solid #3399e5;
+    background-color: #badcf5;
+    filter:alpha(opacity=90);
+    -moz-opacity:0.9;
+    -khtml-opacity: 0.9;
+    opacity: 0.9;
+}
+.alert_error{
+    border:1px solid #ffacac;
+    background-color: #ffe4e4;
+    filter:alpha(opacity=90);
+    -moz-opacity:0.9;
+    -khtml-opacity: 0.9;
+    opacity: 0.9;
+}
+.alert_fail{
+    border:1px solid #ffc200;
+    background-color: #feeab6;
+    filter:alpha(opacity=90);
+    -moz-opacity:0.9;
+    -khtml-opacity: 0.9;
+    opacity: 0.9;
+}
+/*给repeat中的enter和leave事件添加基础动画*/
+/*给repeat中的enter和leave事件添加基础动画*/
+.repeat.ng-enter,
+.repeat.ng-leave {
+    -webkit-transition: 1.5s linear all;
+    transition: 1.5s linear all;
+}
+
+.repeat.ng-enter,
+.repeat.ng-leave.ng-leave-active {
+    opacity: 0;
+}
+
+.repeat.ng-leave,
+.repeat.ng-enter.ng-enter-active {
+    opacity: 1;
+}
+/*警示框相关结束*/
