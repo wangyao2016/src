@@ -2,7 +2,8 @@
     <a type="button" class="rds-btn buy-btn" ng-click="vm.openAddDbModal()">
         <span class="btn-icon new-user"></span> 添加数据库
     </a>
-    <div style="height: 8px"></div>
+    <div style="height: 8px">
+    </div>
     <div class="table-responsive">
         <table class="table table-hover">
             <thead>
@@ -18,7 +19,7 @@
             <pre>{{vm.db.databases}}</pre>
 -->
                 <tr ng-repeat="dbname in vm.db">
-                    <td><input type="radio"></td>
+                    <td><input type="radio" name="dbRadio" ng-model="vm.selection" ng-value="dbname"></td>
                     <td>{{dbname.name}}</td>
                     <td>运行中</td>
                     <td>
@@ -86,27 +87,15 @@
                 <div class="col-sm-9">
                     <select ng-model="selectedName" ng-options="x.charater for x in vm.dbs"></select>
 
-                    <!--<input type="password" name="user_password" ng-model="vm.user_add.password" required="" ng-maxlength="20" ng-minlength="6" class="form-control" placeholder="选择字符集">
 
-                    <p class="glyphicon glyphicon-ok input_result input_success" ng-if="user_form.user_password.$valid">
-                    </p>
-
-                    <p class="glyphicon glyphicon-remove input_result input_error" ng-if="user_form.user_password.$invalid && user_form.user_password.$dirty">
-                    </p>-->
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">选择字符规则</label>
 
                 <div class="col-sm-9">
-                    <select ng-model="selectedName" ng-options="x.charater for x in vm.dbs"></select>
-                    <!--<input type="password" name="user_repeat_password" ng-model="vm.daname_add.repeat_password" required="" ng-maxlength="20" ng-minlength="6" repeat="user_password" class="form-control" placeholder="再次输入密码">-->
+                    <select ng-model="selectedName" ng-options="x.rule for x in vm.dbs"></select>
 
-                    <!--<p class="glyphicon glyphicon-ok input_result input_success" ng-if="daname_form.user_repeat_password.$valid">
-                    </p>
-
-                    <p class="glyphicon glyphicon-remove input_result input_error" ng-if="daname_form.user_repeat_password.$invalid && user_form.user_repeat_password.$dirty">
-                    </p>-->
                 </div>
             </div>
             <!--打印错误信息-->
