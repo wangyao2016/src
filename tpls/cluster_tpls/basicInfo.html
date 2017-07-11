@@ -25,6 +25,10 @@
                             </td>
                         </tr>
                         <tr>
+                            <td>状态</td>
+                            <td>{{vm.basicInfo.cluster.status}}</td>
+                        </tr>
+                        <tr>
                             <td>数据库类型</td>
                             <td>
                                 {{vm.basicInfo.cluster.datastore.type}}
@@ -37,16 +41,12 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>绑定参数组</td>
-                            <td>暂无</td>
+                            <td>参数组名称</td>
+                            <td>{{vm.basicInfo.cluster.instances[0].configuration.name||'暂未绑定'}}</td>
                         </tr>
                         <tr>
                             <td>子网名称</td>
                             <td>{{vm.basicInfo.cluster.instances[0].networks.name}}</td>
-                        </tr>
-                        <tr>
-                            <td>状态</td>
-                            <td>{{vm.basicInfo.cluster.status}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -132,12 +132,12 @@
                             <td>{{vm.basicInfo.cluster.instances[0].volume.size}}GB</td>
                         </tr>
                         <tr>
-                            <td>已创建</td>
-                            <td id="ds_cloud_create">{{vm.basicInfo.cluster.created}}</td>
+                            <td>创建时间</td>
+                            <td id="ds_cloud_create">{{vm.basicInfo.cluster.created.replace("T"," ")}}</td>
                         </tr>
                         <tr>
-                            <td>已更新</td>
-                            <td id="ds_cloud_update">{{vm.basicInfo.cluster.updated}}</td>
+                            <td>更新时间</td>
+                            <td id="ds_cloud_update">{{vm.basicInfo.cluster.updated.replace("T"," ")}}</td>
                         </tr>
                     </tbody>
                 </table>

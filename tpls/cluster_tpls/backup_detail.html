@@ -1,0 +1,98 @@
+<div class="col-md-8">
+    <div class="panel panel-default" ng-class="{hidden: vm.getBackupDetail.hidden}">
+        <div class="panel-heading">基本信息
+            <span class="pull-right">
+                <span class="glyphicon"
+                      ng-class="vm.getBackupDetail.collapsed?'glyphicon-chevron-down':'glyphicon-chevron-up'"
+                      ng-click="vm.getBackupDetail.collapsed = !vm.getBackupDetail.collapsed">
+
+                </span>
+            </span>
+            &nbsp;
+        </div>
+        <div class="panel-collapse collapse" ng-class="{in: !vm.getBackupDetail.collapsed}">
+            <div class="table-responsive">
+                <table class="table table-striped" id="backup-table-0">
+                    <tbody>
+                    <tr>
+                        <td style="width:40%;">名称</td>
+                        <td>{{vm.getBackupDetail.backup.name}}</td>
+                    </tr>
+                    <tr>
+                        <td>ID</td>
+                        <td>{{vm.getBackupDetail.backup.id}}</td>
+                    </tr>
+                    <tr>
+                        <td>状态</td>
+                        <td>{{vm.getBackupDetail.backup.status}}</td>
+                    </tr>
+                    <tr>
+                        <td>描述</td>
+                        <td>
+                            {{vm.getBackupDetail.backup.description == null?'暂无':vm.getBackupDetail.backup.description}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>创建时间</td>
+                        <td>{{vm.getBackupDetail.backup.created.replace("T"," ")}}</td>
+                    </tr>
+                    <tr>
+                        <td>更新时间</td>
+                        <td>{{vm.getBackupDetail.backup.updated.replace("T"," ")}}</td>
+                    </tr>
+                    <tr>
+                        <td>备份大小</td>
+                        <td>{{vm.getBackupDetail.backup.size}}</td>
+                    </tr>
+                    <tr>
+                        <td>父备份ID</td>
+                        <td>{{vm.getBackupDetail.backup.parent_id == null?'无父备份':vm.getBackupDetail.backup.parent_id}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-8">
+    <div class="panel panel-default" ng-class="{hidden: vm.instance.hidden}">
+        <div class="panel-heading">实例信息
+            <span class="pull-right">
+                <span class="glyphicon"
+                      ng-class="vm.instance.collapsed?'glyphicon-chevron-down':'glyphicon-chevron-up'"
+                      ng-click="vm.instance.collapsed = !vm.instance.collapsed">
+                </span>
+            </span>
+            &nbsp;
+        </div>
+        <div class="panel-collapse collapse" ng-class="{in: !vm.instance.collapsed}">
+            <div class="table-responsive">
+                <table class="table table-striped" id="backup-table-1">
+                    <tbody>
+                    <tr>
+                        <td style="width:40%;">实例名称</td>
+                        <td>{{vm.getBackupDetail.backup.instance_name}}</td>
+                    </tr>
+                    <tr>
+                        <td>实例ID</td>
+                        <td>{{vm.getBackupDetail.backup.instance_id}}</td>
+                    </tr>
+                    <tr>
+                        <td>数据库类型</td>
+                        <td>
+                            {{vm.getBackupDetail.backup.datastore.version}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>数据库版本</td>
+                        <td>
+                            {{vm.getBackupDetail.backup.datastore.version_id}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

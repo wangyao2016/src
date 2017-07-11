@@ -1,5 +1,8 @@
-angular.module('mainAppCtrls') //backup页面控制器
-    .controller('backupCtrl', ['$scope', '$http', 'getService',
+/**
+ * Created by wangyao on 2017/7/11.
+ */
+angular.module('mainAppCtrls') //自动备份控制器
+    .controller('backupCtrl_auto',  ['$scope', '$http', 'getService',
         function($scope, $http, getService) {
             var vm = $scope.vm = {};
             vm.backupList = [];

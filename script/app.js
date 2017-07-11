@@ -49,8 +49,20 @@ mainApp.config(function($stateProvider, $urlRouterProvider) {
             controller: 'dbCtrl'
         }).state('cluster.backup', {
             url: '/backup',
-            templateUrl: 'tpls/cluster_tpls/backup.html',
-            controller: 'backupCtrl'
+            templateUrl: 'tpls/cluster_tpls/backup_nav.html',
+            controller: 'backupCtrl_nav'
+        }).state('cluster.backup.backup', {
+            url: '/list',
+            templateUrl: 'tpls/cluster_tpls/backup_list.html',
+            controller: 'backupCtrl_backup'
+        }).state('cluster.backup.detail', {
+            url: '/detail?backupId',
+            templateUrl: 'tpls/cluster_tpls/backup_detail.html',
+            controller: 'backupCtrl_detail'
+        }).state('cluster.backup.auto', {
+            url: '/auto',
+            templateUrl: 'tpls/cluster_tpls/backup_auto.html',
+            controller: 'backupCtrl_auto'
         }).state('cluster.monitor', {
             url: '/monitor',
             templateUrl: 'tpls/cluster_tpls/monitor.html',

@@ -44,9 +44,8 @@
             <li ng-class="{active:vm.activeTab == 1||vm.activeTab == 0}" ng-click="vm.setActiveTab(1)"><a ui-sref="cluster.basicInfo" role="tab">基本信息</a></li>
             <li ng-class="{active:vm.activeTab == 2}" ng-click="vm.setActiveTab(2)"><a ui-sref="cluster.user" role="tab">用户管理</a></li>
             <li ng-class="{active:vm.activeTab == 3}" ng-click="vm.setActiveTab(3)"><a ui-sref="cluster.db" role="tab">数据库管理</a></li>
-            <li ng-class="{active:vm.activeTab == 5}" ng-click="vm.setActiveTab(5)"><a ui-sref="cluster.configs" role="tab">参数组设置</a></li>
-            <li ng-click="" style="background-color: #eeeeee;">
-                <a role="tab" id="backup_disabled">备份管理</a></li>
+            <li ng-class="{active:vm.activeTab == 4}" ng-click="vm.setActiveTab(4)"><a ui-sref="cluster.configs" role="tab">参数组设置</a></li>
+            <li ng-class="{active:vm.activeTab == 5}" ng-click="vm.setActiveTab(5)"><a ui-sref="cluster.backup" role="tab">备份管理</a></li>
 
         </ul>
         <div class="" style="height:20px;"></div>

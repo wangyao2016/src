@@ -1,0 +1,22 @@
+{
+    "getBackupDetail": {
+        "backup": {
+            "status": "COMPLETED",
+            "updated": "2017-06-20T15:30:01",
+            "description": "测试",
+            "datastore": {
+                "version": "mysql5.5-centos7.1",
+                "type": "mysql",
+                "version_id": "13185a99-bba8-4de5-8d7c-2882fec6c4f5"
+            },
+            "id": "a54da5dc-8124-4bd7-832c-d9245548aea0",
+            "size": 0.1,
+            "instance_name": "release5.5",
+            "name": "gdfgfxd",
+            "created": "2017-06-20T15:29:57",
+            "instance_id": "c1c46993-4e3a-4b4f-9ff1-ab63f5f213f8",
+            "parent_id": "我是父备份",
+            "locationRef": "http://10.132.49.29:7480/swift/v1/rdsbackup-testuser:swift/a54da5dc-8124-4bd7-832c-d9245548aea0.xbstream.gz.enc"
+        }
+    }
+}
