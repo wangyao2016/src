@@ -3,7 +3,6 @@ angular.module('mainAppCtrls')
     .controller('basicInfoCtrl', ['$scope', '$http', 'dataService', 'getService',
         function($scope, $http, dataService, getService) {
             var vm = $scope.vm = {};
-
             var clusterInfo = {
                 '310': { name: 'rds.tiny', ram: 240, cpu: 1 },
                 '311': { name: 'rds.small', ram: 600, cpu: 2 },
@@ -15,6 +14,7 @@ angular.module('mainAppCtrls')
                 '317': { name: 'rds.4xlarge', ram: 32000, cpu: 8 }
             };
             vm.basicInfo = [];
+            vm.backupList = [];
             //以后把path改成真实的path，param是传进来的参数
             var id = dataService.getData();
             var data = { "id": id };
@@ -28,10 +28,21 @@ angular.module('mainAppCtrls')
                         });
                         console.log(angular.fromJson(data.data.clusterDetail));
                     } else {
-                        console.log("get instance basicInfo error");
+                        console.log("get cluster basicInfo error");
                     }
                 }).catch(function(data, status, headers, config) {
                     console.log("error load basicInfo.json");
+                });
+            getService.getServiceResult("data/backup_list.json")
+                .then(function(data, status, headers, config) {
+
+                    if (angular.fromJson(data.data.backupList) != undefined) {
+                        vm.backupList = angular.fromJson(data.data.backupList);
+                    } else {
+                        console.log("get backupList  error");
+                    }
+                }).catch(function(data, status, headers, config) {
+                    console.log("error load backupList.json");
                 });
         }
     ]);
