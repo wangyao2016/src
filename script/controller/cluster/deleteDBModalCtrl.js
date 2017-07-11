@@ -9,7 +9,7 @@ angular.module('mainAppCtrls') //删除用户modal的控制器
             vm.deleteDBOk = function(username) {
                 var id = dataService.getData();
                 var data = {
-                    "id": id,
+                    "id": '1',
                     "name": username
                 };
                 console.log("username: " + username);

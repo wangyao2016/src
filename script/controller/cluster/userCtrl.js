@@ -57,6 +57,7 @@ angular.module('mainAppCtrls') //instance.user页面控制器
             vm.openDeleteUserModal = function(size, parentSelector) {
                 var parentElem = parentSelector ?
                     angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
+                console.log(parentElem);
                 var deleteUserModalInstance = $uibModal.open({
                     animation: true,
                     ariaLabelledBy: 'deleteUserModal-title',

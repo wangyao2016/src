@@ -1,6 +1,6 @@
 angular.module('mainAppCtrls') //instance.configs.configInfo页面控制器
-    .controller('configInfoCtrl', ['$scope', '$http', '$uibModal', '$timeout', '$stateParams', 'httpService',
-        function($scope, $http, $uibModal, $timeout, $stateParams, httpService) {
+    .controller('configInfoCtrl', ['$scope', '$http', '$uibModal', '$timeout', '$stateParams', 'getService',
+        function($scope, $http, $uibModal, $timeout, $stateParams, getService) {
             var vm = $scope.vm = {};
             //设置tooltip展示方向
             vm.placement = {
@@ -17,6 +17,26 @@ angular.module('mainAppCtrls') //instance.configs.configInfo页面控制器
             };
             vm.addDefalut = function(addDefalut) {
                 alert(addDefalut);
+            };
+            /**
+             * 分页开始
+             */
+            vm.pagination = {
+                totalItems: 1,
+                currentPage: 1,
+                setPage: function(pageNo) {
+                    this.currentPage = pageNo;
+                },
+                pageChanged: function() {
+                    // $log.log('Page changed to: ' + this.currentPage);
+                    // console.log('pageChanged:' + vm.configsList);
+                    vm.configInfo();
+                    // vm.configs = data.splice((vm.pagination.currentPage - 1) * 10, vm.pagination.currentPage * 10);
+
+                },
+                maxSize: 10,
+                bigTotalItems: 10,
+                bigCurrentPage: 10
             };
 
             /*警告框相关开始*/
@@ -51,12 +71,12 @@ angular.module('mainAppCtrls') //instance.configs.configInfo页面控制器
             vm.configInfo = function() {
                 var configId = $stateParams.configId;
                 var param = { "id": configId };
-                httpService.getServiceResult("get", "v1/oracle/configurations/" + configId + "/selfDetail", param)
-                    .success(function(data, status, headers, config) {
-                        if (angular.fromJson(data.jsonstring).configuration_parameters != undefined) {
+                getService.getServiceResult("data/config_pram.json")
+                    .then(function(data, status, headers, config) {
+                        if (angular.fromJson(data.data.jsonstring).configuration_parameters != undefined) {
                             //每次重新调用清空内容
                             vm.defaultConfigs = [];
-                            vm.defaultConfigs = angular.fromJson(data.jsonstring).configuration_parameters;
+                            vm.defaultConfigs = angular.fromJson(data.data.jsonstring).configuration_parameters;
                             //把参数组名称过滤出来，单独存在values里面。
                             var tempValue = "";
                             vm.submitConfigs.keys = [];
@@ -72,11 +92,19 @@ angular.module('mainAppCtrls') //instance.configs.configInfo页面控制器
                                 vm.submitConfigs.keys.push(tempKey);
                                 vm.submitConfigs.values.push(tempValue);
                             }
+
+                            var start = (vm.pagination.currentPage - 1) * 10;
+                            var end = (vm.defaultConfigs.length - 10 <= (vm.pagination.currentPage - 1) * 10) ? vm.defaultConfigs.length : vm.pagination.currentPage * 10;
+                            console.log("参数组列表：" + vm.defaultConfigs);
+                            vm.pagination.totalItems = vm.defaultConfigs.length;
+                            vm.defaultConfigs = vm.defaultConfigs.slice(start, end);
+
+
                         } else {
                             vm.addAlert("alert_fail", "参数组列表展示错误，原因为： " + data.jsonstring);
                             console.log("参数组列表展示错误，原因为：" + data.jsonstring);
                         }
-                    }).error(function(data, status, headers, config) {
+                    }).catch(function(data, status, headers, config) {
                         vm.addAlert("alert_error", "网络错误，无法获取参数组列表");
                     });
             };

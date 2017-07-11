@@ -1,7 +1,7 @@
 angular.module('mainAppCtrls')
     //instance.configs页面控制器
-    .controller('configsCtrl', ['$scope', '$http', '$uibModal', '$timeout', 'dataService', 'httpService',
-        function($scope, $http, $uibModal, $timeout, dataService, httpService) {
+    .controller('configsCtrl', ['$scope', '$http', '$uibModal', '$timeout', 'dataService', 'getService',
+        function($scope, $http, $uibModal, $timeout, dataService, getService) {
             //通过service获取实例id
             dataService.getData();
 
@@ -9,6 +9,51 @@ angular.module('mainAppCtrls')
             //设置tooltip展示方向
             vm.placement = {
                 selected: 'right'
+            };
+            vm.configs = [];
+            /**
+             * 分页开始
+             */
+            vm.pagination = {
+                totalItems: 1,
+                currentPage: 1,
+                setPage: function(pageNo) {
+                    this.currentPage = pageNo;
+                },
+                pageChanged: function() {
+                    // $log.log('Page changed to: ' + this.currentPage);
+                    // console.log('pageChanged:' + vm.configsList);
+                    vm.configsList();
+                    // vm.configs = data.splice((vm.pagination.currentPage - 1) * 10, vm.pagination.currentPage * 10);
+
+                },
+                maxSize: 10,
+                bigTotalItems: 10,
+                bigCurrentPage: 10
+            };
+            /**
+             * 分页结束
+             */
+            //参数组列表展示
+            vm.configsList = function() {
+                getService.getServiceResult("data/config_list.json")
+                    .then(function(data, status, headers, config) {
+                        var datas = angular.fromJson(data.data.configs).configurations;
+
+                        if (datas != undefined) {
+                            // angular.copy(datas, vm.configs);
+                            var start = (vm.pagination.currentPage - 1) * 10;
+                            var end = (datas.length - 10 <= (vm.pagination.currentPage - 1) * 10) ? datas.length : vm.pagination.currentPage * 10;
+                            // console.log("参数组列表：" + datas.slice((vm.pagination.currentPage - 1) * 10, end));
+                            vm.configs = datas.slice(start, end);
+                            vm.pagination.totalItems = datas.length;
+                            // console.log(datas);
+                        } else {
+                            console.log("get configs list error");
+                        }
+                    }).catch(function(data, status, headers, config) {
+                        console.log("connect error,fail to get configs list");
+                    });
             };
 
             /*警告框相关开始*/
@@ -197,22 +242,34 @@ angular.module('mainAppCtrls')
              console.log("connect error,fail to add configs");
              });
              }
-             };*/
-            //参数组列表展示
-            vm.configsList = function() {
-                httpService.getServiceResult("get", "v1/oracle/configurations")
-                    .success(function(data, status, headers, config) {
-                        console.log("参数组列表：" + angular.fromJson(data.configs).configurations);
-                        if (angular.fromJson(data.configs).configurations != undefined) {
-                            vm.configs = angular.fromJson(data.configs).configurations;
-                        } else {
-                            console.log("get configs list error");
-                        }
-                    }).error(function(data, status, headers, config) {
-                        console.log("connect error,fail to get configs list");
-                    });
+            };*/
+
+            /**
+             *  vm.pagination = {
+                totalItems: 1,
+                currentPage: 1,
+                setPage: function(pageNo) {
+                    this.currentPage = pageNo;
+                },
+                pageChanged: function() {
+                    $log.log('Page changed to: ' + $scope.currentPage);
+                },
+                maxSize:10,
+                bigTotalItems:100,
+                bigCurrentPage:100
             };
+             */
+
             //第一次加载configs页面，加载参数组列表
             vm.configsList();
+
+            //         $scope.$watch(function () 
+            //             return $scope.vm.pagination.currentPage;
+            // 　　　　},configsList);
+
+            // $scope.$watch(function() {
+            //     console.log('当前页面：' + $scope.vm.pagination.currentPage);
+            //     return $scope.vm.pagination.currentPage;
+            // }, vm.configsList);
         }
     ]);
