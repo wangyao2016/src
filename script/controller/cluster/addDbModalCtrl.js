@@ -1,7 +1,7 @@
 angular.module('mainAppCtrls')
     //添加用户modal的控制器
-    .controller('addDbModalCtrl', ['$scope', '$uibModalInstance', 'dataService',
-        function($scope, $uibModalInstance, dataService) {
+    .controller('addDbModalCtrl', ['$scope', '$uibModalInstance', '$stateParams', 'dataService', 'httpService',
+        function($scope, $uibModalInstance, $stateParams, dataService, httpService) {
             var vm = $scope.vm = {};
             vm.dbs = [
                 { "charater": "utf8", "rule": "utf8_general_ci" },
@@ -78,13 +78,21 @@ angular.module('mainAppCtrls')
                 var id = dataService.getData();
                 var data = {
                     "id": id,
-                    "name": vm.user_add.name,
-                    "password": vm.user_add.password
+                    "name": vm.db_add.name,
+                    "character_set": vm.db_add.character_set.charater,
+                    "collate": vm.db_add.character_set.rule
                 };
+                httpService.getServiceResult("post","rds/v1/mysql/clusters/"+$stateParams.clusterId+"/databases",angular.fromJson(data))
+                    .then(function(data, status, headers, config) {
+                        console.log(data);
+                    }).catch(function(data, status, headers, config) {
+                        console.log(data);
+                    });
                 $uibModalInstance.close({ data: data });
             };
             //cancel方法，点击取消触发
             vm.cancel = function() {
+                console.log(vm.db_add.character_set.charater);
                 $uibModalInstance.dismiss('cancel');
             };
         }

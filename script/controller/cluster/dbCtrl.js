@@ -1,17 +1,19 @@
 angular.module('mainAppCtrls')
     //instance.db页面控制器
-    .controller('dbCtrl', ['$scope', '$http', '$timeout', '$uibModal', 'dataService', 'getService',
-        function($scope, $http, $timeout, $uibModal, dataService, getService) {
+    .controller('dbCtrl', ['$scope', '$http', '$stateParams', '$timeout', '$uibModal', 'dataService', 'getService',
+        function($scope, $http, $stateParams, $timeout, $uibModal, dataService, getService) {
             var vm = $scope.vm = {};
             vm.db = [];
+            console.log($stateParams.clusterId);
+            console.log($stateParams.clusterName);
             //get方法，展示数据库列表
             var id = dataService.getData();
             var data = { "id": id };
-            getService.getServiceResult("data/db_list.json")
+            getService.getServiceResult("rds/v1/mysql/clusters/"+$stateParams.clusterId+"/databases")
                 .then(function(data, status, headers, config) {
-                    console.log(angular.fromJson(data.data.Db_display).databases);
-                    if (angular.fromJson(data.data.Db_display).databases != undefined) {
-                        vm.db = angular.fromJson(data.data.Db_display).databases;
+                    console.log(angular.fromJson(data.data.dbdisplay).databases);
+                    if (angular.fromJson(data.data.dbdisplay).databases != undefined) {
+                        vm.db = angular.fromJson(data.data.dbdisplay).databases;
                     } else {
                         console.log("get db list error");
                     }
@@ -48,7 +50,7 @@ angular.module('mainAppCtrls')
                                 if (data.status == '' || data.status == 'undefined') {
                                     console.log("删除数据库成功");
                                     //重新加载用户list
-                                    vm.userList();
+                                    vm.db();
                                     //添加警示框
                                     vm.addAlert("alert_success", "删除数据库成功");
                                     //删除警示框
