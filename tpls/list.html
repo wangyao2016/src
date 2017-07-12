@@ -45,6 +45,11 @@
                         </tr>
                     </tbody>
                 </table>
+                <div>
+                    <ul style="float:right;" uib-pagination total-items="vm.pagination.totalItems" ng-model="vm.pagination.currentPage" ng-change="vm.pagination.pageChanged()" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+                        rotate="false"></ul>
+
+                </div>
             </div>
             <!--分页-->
             <!--<div class="container">

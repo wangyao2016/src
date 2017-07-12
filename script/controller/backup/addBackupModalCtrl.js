@@ -8,8 +8,9 @@ angular.module('mainAppCtrls')
             var vm = $scope.vm = {};
             vm.backupList = [];
             vm.activeBackupList = [];
-            getService.getServiceResult("data/backup_list.json")
+            getService.getServiceResult("rds/v1/mysql/clusters/"+$stateParams.clusterId+"/backups")
                 .then(function(data, status, headers, config) {
+                    console.log(data);
                     if (angular.fromJson(data.data.backupList) != undefined) {
                         vm.backupList = angular.fromJson(data.data.backupList);
                         for(var i=0;i<vm.backupList.backups.length;i++){

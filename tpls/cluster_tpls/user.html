@@ -16,7 +16,7 @@
     </div>
 
     <div style="height: 20px"></div>
-    <div class="table-responsive">
+    <div class="table-responsive row">
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -44,6 +44,11 @@
                 </tr>
             </tbody>
         </table>
+
+         <div>
+            <ul style="float:right;" uib-pagination total-items="vm.pagination.totalItems" ng-model="vm.pagination.currentPage" ng-change="vm.pagination.pageChanged()" class="pagination-sm"previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"  rotate="false"></ul>
+
+        </div>
     </div>
 </div>
 <!--重置密码模态框-->

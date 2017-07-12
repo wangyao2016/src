@@ -9,17 +9,41 @@ angular.module('mainAppCtrls')
             //get方法，展示数据库列表
             var id = dataService.getData();
             var data = { "id": id };
-            getService.getServiceResult("rds/v1/mysql/clusters/"+$stateParams.clusterId+"/databases")
-                .then(function(data, status, headers, config) {
-                    console.log(angular.fromJson(data.data.dbdisplay).databases);
-                    if (angular.fromJson(data.data.dbdisplay).databases != undefined) {
-                        vm.db = angular.fromJson(data.data.dbdisplay).databases;
+             vm.pagination = {
+                totalItems: 1,
+                currentPage: 1,
+                setPage: function(pageNo) {
+                    this.currentPage = pageNo;
+                },
+                pageChanged: function() {
+                    // $log.log('Page changed to: ' + this.currentPage);
+                    // console.log('pageChanged:' + vm.configsList);
+                    vm.dblist();
+                    // vm.configs = data.splice((vm.pagination.currentPage - 1) * 10, vm.pagination.currentPage * 10);
+
+                },
+                maxSize: 10,
+                bigTotalItems: 10,
+                bigCurrentPage: 10
+            };
+            vm.dblist = function(){
+                getService.getServiceResult("rds/v1/mysql/clusters/"+$stateParams.clusterId+"/databases")
+                    .then(function(data, status, headers, config) {
+                        console.log(angular.fromJson(data.data.dbdisplay).databases);
+                        if (angular.fromJson(data.data.dbdisplay).databases != undefined) {
+                            vm.db = angular.fromJson(data.data.dbdisplay).databases;
+                        var start = (vm.pagination.currentPage - 1) * 10;
+                        var end = (datas.length - 10 <= (vm.pagination.currentPage - 1) * 10) ? datas.length : vm.pagination.currentPage * 10;
+                        vm.pagination.totalItems =  datas.length;
+                        vm.db = datas.slice(start,end);
                     } else {
                         console.log("get db list error");
                     }
                 }).catch(function(data, status, headers, config) {
                     console.log("connect error get db list");
                 });
+                 };
+                  vm.dblist();
             console.log(vm.selection);
             /*触发删除数据库modal 开始*/
             vm.openDeleteDBModal = function(size, parentSelector) {

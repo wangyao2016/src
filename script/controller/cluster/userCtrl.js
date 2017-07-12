@@ -5,6 +5,24 @@ angular.module('mainAppCtrls') //instance.user页面控制器
             vm.user = [];
             vm.user_add = [];
             var id = dataService.getData();
+              vm.pagination = {
+                totalItems: 1,
+                currentPage: 1,
+                setPage: function(pageNo) {
+                    this.currentPage = pageNo;
+                },
+                pageChanged: function() {
+                    // $log.log('Page changed to: ' + this.currentPage);
+                    // console.log('pageChanged:' + vm.configsList);
+                    vm.userList();
+                    // vm.configs = data.splice((vm.pagination.currentPage - 1) * 10, vm.pagination.currentPage * 10);
+
+                },
+                maxSize: 10,
+                bigTotalItems: 10,
+                bigCurrentPage: 10
+            };
+
 
             /*触发添加用户modal 开始*/
             vm.openAddUserModal = function(size, parentSelector) {
@@ -195,8 +213,12 @@ angular.module('mainAppCtrls') //instance.user页面控制器
                         console.log(angular.fromJson(data.data).userdisplay);
                         //如果接口返回值有users信息，而不是badRequest或者error信息
                         if (angular.fromJson(data.data).userdisplay != undefined) {
-                            vm.users = angular.fromJson(data.data).userdisplay.users;
-                            console.log(vm.users);
+                            var datas= angular.fromJson(data.data).userdisplay.users;
+                            var start = (vm.pagination.currentPage - 1) * 10;
+                            var end = (datas.length - 10 <= (vm.pagination.currentPage - 1) * 10) ? datas.length : vm.pagination.currentPage * 10;
+                            vm.pagination.totalItems = datas.length;
+                            vm.users = datas.slice(start,end);
+                           // console.log(vm.users);
                         } else {
                             console.log("get instance user list error");
                         }
