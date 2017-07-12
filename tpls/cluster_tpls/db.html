@@ -2,13 +2,17 @@
     <a type="button" class="rds-btn buy-btn" ng-click="vm.openAddDbModal()">
         <span class="btn-icon new-user"></span> 添加数据库
     </a>
-    <div style="height: 8px">
+    <div ng-show="true" class="alert_div">
+        <div ng-repeat="alert in vm.alerts" ng-class="['repeat','alert', 'alert-dismissable', alert.type]">
+            <button type="button" class="close" ng-click="vm.closeAlert($index)">&times;</button> {{alert.msg}}
+        </div>
     </div>
     <div class="table-responsive">
         <table class="table table-hover">
             <thead>
                 <tr>
                     <th></th>
+                    <th>序号</th>
                     <th>数据库名</th>
                     <th>状态</th>
                     <th>操作</th>
@@ -20,6 +24,8 @@
 -->
                 <tr ng-repeat="dbname in vm.db">
                     <td><input type="radio" name="dbRadio" ng-model="vm.selection" ng-value="dbname"></td>
+                    <td>{{$index+1}}</td>
+
                     <td>{{dbname.name}}</td>
                     <td>运行中</td>
                     <td>
@@ -30,8 +36,9 @@
                 </tr>
             </tbody>
         </table>
-         <div>
-            <ul style="float:right;" uib-pagination total-items="vm.pagination.totalItems" ng-model="vm.pagination.currentPage" ng-change="vm.pagination.pageChanged()" class="pagination-sm"previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"  rotate="false"></ul>
+        <div>
+            <ul style="float:right;" uib-pagination total-items="vm.pagination.totalItems" ng-model="vm.pagination.currentPage" ng-change="vm.pagination.pageChanged()" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+                rotate="false"></ul>
 
         </div>
     </div>
@@ -71,53 +78,50 @@
         <h3 class="modal-title" id="addDbModal-title">添加数据库</h3>
     </div>
     <div class="modal-body" id="addDbModal-body">
-        <form class="form-horizontal user_form" role="form" id="user_form" name="user_form" novalidate="">
+        <form class="form-horizontal user_form" role="form" id="db_form" name="db_form" novalidate="">
             <div class="form-group">
                 <label class="col-sm-3 control-label">数据库名称</label>
 
                 <div class="col-sm-9">
-                    <input type="text" required="" ng-pattern="/^[A-Za-z]{1}[0-9A-Za-z_]{2,29}$/" name="user_name" ng-model="vm.db_add.name" class="form-control" placeholder="由字母、数字、下划线组成，以字母开头，3-30个字符">
+                    <input type="text" required="" ng-pattern="/^[A-Za-z]{1}[0-9A-Za-z_]{2,29}$/" name="db_name" ng-model="vm.db_add.name" class="form-control" placeholder="由字母、数字、下划线组成，以字母开头，3-30个字符">
 
-                    <!--<p class="glyphicon glyphicon-ok input_result input_success" ng-if="user_form.user_name.$valid">
+                    <p class="glyphicon glyphicon-ok input_result input_success" ng-if="db_form.db_name.$valid">
                     </p>
 
-                    <p class="glyphicon glyphicon-remove input_result input_error" ng-if="user_form.user_name.$invalid && user_form.user_name.$dirty">
-                    </p>-->
+                    <p class="glyphicon glyphicon-remove input_result input_error" ng-if="db_form.db_name.$invalid && db_form.db_name.$dirty">
+                    </p>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">选择字符集</label>
-
                 <div class="col-sm-9">
-                    <select ng-model="vm.db_add.character_set" ng-options="x.charater for x in vm.dbs"></select>
-
-
+                    <select ng-model="vm.character_set" ng-options="x.charater for x in vm.dbs"></select>
                 </div>
             </div>
             <!--<div class="form-group">-->
-                <!--<label class="col-sm-3 control-label">选择字符规则</label>-->
+            <!--<label class="col-sm-3 control-label">选择字符规则</label>-->
 
-                <!--<div class="col-sm-9">-->
-                    <!--<select ng-model="vm.db_add.collate" ng-options="x.rule for x in vm.dbs"></select>-->
+            <!--<div class="col-sm-9">-->
+            <!--<select ng-model="vm.db_add.collate" ng-options="x.rule for x in vm.dbs"></select>-->
 
-                <!--</div>-->
+            <!--</div>-->
             <!--</div>-->
             <!--打印错误信息-->
-            <!--<div class="form-group" ng-show="user_form.$invalid && user_form.$dirty">
+            <div class="form-group" ng-show="db_form.$invalid && db_form.$dirty">
                 <label class="col-sm-2 control-label"></label>
 
                 <div class="col-sm-10">
                     <div class="alert alert-danger" style="margin-bottom: 0">
                         <ul>
-                           //根据name来取得表格中的内容
-            <li ng-show="user_form.user_name.$dirty && user_form.user_name.$error.required">
-                用户名不能为空！
-            </li>
-            <li ng-show="user_form.user_name.$dirty && user_form.user_name.$error.pattern">
-                用户名格式不正确！由字母、数字、下划线组成，3-30个字符
-            </li>
+                            <!--//根据name来取得表格中的内容-->
+                            <li ng-show="db_form.db_name.$dirty && db_form.db_name.$error.required">
+                                数据库名不能为空！
+                            </li>
+                            <li ng-show="db_form.db_name.$dirty && db_form.db_name.$error.pattern">
+                                数据库名格式不正确！由字母、数字、下划线组成，3-30个字符
+                            </li>
 
-            <li ng-show="user_form.user_password.$dirty && user_form.user_password.$error.required">
+                            <!--<li ng-show="user_form.user_password.$dirty && user_form.user_password.$error.required">
                 密码不能为空！
             </li>
             <li ng-show="user_form.user_password.$dirty && user_form.user_password.$error.maxlength">
@@ -128,17 +132,17 @@
             </li>
             <li ng-show="user_form.user_repeat_password.$dirty && user_form.user_repeat_password.$error.repeat">
                 两次密码输入不一致！
-            </li>
-            </ul>
-    </div>
-    </div>
-    </div>-->
+            </li>-->
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </form>
 
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="vm.cancel()">关闭</button>
-        <button type="button" class="btn btn-primary" ng-disabled="user_form.$invalid" ng-click="vm.addUserOk()">添加用户
+        <button type="button" class="btn btn-primary" ng-disabled="user_form.$invalid" ng-click="vm.addUserOk()">添加数据库
         </button>
     </div>
 </script>
