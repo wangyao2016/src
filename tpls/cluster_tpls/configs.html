@@ -72,8 +72,8 @@
                 </tr>
             </tbody>
         </table>
-        <div>
-            <ul uib-pagination total-items="vm.pagination.totalItems" ng-model="vm.pagination.currentPage" ng-change="vm.pagination.pageChanged()" class="pagination-sm" boundary-link-numbers="true" rotate="false"></ul>
+        <div >
+            <ul style="float:right;" uib-pagination total-items="vm.pagination.totalItems" ng-model="vm.pagination.currentPage" ng-change="vm.pagination.pageChanged()" class="pagination-sm"previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"  rotate="false"></ul>
 
         </div>
     </div>

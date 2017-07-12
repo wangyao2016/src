@@ -52,7 +52,7 @@ mainApp.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: 'tpls/cluster_tpls/backup_nav.html',
             controller: 'backupCtrl_nav'
         }).state('cluster.backup.backup', {
-            url: '/list',
+            url: '/backlist',
             templateUrl: 'tpls/cluster_tpls/backup_list.html',
             controller: 'backupCtrl_backup'
         }).state('cluster.backup.detail', {
