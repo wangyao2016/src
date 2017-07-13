@@ -31,7 +31,7 @@ angular.module('mainAppCtrls')
                 var data = {
                     "id": id,
                     "instance_id": $stateParams.clusterId,
-                    "fatherBackup_id": $scope.selectValue,
+                    "fatherBackup_id": $scope.selectValue==null?"":$scope.selectValue,
                     "discription": vm.backup_add.desc,
                     "backup_Name": vm.backup_add.name,
                     "storing_time": vm.backup_add.timePeriod

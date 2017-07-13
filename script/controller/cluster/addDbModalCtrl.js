@@ -57,7 +57,6 @@ angular.module('mainAppCtrls')
             };
             //cancel方法，点击取消触发
             vm.cancel = function() {
-                console.log(vm.db_add.character_set.charater);
                 $uibModalInstance.dismiss('cancel');
             };
         }
