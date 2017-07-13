@@ -45,8 +45,9 @@
             </tbody>
         </table>
 
-         <div>
-            <ul style="float:right;" uib-pagination total-items="vm.pagination.totalItems" ng-model="vm.pagination.currentPage" ng-change="vm.pagination.pageChanged()" class="pagination-sm"previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"  rotate="false"></ul>
+        <div>
+            <ul style="float:right;" uib-pagination total-items="vm.pagination.totalItems" ng-model="vm.pagination.currentPage" ng-change="vm.pagination.pageChanged()" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+                rotate="false"></ul>
 
         </div>
     </div>
@@ -90,6 +91,7 @@
                         </p>
                     </div>
                 </div>
+
 
                 <!--打印错误信息-->
                 <div class="form-group" ng-show="changePsd_form.$invalid && changePsd_form.$dirty">
@@ -173,6 +175,19 @@
                 </div>
             </div>
             <div class="form-group">
+                <label class="col-sm-3 control-label">IP地址</label>
+
+                <div class="col-sm-9">
+                    <input type="text" required="" ng-pattern="/((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d))))/" name="user_host" ng-model="vm.user_add.host" class="form-control" placeholder="请输入用户主机地址">
+
+                    <p class="glyphicon glyphicon-ok input_result input_success" ng-if="user_form.user_host.$valid">
+                    </p>
+
+                    <p class="glyphicon glyphicon-remove input_result input_error" ng-if="user_form.user_host.$invalid && user_form.user_host.$dirty">
+                    </p>
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-sm-3 control-label">密码</label>
 
                 <div class="col-sm-9">
@@ -212,7 +227,12 @@
                             <li ng-show="user_form.user_name.$dirty && user_form.user_name.$error.pattern">
                                 用户名格式不正确！由字母、数字、下划线组成，3-30个字符
                             </li>
-
+                            <li ng-show="user_form.user_host.$dirty && user_form.user_host.$error.required">
+                                IP地址不能为空！
+                            </li>
+                            <li ng-show="user_form.user_host.$dirty && user_form.user_host.$error.pattern">
+                                IP地址格式不正确！
+                            </li>
                             <li ng-show="user_form.user_password.$dirty && user_form.user_password.$error.required">
                                 密码不能为空！
                             </li>

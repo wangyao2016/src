@@ -18,9 +18,10 @@ angular.module('mainAppCtrls')
             //以后把path改成真实的path，param是传进来的参数
             var id = dataService.getData();
             var data = { "id": id };
-            getService.getServiceResult("data/cluster_detail.json")
-                .then(function(data, status, headers, config) {
 
+            getService.getServiceResult("rds/v1/mysql/clusters/" + id)
+                .then(function(data, status, headers, config) {
+                    console.log(data.data);
                     if (angular.fromJson(data.data.clusterDetail) != undefined) {
                         vm.basicInfo = angular.fromJson(data.data.clusterDetail);
                         vm.basicInfo.cluster.instances.map(function(currentValue, index, arr) {

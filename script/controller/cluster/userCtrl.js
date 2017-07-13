@@ -5,7 +5,7 @@ angular.module('mainAppCtrls') //instance.user页面控制器
             vm.user = [];
             vm.user_add = [];
             var id = dataService.getData();
-              vm.pagination = {
+            vm.pagination = {
                 totalItems: 1,
                 currentPage: 1,
                 setPage: function(pageNo) {
@@ -41,29 +41,43 @@ angular.module('mainAppCtrls') //instance.user页面控制器
                     //result 就是CLOSE回传的值。把data值回传回来
                     if (result.data == '' || result.data == undefined) {
                         vm.addAlert("alert_error", "创建用户错误--数据传输错误");
+                    } else if (result.data.status == 200) {
+                        console.log("创建用户成功");
+                        //重新加载用户list
+                        vm.userList();
+                        //添加警示框
+                        vm.addAlert("alert_success", "创建用户成功");
+                        //删除警示框
+                        $timeout(function() {
+                                vm.closeAllAlert(vm.alerts.length)
+                            },
+                            6000);
                     } else {
-                        getService.getServiceResult("data/user.json")
-                            .then(function(data, status, headers, config) {
-                                //创建用户成功后，重新加载用户list
-                                if (data.status == '' || data.status == undefined) {
-                                    console.log("创建用户成功");
-                                    //重新加载用户list
-                                    vm.userList();
-                                    //添加警示框
-                                    vm.addAlert("alert_success", "创建用户成功");
-                                    //删除警示框
-                                    $timeout(function() {
-                                            vm.closeAllAlert(vm.alerts.length)
-                                        },
-                                        6000);
-                                } else {
-                                    console.log("创建用户失败,原因为：" + data.status);
-                                    vm.addAlert("alert_fail", "创建用户失败,原因为：" + data.status);
-                                }
-                            }).catch(function(data, status, headers, config) {
-                                vm.addAlert("alert_error", "创建用户错误");
-                            });
+                        console.log("创建用户失败,原因为：" + result.data.status);
+                        vm.addAlert("alert_fail", "创建用户失败,原因为：" + result.data.status);
                     }
+                    // getService.getServiceResult("data/user.json")
+                    //     .then(function(data, status, headers, config) {
+                    //         //创建用户成功后，重新加载用户list
+                    //         if (data.status == 200) {
+                    //             console.log("创建用户成功");
+                    //             //重新加载用户list
+                    //             vm.userList();
+                    //             //添加警示框
+                    //             vm.addAlert("alert_success", "创建用户成功");
+                    //             //删除警示框
+                    //             $timeout(function() {
+                    //                     vm.closeAllAlert(vm.alerts.length)
+                    //                 },
+                    //                 6000);
+                    //         } else {
+                    //             console.log("创建用户失败,原因为：" + data.status);
+                    //             vm.addAlert("alert_fail", "创建用户失败,原因为：" + data.status);
+                    //         }
+                    //     }).catch(function(data, status, headers, config) {
+                    //         vm.addAlert("alert_error", "创建用户错误");
+                    //     });
+
                 }, function(reason) {
                     //reason 就是dismiss回传的值。
                     console.log(reason);
@@ -213,12 +227,12 @@ angular.module('mainAppCtrls') //instance.user页面控制器
                         console.log(angular.fromJson(data.data).userdisplay);
                         //如果接口返回值有users信息，而不是badRequest或者error信息
                         if (angular.fromJson(data.data).userdisplay != undefined) {
-                            var datas= angular.fromJson(data.data).userdisplay.users;
+                            var datas = angular.fromJson(data.data).userdisplay.users;
                             var start = (vm.pagination.currentPage - 1) * 10;
                             var end = (datas.length - 10 <= (vm.pagination.currentPage - 1) * 10) ? datas.length : vm.pagination.currentPage * 10;
                             vm.pagination.totalItems = datas.length;
-                            vm.users = datas.slice(start,end);
-                           // console.log(vm.users);
+                            vm.users = datas.slice(start, end);
+                            // console.log(vm.users);
                         } else {
                             console.log("get instance user list error");
                         }
