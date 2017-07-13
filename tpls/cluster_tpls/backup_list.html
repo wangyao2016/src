@@ -6,6 +6,11 @@
         <span class="btn-icon new-search"></span> 全局搜索
     </a>
     <input class="search-input" type="text" ng-model="vm.filter" />
+    <div ng-show="true" class="alert_div">
+        <div ng-repeat="alert in vm.alerts" ng-class="['repeat','alert', 'alert-dismissable', alert.type]">
+            <button type="button" class="close" ng-click="vm.closeAlert($index)">&times;</button> {{alert.msg}}
+        </div>
+    </div>
     <div style="height: 8px"></div>
     <div class="table-responsive">
         <table class="table table-hover">
@@ -25,14 +30,14 @@
         <pre>{{vm.db.databases}}</pre>
 -->
                 <tr ng-repeat="backup in vm.backupList.backups|filter:vm.filter">
-                    <td><input type="radio"></td>
+                    <td><input type="radio" name="backupRadio" ng-model="vm.selection" ng-value="backup"></td>
                     <td><a ui-sref="cluster.backup.detail({backupId:backup.id})">{{backup.name}}</a></td>
                     <td>{{backup.status}}</td>
                     <td>{{backup.created.replace("T"," ")}}</td>
                     <td>{{backup.updated.replace("T"," ")}}</td>
                     <td>{{backup.parent_id != null?'是':'否'}}</td>
                     <td>
-                        <a type="button" class="rds-sm-btn normal-btn" id="deleteDb" ng-click="vm.openDeleteDBModal()">
+                        <a type="button" class="rds-sm-btn normal-btn" id="deleteBackup" ng-click="vm.openDeleteBackupModal()">
                             <span class="btn-icon new-delete"></span> 删除
                         </a>
                     </td>
@@ -90,3 +95,29 @@
         <button type="button" class="btn btn-primary" ng-disabled="backup_form.$invalid" ng-click="vm.addBackupOk()">创建</button>
     </div>
 </script>
+<!--创建备份弹出结束-->
+
+<!--删除备份模态框-->
+<script type="text/ng-template" id="deleteBackupModal.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="vm.cancel()">&times;</button>
+        <h3 class="modal-title" id="deleteBackupModal-title">删除备份</h3>
+    </div>
+    <div class="modal-body" id="deleteBackupModal-body">
+        <div class="alert alert-danger" style="margin: 20px;padding: 40px;">
+            <div ng-show="vm.selection.name">
+                确定删除备份{{vm.selection.name}}吗？
+            </div>
+            <!--根据name来取得表格中的内容-->
+            <div ng-show="!vm.selection.name">
+                请先选定一个备份!
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="vm.cancel()">关闭</button>
+        <button type="button" class="btn btn-primary" ng-disabled="!vm.selection.name" ng-click="vm.deleteBackupOk(vm.selection.id)">删除备份
+        </button>
+    </div>
+</script>
+<!--删除备份模态框结束-->

@@ -1,4 +1,8 @@
-<div class="col-md-8">
+<div ui-view="" class="col-md-8">
+    <a type="button" class="rds-btn buy-btn" ui-sref="cluster.backup.backup">
+        <span class="btn-icon new-return"></span> 返回
+    </a>
+    <div style="height: 8px"></div>
     <div class="panel panel-default" ng-class="{hidden: vm.getBackupDetail.hidden}">
         <div class="panel-heading">基本信息
             <span class="pull-right">
@@ -57,7 +61,7 @@
 
 <div class="col-md-8">
     <div class="panel panel-default" ng-class="{hidden: vm.instance.hidden}">
-        <div class="panel-heading">实例信息
+        <div class="panel-heading">数据库信息
             <span class="pull-right">
                 <span class="glyphicon"
                       ng-class="vm.instance.collapsed?'glyphicon-chevron-down':'glyphicon-chevron-up'"
@@ -70,16 +74,16 @@
             <div class="table-responsive">
                 <table class="table table-striped" id="backup-table-1">
                     <tbody>
+                    <!--<tr>-->
+                        <!--<td style="width:40%;">实例名称</td>-->
+                        <!--<td>{{vm.getBackupDetail.backup.instance_name}}</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td>实例ID</td>-->
+                        <!--<td>{{vm.getBackupDetail.backup.instance_id}}</td>-->
+                    <!--</tr>-->
                     <tr>
-                        <td style="width:40%;">实例名称</td>
-                        <td>{{vm.getBackupDetail.backup.instance_name}}</td>
-                    </tr>
-                    <tr>
-                        <td>实例ID</td>
-                        <td>{{vm.getBackupDetail.backup.instance_id}}</td>
-                    </tr>
-                    <tr>
-                        <td>数据库类型</td>
+                        <td style="width:40%;">数据库类型</td>
                         <td>
                             {{vm.getBackupDetail.backup.datastore.version}}
                         </td>

@@ -63,6 +63,10 @@ mainApp.config(function($stateProvider, $urlRouterProvider) {
             url: '/auto',
             templateUrl: 'tpls/cluster_tpls/backup_auto.html',
             controller: 'backupCtrl_auto'
+        }).state('cluster.backup.autoBackupSet', {
+            url: '/autoBackupSet',
+            templateUrl: 'tpls/cluster_tpls/backup_autoBackupSet.html',
+            controller: 'backupCtrl_autoBackupSet'
         }).state('cluster.monitor', {
             url: '/monitor',
             templateUrl: 'tpls/cluster_tpls/monitor.html',

@@ -1,0 +1,117 @@
+<div ui-view="" class="col-md-12  modal-demo">
+    <!--<div class="modal-header">-->
+        <!--<h3 class="modal-title" id="addBackupModal-title">设置</h3>-->
+    <!--</div>-->
+    <!--<div class="modal-body" id="addBackupModal-body">-->
+        <!--<form class="form-horizontal user_form" role="form" id="backup_form" name="backup_form" novalidate="">-->
+            <!--<div class="form-group">-->
+                <!--<label class="col-sm-3 control-label">执行周期</label>-->
+                <!--<div class="col-sm-9">-->
+                    <!--<label class='paddingrighttiny'><input type='checkbox' name='week' value='2'/>星期一</label>-->
+                    <!--<label ><input type='checkbox' name='week' value='3'/>星期二</label>-->
+                    <!--<label class='paddingrighttiny'><input type='checkbox' name='week' value='4'/>星期三</label>-->
+                    <!--<label ><input type='checkbox' name='week' value='5'/>星期四</label></br>-->
+                    <!--<label class='paddingrighttiny'><input type='checkbox' name='week' value='6'/>星期五</label>-->
+                    <!--<label ><input type='checkbox' name='week' value='7'/>星期六</label>-->
+                    <!--<label class='paddingrighttiny'><input type='checkbox' name='week' value='1'/>星期日</label>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+                <!--<label class="col-sm-3 control-label">执行时间</label>-->
+                <!--<div class="col-sm-9">-->
+                    <!--<select id='autoprotect-select'>-->
+                        <!--<option value ='00'>00:00-01:00</option><option value ='01'>01:00-02:00</option><option value ='02'>02:00-03:00</option>-->
+                        <!--<option value ='03'>03:00-04:00</option><option value ='04'>04:00-05:00</option><option value ='05'>05:00-06:00</option>-->
+                        <!--<option value ='06'>06:00-07:00</option><option value ='07'>07:00-08:00</option><option value ='08'>08:00-09:00</option>-->
+                        <!--<option value ='09'>09:00-10:00</option><option value ='10'>10:00-11:00</option><option value ='11'>11:00-12:00</option>-->
+                        <!--<option value ='12'>12:00-13:00</option><option value ='13'>13:00-14:00</option><option value ='14'>14:00-15:00</option>-->
+                        <!--<option value ='15'>15:00-16:00</option><option value ='16'>16:00-17:00</option><option value ='17'>17:00-18:00</option>-->
+                        <!--<option value ='18'>18:00-19:00</option><option value ='19'>19:00-20:00</option><option value ='20'>20:00-21:00</option>-->
+                        <!--<option value ='21'>21:00-22:00</option><option value ='22'>22:00-23:00</option><option value ='23'>23:00-00:00</option>-->
+                    <!--</select>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+                <!--<label class="col-sm-3 control-label">事件类型</label>-->
+                <!--<div class="col-sm-9">-->
+                    <!--<select id='autoaction-select'><option value ='autobackups'>自动备份</option></select>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+                <!--<label class="col-sm-3 control-label">存储时长</label>-->
+                <!--<div class="col-sm-9">-->
+                    <!--<input type="text" required="" ng-pattern="/^([7-9]|[1-9]\d{1,2}|10[0-8]\d|109[0-5])$/" class="form-control" placeholder="存储天数必须在7-1095之间">-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</form>-->
+
+    <!--</div>-->
+    <!--<div class="modal-footer">-->
+        <!--<button type="button" class="btn btn-default" ui-sref="cluster.backup.auto">取消</button>-->
+        <!--<button type="button" class="btn btn-primary" ng-click="vm.autobackupSetOk()">保存</button>-->
+    <!--</div>-->
+
+
+
+
+    <button type="button" class="rds-btn buy-btn" ui-sref="cluster.backup.auto">
+        <span class="btn-icon new-cancel" ></span> 取消
+    </button>
+    <button type="button" class="rds-btn buy-btn" id="autoprotect-save" ng-click="vm.autoBackupSetOk()">
+        <span class="btn-icon new-save"></span> 保存
+    </button>
+    <div ng-show="true" class="alert_div">
+        <div ng-repeat="alert in vm.alerts" ng-class="['repeat','alert', 'alert-dismissable', alert.type]">
+            <button type="button" class="close" ng-click="vm.closeAlert($index)">&times;</button> {{alert.msg}}
+        </div>
+    </div>
+    <div style="height: 8px"></div>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>执行周期</th>
+                <th>执行时间</th>
+                <th>事件类型</th>
+                <th>存储时长</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <label class='paddingrighttiny'><input type='checkbox' name='week' value='2'/>星期一</label>
+                    <label ><input type='checkbox' name='week' value='3'/>星期二</label></br>
+                    <label class='paddingrighttiny'><input type='checkbox' name='week' value='4'/>星期三</label>
+                    <label ><input type='checkbox' name='week' value='5'/>星期四</label></br>
+                    <label class='paddingrighttiny'><input type='checkbox' name='week' value='6'/>星期五</label>
+                    <label ><input type='checkbox' name='week' value='7'/>星期六</label></br>
+                    <label class='paddingrighttiny'><input type='checkbox' name='week' value='1'/>星期日</label>
+                </td>
+                <td>
+                    <select id='autoprotect-select'>
+                        <option value ='00'>00:00-01:00</option><option value ='01'>01:00-02:00</option><option value ='02'>02:00-03:00</option>
+                        <option value ='03'>03:00-04:00</option><option value ='04'>04:00-05:00</option><option value ='05'>05:00-06:00</option>
+                        <option value ='06'>06:00-07:00</option><option value ='07'>07:00-08:00</option><option value ='08'>08:00-09:00</option>
+                        <option value ='09'>09:00-10:00</option><option value ='10'>10:00-11:00</option><option value ='11'>11:00-12:00</option>
+                        <option value ='12'>12:00-13:00</option><option value ='13'>13:00-14:00</option><option value ='14'>14:00-15:00</option>
+                        <option value ='15'>15:00-16:00</option><option value ='16'>16:00-17:00</option><option value ='17'>17:00-18:00</option>
+                        <option value ='18'>18:00-19:00</option><option value ='19'>19:00-20:00</option><option value ='20'>20:00-21:00</option>
+                        <option value ='21'>21:00-22:00</option><option value ='22'>22:00-23:00</option><option value ='23'>23:00-00:00</option>
+                    </select>
+                </td>
+                <td>
+                    <select id='autoaction-select'><option value ='autobackups'>自动备份</option></select>
+                </td>
+                <td>
+                    <input type="text" class="form-control" placeholder="时长(7-1095),默认1095天" id='autoaction_input'>
+                    <!--<input type='text' class='rds-autobkday-text' placeholder='时长(7-1095),默认1095天' id='autoaction_input'/>-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    </br>
+    <div style="height: 8px">
+        <p class="text-info pull-left">执行周期不选即取消自动备份任务！</p>
+    </div>
+</div>
