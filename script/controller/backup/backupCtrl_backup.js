@@ -97,7 +97,12 @@ angular.module('mainAppCtrls') //backup list页面控制器
                     templateUrl: 'addBackupModal.html',
                     controller: 'addBackupModalCtrl',
                     size: size,
-                    appendTo: parentElem
+                    appendTo: parentElem,
+                    resolve: {
+                        selection: function() {
+                            return vm.activeBackupList;
+                        }
+                    }
                 });
                 addBackupModal.result.then(function(result) {
                     //result 就是CLOSE回传的值。把data值回传回来

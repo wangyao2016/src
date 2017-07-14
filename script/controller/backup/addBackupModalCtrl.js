@@ -3,11 +3,11 @@
  */
 angular.module('mainAppCtrls')
     //添加用户modal的控制器
-    .controller('addBackupModalCtrl', ['$scope', '$stateParams', '$uibModalInstance', 'dataService', 'getService', 'httpService',
-        function($scope, $stateParams, $uibModalInstance, dataService, getService, httpService) {
+    .controller('addBackupModalCtrl', ['$scope', '$stateParams', '$uibModalInstance', 'dataService', 'selection', 'httpService',
+        function($scope, $stateParams, $uibModalInstance, dataService, selection, httpService) {
             var vm = $scope.vm = {};
             vm.backups = [];
-            vm.activeBackupList = [];
+            vm.activeBackupList = selection;
 
 
             //console.log("*******start*****");
@@ -19,23 +19,23 @@ angular.module('mainAppCtrls')
             //scan();
             //console.log("*******end*****");
 
-            getService.getServiceResult("rds/v1/mysql/clusters/"+$stateParams.clusterId+"/backups")
-                .then(function(data, status, headers, config) {
-                    console.log(data);
-                    if (angular.fromJson(data.data.backupList) != undefined) {
-                        vm.backups = angular.fromJson(data.data.backupList);
-                        for(var i=0;i<vm.backups.backups.length;i++){
-                            if(vm.backups.backups[i].status=="COMPLETED"){
-                                vm.activeBackupList.push(vm.backups.backups[i]);
-                            }
-                        }
-                    } else {
-                        console.log("get backupList  error");
-                    }
-                }).catch(function(data, status, headers, config) {
-                    console.log("error load backupList.json");
-                    console.log(data);
-            });
+            //getService.getServiceResult("rds/v1/mysql/clusters/"+$stateParams.clusterId+"/backups")
+            //    .then(function(data, status, headers, config) {
+            //        console.log(data);
+            //        if (angular.fromJson(data.data.backupList) != undefined) {
+            //            vm.backups = angular.fromJson(data.data.backupList);
+            //            for(var i=0;i<vm.backups.backups.length;i++){
+            //                if(vm.backups.backups[i].status=="COMPLETED"){
+            //                    vm.activeBackupList.push(vm.backups.backups[i]);
+            //                }
+            //            }
+            //        } else {
+            //            console.log("get backupList  error");
+            //        }
+            //    }).catch(function(data, status, headers, config) {
+            //        console.log("error load backupList.json");
+            //        console.log(data);
+            //});
             //ok方法，点击确认触发
             vm.addBackupOk = function() {
                 var id = dataService.getData();
