@@ -52,12 +52,15 @@ angular.module('mainAppCtrls')
                     });
             };
             vm.dblist();
-            console.log(vm.selection);
+            // console.log(vm.selection);
             /*触发删除数据库modal 开始*/
-            vm.openDeleteDBModal = function(size, parentSelector) {
+            vm.openDeleteDBModal = function(dbname, size, parentSelector) {
                 var parentElem = parentSelector ?
                     angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
-                console.log(parentElem);
+                console.log(dbname);
+                vm.selection = {};
+                vm.selection.dbname = dbname;
+                console.log(vm.selection);
                 var deleteDbModalInstance = $uibModal.open({
                     animation: true,
                     ariaLabelledBy: 'deleteDbModal-title',
@@ -74,30 +77,42 @@ angular.module('mainAppCtrls')
                 });
                 deleteDbModalInstance.result.then(function(result) {
                     //result 就是CLOSE回传的值。把data值回传回来
-                    if (result.data.name == '' || result.data.name == undefined) {
-                        vm.addAlert("alert_error", "删除数据库错误--数据result传输错误");
+                    if (result.data.data.status !== '') {
+                        vm.addAlert("alert_error", "删除数据库错误,出错原因：" + result.data.data.status);
+                    } else
+                    if (result.data.status == 200) {
+                        vm.dblist();
+                        //添加警示框
+                        vm.addAlert("alert_success", "删除数据库成功");
+                        //删除警示框
+                        $timeout(function() {
+                                vm.closeAllAlert(vm.alerts.length)
+                            },
+                            6000);
+                        // getService.getServiceResult("data/db_list.json")
+                        //     .success(function(data, status, headers, config) {
+                        //         if (data.status == '' || data.status == 'undefined') {
+                        //             console.log("删除数据库成功");
+                        //             //重新加载用户list
+                        //             vm.dblist();
+                        //             //添加警示框
+                        //             vm.addAlert("alert_success", "删除数据库成功");
+                        //             //删除警示框
+                        //             $timeout(function() {
+                        //                     vm.closeAllAlert(vm.alerts.length)
+                        //                 },
+                        //                 6000);
+                        //         } else {
+                        //             console.log("删除数据库失败，原因为： " + data.status);
+                        //             vm.addAlert("alert_fail", "删除数据库失败，原因为： " + data.status);
+                        //         }
+                        //     })
+                        //     .error(function(data, status, headers, config) {
+                        //         vm.addAlert("alert_error", "删除数据库错误");
+                        //     });
                     } else {
-                        getService.getServiceResult("data/db_list.json")
-                            .success(function(data, status, headers, config) {
-                                if (data.status == '' || data.status == 'undefined') {
-                                    console.log("删除数据库成功");
-                                    //重新加载用户list
-                                    vm.db();
-                                    //添加警示框
-                                    vm.addAlert("alert_success", "删除数据库成功");
-                                    //删除警示框
-                                    $timeout(function() {
-                                            vm.closeAllAlert(vm.alerts.length)
-                                        },
-                                        6000);
-                                } else {
-                                    console.log("删除数据库失败，原因为： " + data.status);
-                                    vm.addAlert("alert_fail", "删除数据库失败，原因为： " + data.status);
-                                }
-                            })
-                            .error(function(data, status, headers, config) {
-                                vm.addAlert("alert_error", "删除数据库错误");
-                            });
+                        console.log("删除数据库失败，原因为： " + result.data.status);
+                        vm.addAlert("alert_fail", "删除数据库失败，原因为： " + result.data.status);
                     }
                 }, function(reason) {
                     //reason 就是dismiss回传的值。

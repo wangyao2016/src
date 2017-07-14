@@ -20,24 +20,33 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th></th>
+                    <th>序号</th>
+                    <th>IP</th>
                     <th>用户名</th>
-                    <th>状态</th>
+                    <th>可访问的数据库列表</th>
                     <th>动作</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="user in vm.users">
-                    <td>
+                    <!-- <td>
                         <input type="radio" name="userRadio" ng-model="vm.selection" ng-value="user">
-                    </td>
+                    </td> -->
+                    <td>{{$index+1}}</td>
+                    <td>{{user.host}}</td>
                     <td>{{user.name}}</td>
-                    <td>已激活</td>
+                    <td>{{user.databasesList}}</td>
                     <td>
-                        <a type="button" class="rds-sm-btn normal-btn" id="userPassword" ng-click="vm.openUserPasswordModal()">
+                        <a type="button" class="rds-sm-btn normal-btn" id="userResetIP" ng-click="vm.openResetIPModal(user.name,user.host)">
+                            <span class="btn-icon new-compare"></span>修改IP
+                        </a>
+                        <a type="button" class="rds-sm-btn normal-btn" id="GrantDB" ng-click="vm.openGrantDBModel(user.name,user.host)">
+                            <span class="btn-icon new-delete"></span> 数据库权限
+                        </a>
+                        <a type="button" class="rds-sm-btn normal-btn" id="userPassword" ng-click="vm.openUserPasswordModal(user.name,user.host)">
                             <span class="btn-icon new-compare"></span> 重置密码
                         </a>
-                        <a type="button" class="rds-sm-btn normal-btn" id="deleteUser" ng-click="vm.openDeleteUserModal()">
+                        <a type="button" class="rds-sm-btn normal-btn" id="deleteUser" ng-click="vm.openDeleteUserModal(user.name,user.host)">
                             <span class="btn-icon new-delete"></span> 删除用户
                         </a>
                     </td>
@@ -52,79 +61,192 @@
         </div>
     </div>
 </div>
-<!--重置密码模态框-->
-<script type="text/ng-template" id="userPasswordModal.html">
+
+<script type="text/ng-template" id="grantDBModal.html">
     <div class="modal-header">
         <button type="button" class="close" ng-click="vm.cancel()">&times;</button>
-        <h3 class="modal-title" id="userPasswordModal-title">重置用户{{vm.selection.name}}的密码</h3>
+        <h3 class="modal-title" id="grantDBModal-title">授权用户:&nbsp;{{vm.selection.username}}@{{vm.selection.host}}</h3>
     </div>
     <div class="modal-body">
-        <div ng-show="!vm.selection.name" class="alert alert-danger" style="margin: 20px;padding: 40px;">
-            请先选定一个用户!
+        <div class="grant-content row" style="width:90%;margin:0 auto;">
+            <div class="ungrantDB col-sm-5">
+                <div class="dbhead">未授权数据库</div>
+                <ul class=" ungrant-ul">
+                    <li ng-repeat="ugdb in vm.ungrantDBs" class="grant-list ungrant-list" ng-class="{grantActive:ugdb.active}" ng-click="vm.toggleSelect('ungrant',$index)">{{ugdb.name}}</li>
+                    <!-- <li class="grant-list ungrant-list">2</li>
+                    <li class="grant-list ungrant-list">3</li> -->
+                </ul>
+            </div>
+            <div class="grant-action col-sm-2">
+                <a ng-click="vm.granted()">授权&gt;</a><br/>
+                <a ng-click="vm.shift()"> &lt;移除</a>
+            </div>
+            <div class="grantedDB col-sm-5">
+                <div class="dbhead">已授权数据库</div>
+                <ul class="granted-ul">
+                    <li class="grant-list granted-list" ng-repeat="gdb in vm.grantedDBs" ng-class="{grantActive:gdb.active}" ng-click="vm.toggleSelect('granted',$index)">{{gdb.name}}</li>
+                    <!-- <li class="grant-list granted-list">13</li>
+                    <li class="grant-list granted-list">14</li> -->
+                </ul>
+            </div>
         </div>
-        <div ng-show="vm.selection.name">
-            <form class="form-horizontal user_form" role="form" id="changePsd_form" name="changePsd_form" novalidate="">
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">新密码</label>
+        <!-- 
+        <form class="form-horizontal user_form" role="form" id="resetIP_form" name="resetIP_form" novalidate="">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">新IP地址</label>
 
-                    <div class="col-sm-9">
-                        <input type="password" name="changePsd" ng-model="vm.changePsd.password" required="" ng-maxlength="20" ng-minlength="6" class="form-control" placeholder="6-20个字符">
+                <div class="col-sm-9">
 
-                        <p class="glyphicon glyphicon-ok input_result input_success" ng-if="changePsd_form.changePsd.$valid">
-                        </p>
+                </div>
+            </div>
 
-                        <p class="glyphicon glyphicon-remove input_result input_error" ng-if="changePsd_form.changePsd.$invalid && changePsd_form.changePsd.$dirty">
-                        </p>
+
+
+
+        </form> -->
+
+        <!--根据name来取得表格中的内容-->
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="vm.cancel()">取消</button>
+        <button type="button" class="btn btn-primary" ng-click="vm.grantDBOk(vm.selection.username , vm.selection.host)">确认
+        </button>
+    </div>
+</script>
+
+
+
+<!--重置IP模态框-->
+<script type="text/ng-template" id="userResetIPModal.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="vm.cancel()">&times;</button>
+        <h3 class="modal-title" id="userResetIPModal-title">重置用户{{vm.selection.username}}的IP</h3>
+    </div>
+    <div class="modal-body">
+
+
+        <form class="form-horizontal user_form" role="form" id="resetIP_form" name="resetIP_form" novalidate="">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">新IP地址</label>
+
+                <div class="col-sm-9">
+                    <input type="text" name="resetIP" ng-model="vm.selection.ip" ng-pattern="vm.ipRegx" required="" class="form-control" placeholder="IP地址">
+
+                    <p class="glyphicon glyphicon-ok input_result input_success" ng-if="resetIP_form.resetIP.$valid">
+                    </p>
+
+                    <p class="glyphicon glyphicon-remove input_result input_error" ng-if="resetIP_form.resetIP.$invalid && resetIP_form.resetIP.$dirty">
+                    </p>
+                </div>
+            </div>
+
+
+
+            <!--打印错误信息-->
+            <div class="form-group" ng-show="resetIP_form.$invalid && resetIP_form.$dirty">
+                <label class="col-sm-2 control-label"></label>
+
+                <div class="col-sm-10">
+                    <div class="alert alert-danger" style="margin-bottom: 0px">
+                        <ul>
+                            <!--根据name来取得表格中的内容-->
+                            <li ng-show="resetIP_form.resetIP.$dirty && resetIP_form.resetIP.$error.required">
+                                IP不能为空！
+                            </li>
+                            <li ng-show="resetIP_form.resetIP.$dirty && resetIP_form.resetIP.$error.pattern">
+                                IP格式不符合要求！
+                            </li>
+
+                        </ul>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">确认密码</label>
+            </div>
+        </form>
 
-                    <div class="col-sm-9">
-                        <input type="password" name="repeat_changePsd" ng-model="vm.changePsd.repeat_password" required="" ng-maxlength="20" ng-minlength="6" repeat="changePsd" class="form-control" placeholder="再次输入新密码">
-
-                        <p class="glyphicon glyphicon-ok input_result input_success" ng-if="changePsd_form.repeat_changePsd.$valid">
-                        </p>
-
-                        <p class="glyphicon glyphicon-remove input_result input_error" ng-if="changePsd_form.repeat_changePsd.$invalid
-                                       && changePsd_form.repeat_changePsd.$dirty">
-                        </p>
-                    </div>
-                </div>
-
-
-                <!--打印错误信息-->
-                <div class="form-group" ng-show="changePsd_form.$invalid && changePsd_form.$dirty">
-                    <label class="col-sm-2 control-label"></label>
-
-                    <div class="col-sm-10">
-                        <div class="alert alert-danger" style="margin-bottom: 0px">
-                            <ul>
-                                <!--根据name来取得表格中的内容-->
-                                <li ng-show="changePsd_form.changePsd.$dirty && changePsd_form.changePsd.$error.required">
-                                    密码不能为空！
-                                </li>
-                                <li ng-show="changePsd_form.changePsd.$dirty && changePsd_form.changePsd.$error.maxlength">
-                                    密码长度不能大于20个字符！
-                                </li>
-                                <li ng-show="changePsd_form.changePsd.$dirty && changePsd_form.changePsd.$error.minlength">
-                                    密码长度不能小于6个字符！
-                                </li>
-                                <li ng-show="changePsd_form.repeat_changePsd.$dirty && changePsd_form.repeat_changePsd.$error.repeat">
-                                    两次密码输入不一致！
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
         <!--根据name来取得表格中的内容-->
     </div>
 
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="vm.cancel()">关闭</button>
-        <button type="button" class="btn btn-primary" ng-disabled="!vm.selection.name || changePsd_form.$invalid" ng-click="vm.changePsdOk(vm.selection.name,vm.changePsd.password)">更改密码
+        <button type="button" class="btn btn-primary" ng-disabled="resetIP_form.$invalid" ng-click="vm.resetIPOk(vm.selection.username,vm.selection.ip)">更改IP
+        </button>
+    </div>
+</script>
+
+
+
+<!--重置密码模态框-->
+<script type="text/ng-template" id="userPasswordModal.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="vm.cancel()">&times;</button>
+        <h3 class="modal-title" id="userPasswordModal-title">重置用户{{vm.selection.username}}的密码</h3>
+    </div>
+    <div class="modal-body">
+
+
+        <form class="form-horizontal user_form" role="form" id="changePsd_form" name="changePsd_form" novalidate="">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">新密码</label>
+
+                <div class="col-sm-9">
+                    <input type="password" name="changePsd" ng-model="vm.changePsd.password" required="" ng-maxlength="20" ng-minlength="6" class="form-control" placeholder="6-20个字符">
+
+                    <p class="glyphicon glyphicon-ok input_result input_success" ng-if="changePsd_form.changePsd.$valid">
+                    </p>
+
+                    <p class="glyphicon glyphicon-remove input_result input_error" ng-if="changePsd_form.changePsd.$invalid && changePsd_form.changePsd.$dirty">
+                    </p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">确认密码</label>
+
+                <div class="col-sm-9">
+                    <input type="password" name="repeat_changePsd" ng-model="vm.changePsd.repeat_password" required="" ng-maxlength="20" ng-minlength="6" repeat="changePsd" class="form-control" placeholder="再次输入新密码">
+
+                    <p class="glyphicon glyphicon-ok input_result input_success" ng-if="changePsd_form.repeat_changePsd.$valid">
+                    </p>
+
+                    <p class="glyphicon glyphicon-remove input_result input_error" ng-if="changePsd_form.repeat_changePsd.$invalid
+                                       && changePsd_form.repeat_changePsd.$dirty">
+                    </p>
+                </div>
+            </div>
+
+
+            <!--打印错误信息-->
+            <div class="form-group" ng-show="changePsd_form.$invalid && changePsd_form.$dirty">
+                <label class="col-sm-2 control-label"></label>
+
+                <div class="col-sm-10">
+                    <div class="alert alert-danger" style="margin-bottom: 0px">
+                        <ul>
+                            <!--根据name来取得表格中的内容-->
+                            <li ng-show="changePsd_form.changePsd.$dirty && changePsd_form.changePsd.$error.required">
+                                密码不能为空！
+                            </li>
+                            <li ng-show="changePsd_form.changePsd.$dirty && changePsd_form.changePsd.$error.maxlength">
+                                密码长度不能大于20个字符！
+                            </li>
+                            <li ng-show="changePsd_form.changePsd.$dirty && changePsd_form.changePsd.$error.minlength">
+                                密码长度不能小于6个字符！
+                            </li>
+                            <li ng-show="changePsd_form.repeat_changePsd.$dirty && changePsd_form.repeat_changePsd.$error.repeat">
+                                两次密码输入不一致！
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <!--根据name来取得表格中的内容-->
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="vm.cancel()">关闭</button>
+        <button type="button" class="btn btn-primary" ng-disabled="!vm.selection.username || changePsd_form.$invalid" ng-click="vm.changePsdOk(vm.selection.username,vm.changePsd.password)">更改密码
         </button>
     </div>
 </script>
@@ -137,18 +259,18 @@
     </div>
     <div class="modal-body" id="deleteUserModal-body">
         <div class="alert alert-danger" style="margin: 20px;padding: 40px;">
-            <div ng-show="vm.selection.name">
-                确定删除用户{{vm.selection.name}}吗？
+            <div ng-show="vm.selection.username">
+                确定删除用户{{vm.selection.username}}吗？
             </div>
             <!--根据name来取得表格中的内容-->
-            <div ng-show="!vm.selection.name">
-                请先选定一个用户!
+            <div ng-show="!vm.selection.username">
+                请先选定一个用户!{{vm.selection}}
             </div>
         </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="vm.cancel()">关闭</button>
-        <button type="button" class="btn btn-primary" ng-disabled="!vm.selection.name" ng-click="vm.deleteUserOk(vm.selection.name)">删除用户
+        <button type="button" class="btn btn-primary" ng-disabled="!vm.selection.username" ng-click="vm.deleteUserOk(vm.selection.username,vm.selection.host)">删除用户
         </button>
     </div>
 </script>
@@ -165,7 +287,7 @@
                 <label class="col-sm-3 control-label">用户名</label>
 
                 <div class="col-sm-9">
-                    <input type="text" required="" ng-pattern="/^[A-Za-z]{1}[0-9A-Za-z_]{2,29}$/" name="user_name" ng-model="vm.user_add.name" class="form-control" placeholder="由字母、数字、下划线组成，以字母开头，3-30个字符">
+                    <input type="text" required="" ng-pattern="vm.ipRegx" name="user_name" ng-model="vm.user_add.name" class="form-control" placeholder="由字母、数字、下划线组成，以字母开头，3-30个字符">
 
                     <p class="glyphicon glyphicon-ok input_result input_success" ng-if="user_form.user_name.$valid">
                     </p>
@@ -178,7 +300,7 @@
                 <label class="col-sm-3 control-label">IP地址</label>
 
                 <div class="col-sm-9">
-                    <input type="text" required="" ng-pattern="/((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d))))/" name="user_host" ng-model="vm.user_add.host" class="form-control" placeholder="请输入用户主机地址">
+                    <input type="text" required="" ng-pattern="vm.ipRegx" name="user_host" ng-model="vm.user_add.host" class="form-control" placeholder="请输入用户主机地址">
 
                     <p class="glyphicon glyphicon-ok input_result input_success" ng-if="user_form.user_host.$valid">
                     </p>
