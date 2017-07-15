@@ -1,6 +1,6 @@
 angular.module('mainAppCtrls') //instance.configs.configInfo页面控制器
-    .controller('configInfoCtrl', ['$scope', '$http', '$uibModal', '$timeout', '$stateParams', 'getService',
-        function($scope, $http, $uibModal, $timeout, $stateParams, getService) {
+    .controller('configInfoCtrl', ['$scope', '$http', '$uibModal', '$timeout', '$stateParams', 'httpService',
+        function($scope, $http, $uibModal, $timeout, $stateParams, httpService) {
             var vm = $scope.vm = {};
             //设置tooltip展示方向
             vm.placement = {
@@ -30,7 +30,7 @@ angular.module('mainAppCtrls') //instance.configs.configInfo页面控制器
                 pageChanged: function() {
                     // $log.log('Page changed to: ' + this.currentPage);
                     // console.log('pageChanged:' + vm.configsList);
-                    vm.configInfo();
+                    //vm.configInfo();
                     // vm.configs = data.splice((vm.pagination.currentPage - 1) * 10, vm.pagination.currentPage * 10);
 
                 },
@@ -71,9 +71,10 @@ angular.module('mainAppCtrls') //instance.configs.configInfo页面控制器
             vm.configInfo = function() {
                 var configId = $stateParams.configId;
                 var param = { "id": configId };
-                getService.getServiceResult("data/config_pram.json")
+                httpService.getServiceResult("get", "rds/v1/mysql/configurations/" + configId + "/selfDetail")
                     .then(function(data, status, headers, config) {
-                        if (angular.fromJson(data.data.jsonstring).configuration_parameters != undefined) {
+                        console.log(data);
+                        if (angular.fromJson(data.data.jsonstring).configuration_parameters) {
                             //每次重新调用清空内容
                             vm.defaultConfigs = [];
                             vm.defaultConfigs = angular.fromJson(data.data.jsonstring).configuration_parameters;
@@ -95,9 +96,10 @@ angular.module('mainAppCtrls') //instance.configs.configInfo页面控制器
 
                             var start = (vm.pagination.currentPage - 1) * 10;
                             var end = (vm.defaultConfigs.length - 10 <= (vm.pagination.currentPage - 1) * 10) ? vm.defaultConfigs.length : vm.pagination.currentPage * 10;
-                            console.log("参数组列表：" + vm.defaultConfigs);
+                            console.log("参数组列表：");
+                            console.log(vm.defaultConfigs)
                             vm.pagination.totalItems = vm.defaultConfigs.length;
-                            vm.defaultConfigs = vm.defaultConfigs.slice(start, end);
+                            // vm.defaultConfigs = vm.defaultConfigs.slice(start, end);
 
 
                         } else {

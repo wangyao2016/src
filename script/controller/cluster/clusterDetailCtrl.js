@@ -1,7 +1,7 @@
 angular.module('mainAppCtrls')
     //instance.basicInfo页面控制器
-    .controller('basicInfoCtrl', ['$scope', '$http', 'dataService', 'getService',
-        function($scope, $http, dataService, getService) {
+    .controller('basicInfoCtrl', ['$scope', '$http', 'dataService', 'dbVersionService', 'httpService',
+        function($scope, $http, dataService, dbVersionService, httpService) {
             var vm = $scope.vm = {};
             var clusterInfo = {
                 '310': { name: 'rds.tiny', ram: 240, cpu: 1 },
@@ -19,11 +19,13 @@ angular.module('mainAppCtrls')
             var id = dataService.getData();
             var data = { "id": id };
 
-            getService.getServiceResult("rds/v1/mysql/clusters/" + id)
+            httpService.getServiceResult("get", "rds/v1/mysql/clusters/" + id)
                 .then(function(data, status, headers, config) {
                     console.log(data.data);
                     if (angular.fromJson(data.data.clusterDetail) != undefined) {
                         vm.basicInfo = angular.fromJson(data.data.clusterDetail);
+                        dbVersionService.setData(vm.basicInfo.cluster.datastore.version);
+                        console.log(dbVersionService.getData());
                         vm.basicInfo.cluster.instances.map(function(currentValue, index, arr) {
                             currentValue.flavor.addflavor = clusterInfo[currentValue.flavor.id]
                         });
@@ -34,16 +36,16 @@ angular.module('mainAppCtrls')
                 }).catch(function(data, status, headers, config) {
                     console.log("error load basicInfo.json");
                 });
-            getService.getServiceResult("data/backup_list.json")
-                .then(function(data, status, headers, config) {
+            // getService.getServiceResult("data/backup_list.json")
+            //     .then(function(data, status, headers, config) {
 
-                    if (angular.fromJson(data.data.backupList) != undefined) {
-                        vm.backupList = angular.fromJson(data.data.backupList);
-                    } else {
-                        console.log("get backupList  error");
-                    }
-                }).catch(function(data, status, headers, config) {
-                    console.log("error load backupList.json");
-                });
+            //         if (angular.fromJson(data.data.backupList) != undefined) {
+            //             vm.backupList = angular.fromJson(data.data.backupList);
+            //         } else {
+            //             console.log("get backupList  error");
+            //         }
+            //     }).catch(function(data, status, headers, config) {
+            //         console.log("error load backupList.json");
+            //     });
         }
     ]);
