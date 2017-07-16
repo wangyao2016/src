@@ -1,9 +1,39 @@
 angular.module('mainAppCtrls')
     //list页面控制器
-    .controller('LoadDataCtrl', ['$window', '$scope', '$http', 'getService',
-        function($window, $scope, $http, getService) {
+    .controller('LoadDataCtrl', ['$window', '$scope', '$uibModal', '$http', 'getService',
+        function($window, $scope, $uibModal, $http, getService) {
             var vm = $scope.vm = {};
             vm.clusters = [];
+            vm.selection = [];
+
+            /*警告框相关开始*/
+            vm.alerts = [];
+            //删除单条警告
+            vm.closeAlert = function(index) {
+                vm.alerts.splice(index, 1);
+            };
+            //逐个删除警告
+            vm.closeAllAlert = function(length) {
+                for (var i = length; i > 0; i--) {
+                    vm.alerts.splice(i - 1, 1);
+                }
+            };
+            //添加新警告
+            vm.addAlert = function(type, msg) {
+                if (type === undefined || msg === undefined) {
+                    vm.alerts.push({
+                        type: 'alert-warning',
+                        msg: '类型和内容不能为空.'
+                    });
+                } else {
+                    vm.alerts.push({
+                        type: type,
+                        msg: msg
+                    });
+                }
+            };
+            /*警告框相关结束*/
+
             var flavor = {
                 '310': 'rds.tiny',
                 '311': 'rds.small',
@@ -43,6 +73,7 @@ angular.module('mainAppCtrls')
                 getService.getServiceResult("rds/v1/mysql/clusters")
                     .then(function(data, status, headers, config) {
                         console.log(data.data.clusters);
+                        vm.selection = [];
                         var datas = angular.fromJson(data.data.clusters).clusters;
 
                         if (data.data.clusters) {
@@ -65,6 +96,47 @@ angular.module('mainAppCtrls')
                     });
             };
             vm.clusterList();
+
+            /*触发分配用户modal 开始*/
+            vm.openDesignModal = function(size, parentSelector) {
+                var parentElem = parentSelector ?
+                    angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
+                var deSignModalUser = $uibModal.open({
+                    animation: true,
+                    ariaLabelledBy: 'deSignModal-title',
+                    ariaDescribedBy: 'deSignModal-body',
+                    templateUrl: 'deSignModal.html',
+                    controller: 'deSignModalCtrl',
+                    size: size,
+                    appendTo: parentElem,
+                    resolve: {
+                        selection: function() {
+                            return vm.selection;
+                        }
+                    }
+                });
+                console.log("vm.selection:"+vm.selection);
+                deSignModalUser.result.then(function(result) {
+                    //result 就是CLOSE回传的值。把data值回传回来
+                    if (result.data.data.status != undefined) {
+
+                        vm.addAlert("alert_success", "授权成功！");
+                        //删除警示框
+                        $timeout(function() {
+                            vm.closeAllAlert(vm.alerts.length)
+                        },6000);
+                        console.log("授权资源成功");
+                    } else {
+                        console.log("授权失败,原因为：" );
+                        console.log(result);
+                        vm.addAlert("alert_fail", "授权失败！");
+                    }
+                }, function(reason) {
+                    //reason 就是dismiss回传的值。
+                    console.log(reason);
+                });
+            };
+            /*触发分配用户modal 结束*/
 
         }
     ]);

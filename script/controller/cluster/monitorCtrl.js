@@ -8,6 +8,34 @@ angular.module('mainAppCtrls') //monitor控制器
             vm.clusterId = $stateParams.clusterId;
             vm.clusterName = $stateParams.clusterName;
 
+            /*警告框相关开始*/
+            vm.alerts = [];
+            //删除单条警告
+            vm.closeAlert = function(index) {
+                vm.alerts.splice(index, 1);
+            };
+            //逐个删除警告
+            vm.closeAllAlert = function(length) {
+                for (var i = length; i > 0; i--) {
+                    vm.alerts.splice(i - 1, 1);
+                }
+            };
+            //添加新警告
+            vm.addAlert = function(type, msg) {
+                if (type === undefined || msg === undefined) {
+                    vm.alerts.push({
+                        type: 'alert-warning',
+                        msg: '类型和内容不能为空.'
+                    });
+                } else {
+                    vm.alerts.push({
+                        type: type,
+                        msg: msg
+                    });
+                }
+            };
+            /*警告框相关结束*/
+
             createCharts(vm.clusterName+"-member-1_");
 
             //<!-- ECharts单文件引入 -->
@@ -116,7 +144,8 @@ angular.module('mainAppCtrls') //monitor控制器
                                 var original = returndata.data;
                                 console.log($.parseJSON(original));
                                 if($.parseJSON(original).host.graph==null){
-                                    alert("暂无监控数据！");
+                                    //alert("暂无监控数据！");
+                                    vm.addAlert("alert_fail", "暂无监控数据！");
                                 }else{
 
                                     $.each($.parseJSON(original).host.graph, function (i, item)

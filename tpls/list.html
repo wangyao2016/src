@@ -4,6 +4,9 @@
             <a type="button" class="rds-btn buy-btn">
                 <span class="btn-icon new-buy"></span> 订购实例
             </a>
+            <a type="button" class="rds-btn buy-btn" ng-click="vm.openDesignModal()">
+                <span class="btn-icon new-user"></span> 分配
+            </a>
             <a ng-click="vm.reloadPage()" type="button" class="rds-btn normal-btn">
                 <span class="btn-icon new-refresh"></span> 刷新
             </a>
@@ -22,7 +25,7 @@
                 <table class="table table-striped table-hover instance-table">
                     <thead>
                         <tr>
-
+                            <th></th>
                             <th>集群名称</th>
                             <th>状态</th>
                             <th>IP地址</th>
@@ -34,7 +37,7 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="cluster in vm.clusters |filter:vm.filter">
-
+                            <td><input type="radio" name="clusterRadio"  ng-model="vm.selection"  ng-value="cluster.id" /></td>
                             <td><a ui-sref="cluster({clusterId:cluster.id,clusterName:cluster.name})">{{cluster.name}}</a></td>
                             <td>{{cluster.status}}</td>
                             <td>{{cluster.ip||'无'}}</td>
@@ -73,3 +76,28 @@
         </div>
     </div>
 </div>
+
+<!--分配用户模态框-->
+<script type="text/ng-template" id="deSignModal.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="vm.cancel()">&times;</button>
+        <h3 class="modal-title" id="deSignModal-title">分配用户</h3>
+    </div>
+    <div class="modal-body" id="deSignModal-body">
+        <div class="alert alert-danger" style="margin: 20px;padding: 40px;">
+            <div ng-show="vm.selection">
+                <ul id="treeDemo" class="ztree"></ul>
+            </div>
+            <!--根据name来取得表格中的内容-->
+            <div ng-show="!vm.selection">
+                请先选定一个集群资源!
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="vm.cancel()">关闭</button>
+        <button type="button" class="btn btn-primary" ng-disabled="!vm.selection" ng-click="vm.deSignOk(vm.selection)">确定
+        </button>
+    </div>
+</script>
+<!--分配用户模态框结束-->
