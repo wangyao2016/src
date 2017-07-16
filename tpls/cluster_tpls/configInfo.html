@@ -2,12 +2,21 @@
     <a type="button" class="rds-btn cancel-btn" ui-sref="cluster.configs">
         <span class="btn-icon new-return"></span> 返回参数组
     </a>
-    <a type="button" class="rds-btn buy-btn" id="submitConfig" ng-click="vm.openSubmitConfigModal()" ng-disabled="vm.submitConfigs.values.length==0" ng-show="vm.addInputShow == false">
+    <a type="button" class="rds-btn normal-btn" ng-show="vm.addInputShow == false" ng-click="vm.addInput()">
+
+        <span class="btn-icon new-edit"></span> 编辑参数
+
+    </a>
+    <a type="button" class="rds-btn normal-btn" ng-show="vm.addInputShow == true" ng-click="vm.addInput()">
+        <span class="btn-icon new-cancel"></span> 取消编辑
+    </a>
+    <a type="button" class="rds-btn buy-btn" id="submitConfig" ng-click="vm.openSubmitConfigModal()" ng-disabled="vm.submitConfigs.values.length==0" ng-show="vm.addInputShow == true">
         <span class="btn-icon new-submit"></span> 提交参数
     </a>
-    <a type="button" class="rds-btn normal-btn" ng-click="vm.resetConfig()">
+
+    <!-- <a type="button" class="rds-btn normal-btn" ng-click="vm.resetConfig()">
         <span class="btn-icon new-refresh"></span> 重置参数
-    </a>
+    </a> -->
     <!--<a type="button"
        class="rds-btn normal-btn"
        ng-click="vm.cancelEditConfig()"
@@ -51,17 +60,17 @@
                 <!--
                 在ng-repeat结束之后加载tooltip插件，通过指令repeat-done来实现
             -->
-                <tr ng-repeat="config in vm.defaultConfigs | filter:vm.filter" repeat-done="vm.tool();">
+                <tr ng-repeat="config in vm.defaultConfigs | filter:vm.filter" ng-show="(vm.pagination.currentPage-1)*10<=$index&&$index<vm.pagination.currentPage*10" repeat-done="vm.tool();">
                     <td>{{$index+1}}</td>
                     <td>{{config.name}}</td>
                     <td>
-                        {{config.default_value||'null'}}
-                        <!--<a class="glyphicon glyphicon-pencil" ng-click=vm.addInput()>
-                        </a>
+
+                        <!-- <a class="glyphicon glyphicon-pencil" ng-click=vm.addInput()>
+                        </a> -->
                         <span ng-show="vm.addInputShow == false">
-                            {{vm.submitConfigs.values[$index]}}
+                            {{config.default_value||'null'}}
                         </span>
-                        <input ng-show="vm.addInputShow" style="display: inline-block; width: 100px;" type="number" ng-model="vm.submitConfigs.values[$index]">-->
+                        <input ng-show="vm.addInputShow" style="display: inline-block; width: 100px;" type="number" ng-model="vm.submitConfigs.values[$index]">
                     </td>
                     <td ng-if="config.min||config.max">[{{config.min}}~~{{config.max}}]</td>
                     <td ng-if="!(config.min||config.max)">NULL</td>
@@ -92,7 +101,7 @@
             </tbody>
         </table>
         <div>
-            <ul style="float:right;" uib-pagination total-items="vm.pagination.totalItems" ng-model="vm.pagination.currentPage" ng-change="vm.pagination.pageChanged()" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" 
+            <ul style="float:right;" uib-pagination total-items="vm.pagination.totalItems" ng-model="vm.pagination.currentPage" ng-change="vm.pagination.pageChanged()" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
                 rotate="false"></ul>
 
         </div>

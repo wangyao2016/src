@@ -1,7 +1,7 @@
 angular.module('mainAppCtrls')
     //list页面控制器
-    .controller('LoadDataCtrl', ['$window', '$scope', '$uibModal', '$http', 'getService',
-        function($window, $scope, $uibModal, $http, getService) {
+    .controller('LoadDataCtrl', ['$window', '$scope', '$http', 'httpService',
+        function($window, $scope, $http, httpService) {
             var vm = $scope.vm = {};
             vm.clusters = [];
             vm.selection = [];
@@ -70,7 +70,7 @@ angular.module('mainAppCtrls')
                 $window.location.reload();
             };
             vm.clusterList = function() {
-                getService.getServiceResult("rds/v1/mysql/clusters")
+                httpService.getServiceResult("get", "rds/v1/mysql/clusters")
                     .then(function(data, status, headers, config) {
                         console.log(data.data.clusters);
                         vm.selection = [];

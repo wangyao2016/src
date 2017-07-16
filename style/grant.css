@@ -1,0 +1,40 @@
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+.dbhead {
+    background: #f3f3f3;
+    color: #bbb;
+    padding-left: 5px;
+    padding-right: 5px;
+    height: 32px;
+    line-height: 32px;
+    border: none;
+}
+
+.granted-ul,
+.ungrant-ul {
+    height: 139px;
+    overflow: auto;
+}
+
+.grantedDB,
+.ungrantDB {
+    border: 1px solid #e0e0e0;
+    padding: 0;
+}
+
+.grantActive {
+    background-color: #2980B9;
+}
+
+.granted-list,
+.ungrant-list {
+    height: 32px;
+    line-height: 32px;
+    white-space: nowrap;
+    text-indent: 8px;
+    border-bottom: 1px solid #DDD;
+    list-style: none;
+}

@@ -1,10 +1,11 @@
 angular.module('mainAppCtrls')
     //instance.configs页面控制器
-    .controller('configsCtrl', ['$scope', '$http', '$uibModal', '$timeout', 'dataService', 'getService',
-        function($scope, $http, $uibModal, $timeout, dataService, getService) {
+    .controller('configsCtrl', ['$scope', '$http', '$uibModal', '$timeout', 'dataService', 'dbVersionService', 'httpService',
+        function($scope, $http, $uibModal, $timeout, dataService, dbVersionService, httpService) {
             //通过service获取实例id
-            dataService.getData();
-
+            var id = dataService.getData();
+            var dbversion = dbVersionService.getData();
+            console.log('dbversion: ' + dbversion);
             var vm = $scope.vm = {};
             //设置tooltip展示方向
             vm.placement = {
@@ -35,9 +36,11 @@ angular.module('mainAppCtrls')
              * 分页结束
              */
             //参数组列表展示
+
             vm.configsList = function() {
-                getService.getServiceResult("data/config_list.json")
+                httpService.getServiceResult('get', "rds/v1/mysql/configurations/" + dbversion + "/listByVersion")
                     .then(function(data, status, headers, config) {
+                        console.log(data);
                         var datas = angular.fromJson(data.data.configs).configurations;
 
                         if (datas != undefined) {

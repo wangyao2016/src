@@ -11,7 +11,7 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th></th>
+                    <!-- <th></th> -->
                     <th>序号</th>
                     <th>数据库名</th>
                     <th>状态</th>
@@ -23,13 +23,13 @@
             <pre>{{vm.db.databases}}</pre>
 -->
                 <tr ng-repeat="dbname in vm.db">
-                    <td><input type="radio" name="dbRadio" ng-model="vm.selection" ng-value="dbname"></td>
+                    <!-- <td><input type="radio" name="dbRadio" ng-model="vm.selection" ng-value="dbname"></td> -->
                     <td>{{$index+1}}</td>
 
                     <td>{{dbname.name}}</td>
                     <td>运行中</td>
                     <td>
-                        <a type="button" class="rds-sm-btn normal-btn" id="deleteDb" ng-click="vm.openDeleteDBModal()">
+                        <a type="button" class="rds-sm-btn normal-btn" id="deleteDb" ng-click="vm.openDeleteDBModal(dbname.name)">
                             <span class="btn-icon new-delete"></span> 删除数据库
                         </a>
                     </td>
@@ -55,18 +55,18 @@
     </div>
     <div class="modal-body" id="deleteDbModal-body">
         <div class="alert alert-danger" style="margin: 20px;padding: 40px;">
-            <div ng-show="vm.selection.name">
-                确定删除数据库{{vm.selection.name}}吗？
+            <div ng-show="vm.selection.dbname">
+                确定删除数据库{{vm.selection.dbname}}吗？
             </div>
             <!--根据name来取得表格中的内容-->
-            <div ng-show="!vm.selection.name">
+            <div ng-show="!vm.selection.dbname">
                 请先选定一个数据库!
             </div>
         </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="vm.cancel()">关闭</button>
-        <button type="button" class="btn btn-primary" ng-disabled="!vm.selection.name" ng-click="vm.deleteUserOk(vm.selection.name)">删除数据库
+        <button type="button" class="btn btn-primary" ng-disabled="!vm.selection.dbname" ng-click="vm.deleteDBOk(vm.selection.dbname)">删除数据库
         </button>
     </div>
 </script>
