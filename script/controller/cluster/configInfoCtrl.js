@@ -80,6 +80,7 @@ angular.module('mainAppCtrls') //instance.configs.configInfo页面控制器
                             vm.defaultConfigs = angular.fromJson(data.data.jsonstring).configuration_parameters;
                             //把参数组名称过滤出来，单独存在values里面。
                             var tempValue = "";
+                            vm.addInputShow = false;
                             vm.submitConfigs.keys = [];
                             vm.submitConfigs.values = [];
                             for (var i = 0; i < vm.defaultConfigs.length; i++) {
@@ -163,15 +164,17 @@ angular.module('mainAppCtrls') //instance.configs.configInfo页面控制器
                     }
                 });
                 submitConfigModalInstance.result.then(function(result) {
-                    console.log("result: " + result);
+                    console.log(result);
                     if (result.data.id == '' || result.data.id == undefined) {
                         vm.addAlert("alert_error", "保存参数错误--数据result传输错误");
                     } else {
                         //post方法，保存参数组
                         var configId = $stateParams.configId;
-                        httpService.getServiceResult("put", "v1/oracle/configurations/" + configId + "", result.data)
-                            .success(function(data, status, headers, config) {
-                                if (data.jsonString == '') {
+
+                        httpService.getServiceResult("put", "rds/v1/mysql/configurations/" + configId + "", result.data)
+                            .then(function(data, status, headers, config) {
+                                console.log(data);
+                                if (data.data.jsonString == '') {
                                     //保存参数组成功后，重新加载参数组list
                                     vm.configInfo();
                                     vm.addAlert("alert_success", "提交参数成功");
@@ -180,10 +183,10 @@ angular.module('mainAppCtrls') //instance.configs.configInfo页面控制器
                                         },
                                         6000);
                                 } else {
-                                    vm.addAlert("alert_fail", "提交参数失败，原因为： " + data.jsonString);
-                                    console.log("提交参数失败，原因为： " + data.jsonString);
+                                    vm.addAlert("alert_fail", "提交参数失败，原因为： " + data.data.jsonString);
+                                    console.log("提交参数失败，原因为： " + data.data.jsonString);
                                 }
-                            }).error(function(data, status, headers, config) {
+                            }).catch(function(data, status, headers, config) {
                                 console.log("connect error,fail to edit configInfo");
                                 vm.addAlert("alert_error", "提交参数错误");
 

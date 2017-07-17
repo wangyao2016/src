@@ -68,7 +68,7 @@
                         <!-- <a class="glyphicon glyphicon-pencil" ng-click=vm.addInput()>
                         </a> -->
                         <span ng-show="vm.addInputShow == false">
-                            {{config.default_value||'null'}}
+                            {{config.default_value||''}}
                         </span>
                         <input ng-show="vm.addInputShow" style="display: inline-block; width: 100px;" type="number" ng-model="vm.submitConfigs.values[$index]">
                     </td>
