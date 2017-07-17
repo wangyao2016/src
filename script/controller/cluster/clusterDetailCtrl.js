@@ -1,7 +1,7 @@
 angular.module('mainAppCtrls')
     //instance.basicInfo页面控制器
-    .controller('basicInfoCtrl', ['$scope', '$http', 'dataService', 'dbVersionService', 'httpService',
-        function($scope, $http, dataService, dbVersionService, httpService) {
+    .controller('basicInfoCtrl', ['$scope', '$http', 'dataService', 'clusterDBInfoService', 'httpService',
+        function($scope, $http, dataService, clusterDBInfoService, httpService) {
             var vm = $scope.vm = {};
             var clusterInfo = {
                 '310': { name: 'rds.tiny', ram: 240, cpu: 1 },
@@ -24,8 +24,10 @@ angular.module('mainAppCtrls')
                     console.log(data.data);
                     if (angular.fromJson(data.data.clusterDetail) != undefined) {
                         vm.basicInfo = angular.fromJson(data.data.clusterDetail);
-                        dbVersionService.setData(vm.basicInfo.cluster.datastore.version);
-                        console.log(dbVersionService.getData());
+                        clusterDBInfoService.setVersion(vm.basicInfo.cluster.datastore.version);
+                        clusterDBInfoService.setDBType(vm.basicInfo.cluster.datastore.type);
+                        clusterDBInfoService.setStatus(vm.basicInfo.cluster.instances[0].configuration.name);
+                        console.log(clusterDBInfoService.getVersion());
                         vm.basicInfo.cluster.instances.map(function(currentValue, index, arr) {
                             currentValue.flavor.addflavor = clusterInfo[currentValue.flavor.id]
                         });

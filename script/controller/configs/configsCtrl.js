@@ -1,10 +1,12 @@
 angular.module('mainAppCtrls')
     //instance.configs页面控制器
-    .controller('configsCtrl', ['$scope', '$http', '$uibModal', '$timeout', 'dataService', 'dbVersionService', 'httpService',
-        function($scope, $http, $uibModal, $timeout, dataService, dbVersionService, httpService) {
+    .controller('configsCtrl', ['$scope', '$http', '$uibModal', '$timeout', 'dataService', 'clusterDBInfoService', 'httpService',
+        function($scope, $http, $uibModal, $timeout, dataService, clusterDBInfoService, httpService) {
             //通过service获取实例id
             var id = dataService.getData();
-            var dbversion = dbVersionService.getData();
+            var dbversion = clusterDBInfoService.getVersion();
+            var db = clusterDBInfoService.getDBType();
+            var configid = clusterDBInfoService.getStatus();
             console.log('dbversion: ' + dbversion);
             var vm = $scope.vm = {};
             //设置tooltip展示方向
@@ -24,7 +26,7 @@ angular.module('mainAppCtrls')
                 pageChanged: function() {
                     // $log.log('Page changed to: ' + this.currentPage);
                     // console.log('pageChanged:' + vm.configsList);
-                    vm.configsList();
+                    //  vm.configsList();
                     // vm.configs = data.splice((vm.pagination.currentPage - 1) * 10, vm.pagination.currentPage * 10);
 
                 },
@@ -35,6 +37,10 @@ angular.module('mainAppCtrls')
             /**
              * 分页结束
              */
+            vm.clusterbaseinfo = {};
+            vm.clusterbaseinfo.version = dbversion;
+            vm.clusterbaseinfo.db = db;
+            vm.clusterbaseinfo.configId = configid;
             //参数组列表展示
 
             vm.configsList = function() {
@@ -48,8 +54,10 @@ angular.module('mainAppCtrls')
                             var start = (vm.pagination.currentPage - 1) * 10;
                             var end = (datas.length - 10 <= (vm.pagination.currentPage - 1) * 10) ? datas.length : vm.pagination.currentPage * 10;
                             // console.log("参数组列表：" + datas.slice((vm.pagination.currentPage - 1) * 10, end));
-                            vm.configs = datas.slice(start, end);
+                            //vm.configs = datas.slice(start, end);
+                            vm.configs = datas;
                             vm.pagination.totalItems = datas.length;
+
                             // console.log(datas);
                         } else {
                             console.log("get configs list error");
@@ -86,6 +94,73 @@ angular.module('mainAppCtrls')
                 }
             };
             /*警告框相关结束*/
+            /**
+             * 绑定参数
+             */
+            vm.attachConfig = function(configId, size, parentSelector) {
+                console.log(configId);
+                vm.selection = {};
+                vm.selection.configId = configId;
+                vm.selection.id = id;
+                vm.selection.selectconfigid = vm.clusterbaseinfo.configId;
+                var parentElem = parentSelector ?
+                    angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
+                var attachConfigModalInstance = $uibModal.open({
+                    animation: true,
+                    ariaLabelledBy: 'attachConfigModal-title',
+                    ariaDescribedBy: 'attachConfigModal-body',
+                    templateUrl: 'attachConfigModal.html',
+                    controller: 'attachConfigModalCtrl',
+                    size: size,
+                    appendTo: parentElem,
+                    resolve: {
+                        selection: function() {
+                            return vm.selection;
+                        }
+                    }
+                });
+                attachConfigModalInstance.result.then(function(result) {
+                    if (result.data) {
+                        console.log(result.data);
+                        vm.clusterbaseinfo.configId = vm.selection.configId;
+                    }
+                });
+
+            };
+
+            /**
+             * 解除绑定参数
+             */
+            vm.detachConfig = function(configId, size, parentSelector) {
+                console.log(configId);
+                vm.selection = {};
+                vm.selection.configId = configId;
+                vm.selection.id = id;
+                //vm.selection.configname = configname;
+                var parentElem = parentSelector ?
+                    angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
+                var detachConfigModalInstance = $uibModal.open({
+                    animation: true,
+                    ariaLabelledBy: 'detachConfigModal-title',
+                    ariaDescribedBy: 'detachConfigModal-body',
+                    templateUrl: 'detachConfigModal.html',
+                    controller: 'detachConfigModalCtrl',
+                    size: size,
+                    appendTo: parentElem,
+                    resolve: {
+                        selection: function() {
+                            return vm.selection;
+                        }
+                    }
+                });
+                detachConfigModalInstance.result.then(function(result) {
+                    if (result.data) {
+                        console.log(result.data);
+                        vm.clusterbaseinfo.configId = "";
+                    }
+                });
+
+            };
 
             /*触发添加参数组modal 开始*/
             vm.openAddConfigsModal = function(size, parentSelector) {
@@ -106,7 +181,7 @@ angular.module('mainAppCtrls')
                         vm.addAlert("alert_error", "创建参数组错误--数据传输错误");
                     } else {
                         //post方法，创建参数组
-                        httpService.getServiceResult("post", "v1/oracle/configurations", result.data)
+                        httpService.getServiceResult("post", "rds/v1/mysql/configurations", result.data)
                             .success(function(data, status, headers, config) {
                                 console.log("data: " + data);
                                 console.log("data.jsonstring: " + data.jsonString);

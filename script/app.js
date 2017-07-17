@@ -71,7 +71,17 @@ mainApp.config(function($stateProvider, $urlRouterProvider) {
             url: '/monitor',
             templateUrl: 'tpls/cluster_tpls/monitor.html',
             controller: 'monitorCtrl'
-        }).state('cluster.configs', {
+        })
+        // .state('cluster.configs', {
+        //     utl: '/configs',
+        //     templateUrl: 'tpls/cluster_tpls/config_nav.html',
+        //     controller: 'configsNavCtrl'
+        // }).state('cluster.configs.configAction', {
+        //     utl: '/configAction',
+        //     templateUrl: 'tpls/cluster_tpls/configAction.html',
+        //     controller: 'configActionCtrl'
+        // })
+        .state('cluster.configs', {
             url: '/configs',
             templateUrl: 'tpls/cluster_tpls/configs.html',
             controller: 'configsCtrl'

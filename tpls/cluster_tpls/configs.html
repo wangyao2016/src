@@ -1,4 +1,35 @@
 <div class="col-md-12">
+    <div class="">
+        <a type="button" class="rds-btn normal-btn" ng-show="vm.clusterbaseinfo.configId" ng-click="vm.detachConfig(vm.clusterbaseinfo.configId)">
+            <span class="btn-icon new-detach"></span> 解绑参数组
+        </a>
+        <div ng-show="true" class="alert_div">
+            <div ng-repeat="alert in vm.alerts" ng-class="['repeat','alert', 'alert-dismissable', alert.type]">
+                <button type="button" class="close" ng-click="vm.closeAlert($index)">&times;</button> {{alert.msg}}
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive panel panel-default" style="margin-top:20px">
+        <div class="panel-heading">
+            当前组详情
+        </div>
+        <table class="table table-hover table-striped configTable">
+            <tbody>
+                <tr>
+                    <td>当前绑定的参数组</td>
+                    <td> {{vm.clusterbaseinfo.configId||'no configration'}}</td>
+                </tr>
+                <tr>
+                    <td>当前实例的数据库</td>
+                    <td>{{vm.clusterbaseinfo.db}}</td>
+                </tr>
+                <tr>
+                    <td>当前数据库版本</td>
+                    <td>{{vm.clusterbaseinfo.version}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
     <a type="button" class="rds-btn buy-btn" id="newConfigs" ng-click="vm.openAddConfigsModal()">
         <span class="btn-icon new-new"></span> 创建
     </a>
@@ -22,13 +53,9 @@
     </a>
     <input class="search-input" type="text" ng-model="vm.filter" />
 
-    <div ng-show="true" class="alert_div">
-        <div ng-repeat="alert in vm.alerts" ng-class="['repeat','alert', 'alert-dismissable', alert.type]">
-            <button type="button" class="close" ng-click="vm.closeAlert($index)">&times;</button> {{alert.msg}}
-        </div>
-    </div>
+
     <div style="height: 20px"></div>
-    <div class="table-responsive">
+    <div class="table-responsive panel panel-default">
         <table class="table table-hover table-striped configTable" id="">
             <thead>
                 <tr>
@@ -36,13 +63,15 @@
                     <th>参数组名称</th>
                     <th>创建时间</th>
                     <th>修改时间</th>
-                    <th>数据库类型</th>
-                    <th>数据库版本</th>
+                    <!-- <th>数据库类型</th>
+                    <th>数据库版本</th> -->
                     <th>参数组描述</th>
+                    <th>动作</th>
+
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="config in vm.configs |filter:vm.filter" repeat-done="vm.tool();">
+                <tr ng-repeat="config in vm.configs |filter:vm.filter" ng-show="(vm.pagination.currentPage-1)*10<=$index&&$index<vm.pagination.currentPage*10" repeat-done="vm.tool();">
                     <td>{{$index+1}}</td>
                     <!--<td>
                         <input type="radio" name="configRadio" ng-model="vm.selection" ng-value="config">
@@ -54,8 +83,8 @@
                     </td>
                     <td>{{config.created.replace("T"," ")}}</td>
                     <td>{{config.updated.replace("T"," ")}}</td>
-                    <td>{{config.datastore_name}}</td>
-                    <td>{{config.datastore_version_name}}</td>
+                    <!-- <td>{{config.datastore_name}}</td>
+                    <td>{{config.datastore_version_name}}</td> -->
                     <td>{{config.description}}
                         <!--<a class="glyphicon glyphicon-info-sign"
                        data-toggle="tooltip"
@@ -69,15 +98,70 @@
                             >
                     </a>-->
                     </td>
+                    <td>
+                        <a type="button" class="rds-btn normal-btn" ng-click="vm.attachConfig(config.id)">
+                            <span class="btn-icon new-bind"></span> 绑定参数组
+                        </a>
+                    </td>
+
                 </tr>
             </tbody>
         </table>
-        <div >
-            <ul style="float:right;" uib-pagination total-items="vm.pagination.totalItems" ng-model="vm.pagination.currentPage" ng-change="vm.pagination.pageChanged()" class="pagination-sm"previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"  rotate="false"></ul>
 
-        </div>
+    </div>
+    <div>
+        <ul style="float:right;" uib-pagination total-items="vm.pagination.totalItems" ng-model="vm.pagination.currentPage" ng-change="vm.pagination.pageChanged()" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+            rotate="false"></ul>
+
     </div>
 </div>
+<script type="text/ng-template" id="attachConfigModal.html">
+    <!--绑定参数组模态框-->
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="vm.cancel()">&times;</button>
+        <h3 class="modal-title" id="attachConfigModal-title">绑定参数组</h3>
+    </div>
+    <div class="modal-body" id="attachConfigModal-body">
+        <div class="alert alert-danger" style="margin: 20px;padding: 40px;">
+            <div ng-show="vm.selection.configId && (!vm.configStatus.statusText)">
+                确定要将本参数组绑定到当前实例吗？
+            </div>
+            <!--根据name来取得表格中的内容-->
+            <div ng-show="vm.configStatus.statusText">
+                {{vm.configStatus.text}}
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="vm.cancel()">关闭</button>
+        <button type="button" class="btn btn-primary" ng-disabled="!vm.selection.configId" ng-click="vm.attachConfigOk()">确定
+        </button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="detachConfigModal.html">
+    <!--解除绑定参数组模态框-->
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="vm.cancel()">&times;</button>
+        <h3 class="modal-title" id="detachConfigModal-title">绑定参数组</h3>
+    </div>
+    <div class="modal-body" id="detachConfigModal-body">
+        <div class="alert alert-danger" style="margin: 20px;padding: 40px;">
+            <div ng-show="vm.selection.configId && (!vm.configStatus.statusText)">
+                确认解绑该参数组吗？解绑后实例将会自动重启.
+            </div>
+            <!--根据name来取得表格中的内容-->
+            <div ng-show="vm.configStatus.statusText">
+                {{vm.configStatus.text}}
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="vm.cancel()">关闭</button>
+        <button type="button" class="btn btn-primary" ng-click="vm.detachConfigOk()">确定
+        </button>
+    </div>
+</script>
 <!--删除参数组模态框-->
 <script type="text/ng-template" id="deleteConfigModal.html">
     <div class="modal-header">
