@@ -1,7 +1,7 @@
 angular.module('mainAppCtrls')
     //list页面控制器
-    .controller('LoadDataCtrl', ['$window', '$scope', '$http', 'httpService',
-        function($window, $scope, $http, httpService) {
+    .controller('LoadDataCtrl', ['$window', '$timeout', '$scope', '$http', 'httpService', '$uibModal',
+        function($window, $timeout, $scope, $http, httpService, $uibModal) {
             var vm = $scope.vm = {};
             vm.clusters = [];
             vm.selection = [];
@@ -39,9 +39,9 @@ angular.module('mainAppCtrls')
                 '311': 'rds.small',
                 '312': 'rds.middle',
                 '313': 'rds.large',
-                '315': 'rds .2 xlarge',
-                '316': 'rds .3 xlarge',
-                '317': 'rds .4 xlarge'
+                '315': 'rds.2 xlarge',
+                '316': 'rds.3 xlarge',
+                '317': 'rds.4 xlarge'
             };
             /**
              * 分页开始
@@ -78,9 +78,9 @@ angular.module('mainAppCtrls')
 
                         if (data.data.clusters) {
                             console.log(datas);
-                            // datas.map(function(currentValue, index, arr) {
-                            //     currentValue.flavor = flavor[currentValue.instances[0].flavor.id];
-                            // });
+                            datas.map(function(currentValue, index, arr) {
+                                 currentValue.flavor = flavor[currentValue.instances[0].flavor.id];
+                            });
                             var start = (vm.pagination.currentPage - 1) * 10;
                             var end = (datas.length - 10 <= (vm.pagination.currentPage - 1) * 10) ? datas.length : vm.pagination.currentPage * 10;
                             console.log("参数组列表：" + datas.slice((vm.pagination.currentPage - 1) * 10, end));
