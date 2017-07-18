@@ -231,6 +231,14 @@ body {
     background: url(../image/rds-new/save.png) center no-repeat;
 }
 
+.new-userSon {
+    background: url(../image/rds-new/userSon.png) center no-repeat;
+}
+
+.new-managers {
+    background: url(../image/rds-new/managers.png) center no-repeat;
+}
+
 .new-bind {
     background: url(../image/rds-new/bind.png) center no-repeat;
 }

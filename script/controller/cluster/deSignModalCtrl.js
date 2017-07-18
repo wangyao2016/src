@@ -91,7 +91,7 @@ angular.module('mainAppCtrls')
                 console.log("授权用户:"+name.substring(1)+"<<-->>资源Id:"+vm.clusterId);
                 var data = {
                     "name": name.substring(1),
-                    "clusterId": vm.clusterId
+                    "instanceId": vm.clusterId
                 };
                 httpService.getServiceResult("put", "rds/v1/mysql/additional/privilege/grant", angular.fromJson(data))
                     .then(function(data, status, headers, config) {

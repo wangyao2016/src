@@ -1,7 +1,7 @@
 angular.module('mainAppCtrls')
     //list页面控制器
-    .controller('LoadDataCtrl', ['$window', '$scope', '$http', 'httpService', '$uibModal',
-        function($window, $scope, $http, httpService, $uibModal) {
+    .controller('LoadDataCtrl', ['$window', '$timeout', '$scope', '$http', 'httpService', '$uibModal',
+        function($window, $timeout, $scope, $http, httpService, $uibModal) {
             var vm = $scope.vm = {};
             vm.clusters = [];
             vm.selection = [];
