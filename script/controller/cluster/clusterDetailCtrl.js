@@ -27,8 +27,12 @@ angular.module('mainAppCtrls')
                         console.log(vm.basicInfo);
                         clusterDBInfoService.setVersion(vm.basicInfo.cluster.datastore.version);
                         clusterDBInfoService.setDBType(vm.basicInfo.cluster.datastore.type);
-                        clusterDBInfoService.setId(vm.basicInfo.cluster.instances[0].configuration.id);
-                        clusterDBInfoService.setConfigname(vm.basicInfo.cluster.instances[0].configuration.name);
+                        if (vm.basicInfo.cluster.instances[0].configuration) {
+                            clusterDBInfoService.setId(vm.basicInfo.cluster.instances[0].configuration.id);
+                            clusterDBInfoService.setConfigname(vm.basicInfo.cluster.instances[0].configuration.name);
+                        }
+
+
                         console.log(clusterDBInfoService.getVersion());
                         vm.basicInfo.cluster.instances.map(function(currentValue, index, arr) {
                             currentValue.flavor.addflavor = clusterInfo[currentValue.flavor.id]
@@ -39,6 +43,7 @@ angular.module('mainAppCtrls')
                     }
                 }).catch(function(data, status, headers, config) {
                     console.log("error load basicInfo.json");
+                    console.log(data);
                 });
             // getService.getServiceResult("data/backup_list.json")
             //     .then(function(data, status, headers, config) {

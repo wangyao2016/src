@@ -1,20 +1,18 @@
 angular.module('mainAppCtrls') //添加参数组modal的控制器
-    .controller('addConfigsModalCtrl', ['$scope', '$uibModalInstance',
-        function($scope, $uibModalInstance) {
+    .controller('addConfigsModalCtrl', ['$scope', '$uibModalInstance', 'selection',
+        function($scope, $uibModalInstance, selection) {
             var vm = $scope.vm = {};
-            //数据库类型和版本，写死，待修改
-            vm.dbtypes = ['oracle', 'mysql'];
-            vm.mysqlVersions = ['5.5', '5.6'];
-            vm.oracleVersions = ['12.1.0'];
+            vm.selection = selection;
+
             //ok方法，点击确认触发
-            vm.addConfigsOk = function() {
+            vm.addConfigsOk = function(db, dbversion) {
                 var data = {
                     label_mingcheng: vm.addConfig.name,
-                    rds_DBtype: vm.addConfig.dbtype,
-                    rds_DBversion: vm.addConfig.dbversion,
+                    rds_DBtype: vm.selection.db,
+                    rds_DBversion: vm.selection.version,
                     label_des: vm.addConfig.des
                 };
-                console.log("data: " + data);
+                console.log(data);
                 $uibModalInstance.close({ data: data });
             };
             //cancel方法，点击取消触发

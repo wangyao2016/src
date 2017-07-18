@@ -24,7 +24,7 @@
             <a type="button" class="rds-btn normal-btn" id="deleteInstance" data-toggle="modal" data-target="#deleteInstanceModal">
                 <span class="btn-icon new-delete"></span> 终止实例
             </a>
-            <button class="normal-btn rds-btn" id="restartInstance" data-toggle="modal" data-target="#restartInstanceModal">
+            <button class="normal-btn rds-btn" id="restartInstance" ng-click="vm.resetCluster()">
                 <span class="btn-icon new-compare"></span>
                 重启实例
             </button>
@@ -209,26 +209,22 @@
 
 </div>
 <!--重启实例模态框-->
-<div class="modal fade" id="restartInstanceModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="restartInstanceLabel">重启实例</h4>
-            </div>
-            <div class="modal-body">
-                确定重启实例吗？
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" ng-click="vm.submit()">提交
-                </button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            </div>
-        </div>
-
+<script type="text/ng-template" id="restartInstanceModal.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="vm.cancel()">&times;</button>
+        <h3 class="modal-title" id="restartInstanceModal-title">重启实例</h3>
     </div>
-
-</div>
+    <div class="modal-body" id="restartInstanceModal-body">
+        <div class="alert alert" style="margin: 20px;padding: 40px;">
+            确定重启实例吗？
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="vm.cancel()">关闭</button>
+        <button type="button" class="btn btn-primary" ng-click="vm.restartInstanceOK()">确定
+        </button>
+    </div>
+</script>
 <!--备份实例模态框-->
 <div class="modal fade" id="backupInstanceModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
     <div class="modal-dialog">

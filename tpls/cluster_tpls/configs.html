@@ -45,9 +45,7 @@
         比较
     </a>
     -->
-    <a type="button" class="rds-btn normal-btn" id="deleteConfigs" ng-click="vm.openDeleteConfigModal()">
-        <span class="btn-icon new-delete"></span> 删除
-    </a>
+
     <a class="search-label">
         <span class="btn-icon new-search"></span> 全局搜索
     </a>
@@ -101,6 +99,9 @@
                     <td>
                         <a type="button" class="rds-btn normal-btn" ng-click="vm.attachConfig(config.id,config.name)">
                             <span class="btn-icon new-bind"></span> 绑定参数组
+                        </a>
+                        <a type="button" class="rds-btn normal-btn" id="deleteConfigs" ng-click="vm.openDeleteConfigModal(config.id)">
+                            <span class="btn-icon new-delete"></span> 删除
                         </a>
                     </td>
 
@@ -426,47 +427,6 @@
                     </p>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">数据库类型</label>
-
-                <div class="col-sm-9">
-                    <label>
-                        <select class="form-control"
-                                name="addConfig_dbtype"
-                                ng-model="vm.addConfig.dbtype"
-                                ng-options="dbtype for dbtype in vm.dbtypes"
-                                required>
-                            <option value="">-- 请选择数据库类型 --</option>
-                        </select>
-                    </label>
-                </div>
-            </div>
-            <div class="form-group" ng-show="vm.addConfig.dbtype">
-                <label class="col-sm-3 control-label">数据库版本</label>
-
-                <div class="col-sm-9">
-                    <label>
-                        <select class="form-control"
-                                name="addConfig_dbversion"
-                                ng-show="vm.addConfig.dbtype == 'mysql'"
-                                ng-model="vm.addConfig.dbversion"
-                                ng-options="dbversion for dbversion in vm.mysqlVersions"
-                                required
-                                >
-                            <option value="">-- 请选择数据库版本 --</option>
-                        </select>
-                        <select class="form-control"
-                                name="addConfig_dbversion"
-                                ng-show="vm.addConfig.dbtype == 'oracle'"
-                                ng-model="vm.addConfig.dbversion"
-                                ng-options="dbversion for dbversion in vm.oracleVersions"
-                                required
-                                >
-                            <option value="">-- 请选择数据库版本 --</option>
-                        </select>
-                    </label>
-                </div>
-            </div>
 
             <!--打印错误信息-->
             <div class="form-group" ng-show="addConfig_form.$invalid && addConfig_form.$dirty">
@@ -491,13 +451,6 @@
                             </li>
                             <li ng-show="addConfig_form.addConfig_des.$dirty && addConfig_form.addConfig_des.$error.minlength">
                                 描述长度不能小于3个字符！
-                            </li>
-
-                            <li ng-show="addConfig_form.addConfig_dbtype.$dirty && addConfig_form.addConfig_dbtype.$error.required">
-                                请选择数据库类型
-                            </li>
-                            <li ng-show="addConfig_form.addConfig_dbversion.$dirty && addConfig_form.addConfig_dbversion.$error.required">
-                                请选择数据库版本
                             </li>
                         </ul>
                     </div>

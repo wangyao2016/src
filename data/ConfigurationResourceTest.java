@@ -43,8 +43,8 @@ public class ConfigurationResourceTest extends TestBase{
     public void testCreateConfig() throws Exception {
         Map<String, String> map = new HashMap<String, String>();
         map.put("label_mingcheng", "TestConfig");
-        map.put("rds_DBtype", "mysql");
-        map.put("rds_DBversion", "5.6");
+        map.put("rds_DBtype", "mysql");//cluster
+        map.put("rds_DBversion", "5.6");//cluster dbstaore
         map.put("label_des", "TestConfig");
         Response result = target("mysql/configurations").request()
                 .post(Entity.entity(map, MediaType.APPLICATION_JSON));

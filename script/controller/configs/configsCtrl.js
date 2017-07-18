@@ -128,6 +128,15 @@ angular.module('mainAppCtrls')
                     console.log(!(result.data));
                     if (result.data.length == undefined) {
                         console.log(result.data);
+
+                        //添加警示框
+                        vm.addAlert("alert_success", "绑定参数组成功");
+                        //删除警示框
+                        $timeout(function() {
+                                vm.closeAllAlert(vm.alerts.length)
+                            },
+                            6000);
+
                         vm.clusterbaseinfo.configId = vm.selection.configId;
                         vm.clusterbaseinfo.configInitName = vm.selection.configname;
                         console.log(vm.clusterbaseinfo);
@@ -176,6 +185,9 @@ angular.module('mainAppCtrls')
             vm.openAddConfigsModal = function(size, parentSelector) {
                 var parentElem = parentSelector ?
                     angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
+                vm.selection = {};
+                vm.selection.version = vm.clusterbaseinfo.version;
+                vm.selection.db = vm.clusterbaseinfo.db;
                 var addConfigsModalInstance = $uibModal.open({
                     animation: true,
                     ariaLabelledBy: 'addConfigsModal-title',
@@ -183,7 +195,12 @@ angular.module('mainAppCtrls')
                     templateUrl: 'addConfigsModal.html',
                     controller: 'addConfigsModalCtrl',
                     size: size,
-                    appendTo: parentElem
+                    appendTo: parentElem,
+                    resolve: {
+                        selection: function() {
+                            return vm.selection;
+                        }
+                    }
                 });
                 addConfigsModalInstance.result.then(function(result) {
                     //result 就是CLOSE回传的值。把data值回传回来
@@ -191,16 +208,13 @@ angular.module('mainAppCtrls')
                         vm.addAlert("alert_error", "创建参数组错误--数据传输错误");
                     } else {
                         //post方法，创建参数组
+
                         httpService.getServiceResult("post", "rds/v1/mysql/configurations", result.data)
-                            .success(function(data, status, headers, config) {
-                                console.log("data: " + data);
-                                console.log("data.jsonstring: " + data.jsonString);
-                                console.log("data.jsonstring.configuration: " + data.jsonString.configuration);
-                                if (data.jsonString.badRequest) {
-                                    //若返回为空，则创建失败
-                                    console.log("创建参数组失败,原因为：" + data.jsonString);
-                                    vm.addAlert("alert_fail", "创建用户失败,原因为：" + data.jsonString);
-                                } else {
+                            .then(function(data, status, headers, config) {
+                                console.log(data);
+                                console.log("data.jsonstring: " + data.data.jsonString);
+                                console.log("data.jsonstring.configuration: " + data.data.jsonString.configuration);
+                                if (data.data.configs) {
                                     console.log("创建参数组成功");
                                     //创建参数组成功后，重新加载参数组list
                                     vm.configsList();
@@ -211,8 +225,12 @@ angular.module('mainAppCtrls')
                                             vm.closeAllAlert(vm.alerts.length)
                                         },
                                         6000);
+                                } else if (data.data.jsonString) {
+                                    //若返回为空，则创建失败
+                                    console.log("创建参数组失败,原因为：" + data.data.jsonString);
+                                    vm.addAlert("alert_fail", "创建用户失败,原因为：" + data.data.jsonString);
                                 }
-                            }).error(function(data, status, headers, config) {
+                            }).catch(function(data, status, headers, config) {
                                 vm.addAlert("alert_error", "创建参数组错误");
                             });
                     }
