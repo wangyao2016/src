@@ -21,18 +21,18 @@ angular.module('mainAppCtrls')
                     vm.configStatus.status = !vm.configStatus.status;
                 } else {
                     // vm.configStatus.statusText = "success";
-                    httpService.getServiceResult('put', 'rds/v1/mysql/configurations/' + vm.selection.id + '/attach', angular.fromJson({ "configID": vm.selection.configId }))
+                    httpService.getServiceResult('post', 'rds/v1/mysql/clusters/' + vm.selection.id + '/action', angular.fromJson({ "action": "configuration_attach", "configuration_id": vm.selection.configId }))
                         .then(function(data, status, headers, config) {
                             datas = data;
                         })
                         .catch(function(data, status, headers, config) {
                             datas = data;
-                            console.log(datas);
+                            // console.log(datas);
                         });
                     $uibModalInstance.close({ data: datas });
                 }
 
-                console.log("data: " + datas);
+                console.log(datas);
 
             };
             //cancel方法，点击取消触发

@@ -4,7 +4,8 @@ angular.module('mainAppServices')
         clusteDB.name = 'clusterDBInfoService';
         var version = '';
         var db = '';
-        var status = '';
+        var configid = '';
+        var configname = '';
         clusteDB.setVersion = function(ve) {
             version = ve;
             console.log(version);
@@ -18,11 +19,18 @@ angular.module('mainAppServices')
         clusteDB.getDBType = function() {
             return db;
         };
-        clusteDB.setStatus = function(sta) {
-            status = sta;
+        clusteDB.setId = function(id) {
+            configid = id;
         };
-        clusteDB.getStatus = function() {
-            return status;
+        clusteDB.getId = function() {
+            return configid;
         };
+        clusteDB.setConfigname = function(name) {
+            configname = name;
+        };
+        clusteDB.getConfigname = function() {
+            return configname;
+        };
+
         return clusteDB;
     });
