@@ -212,9 +212,9 @@ angular.module('mainAppCtrls')
                         httpService.getServiceResult("post", "rds/v1/mysql/configurations", result.data)
                             .then(function(data, status, headers, config) {
                                 console.log(data);
-                                console.log("data.jsonstring: " + data.data.jsonString);
-                                console.log("data.jsonstring.configuration: " + data.data.jsonString.configuration);
-                                if (data.data.configs) {
+                                // console.log("data.jsonstring: " + data.data.jsonString);
+                                // console.log("data.jsonstring.configuration: " + data.data.jsonString.configuration);
+                                if (angular.fromJson(data.data.jsonString).configuration) {
                                     console.log("创建参数组成功");
                                     //创建参数组成功后，重新加载参数组list
                                     vm.configsList();
@@ -242,9 +242,11 @@ angular.module('mainAppCtrls')
             /*触发添加参数组modal 结束*/
 
             /*触发删除参数组modal 开始*/
-            vm.openDeleteConfigModal = function(size, parentSelector) {
+            vm.openDeleteConfigModal = function(configid, size, parentSelector) {
                 var parentElem = parentSelector ?
                     angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
+                vm.selection = {};
+                vm.selection.configid = configid;
                 var deleteConfigModalInstance = $uibModal.open({
                     animation: true,
                     ariaLabelledBy: 'deleteConfigModal-title',
@@ -264,9 +266,10 @@ angular.module('mainAppCtrls')
                     if (result.data.id == '' || result.data.id == undefined) {
                         vm.addAlert("alert_error", "删除参数组错误--数据result传输错误");
                     } else {
-                        httpService.getServiceResult("delete", "v1/oracle/configurations/" + result.data.id + "", result)
-                            .success(function(data, status, headers, config) {
-                                if (data.jsonString == '' || data.jsonString == 'undefined') {
+                        httpService.getServiceResult("delete", "rds/v1/mysql/configurations/" + result.data.id)
+                            .then(function(data, status, headers, config) {
+                                console.log(data);
+                                if (data.data.jsonString == '' || data.data.jsonString == 'undefined') {
                                     console.log("删除参数组成功");
                                     //重新加载用户list
                                     vm.configsList();
@@ -282,7 +285,7 @@ angular.module('mainAppCtrls')
                                     vm.addAlert("alert_fail", "删除参数组失败，原因为： " + data.jsonString);
                                 }
                             })
-                            .error(function(data, status, headers, config) {
+                            .catch(function(data, status, headers, config) {
                                 vm.addAlert("alert_error", "删除参数组错误");
                             });
                     }

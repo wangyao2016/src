@@ -170,19 +170,16 @@
         <h3 class="modal-title" id="deleteConfigsModal-title">删除参数组</h3>
     </div>
     <div class="modal-body" id="deleteConfigsModal-body">
-        <div class="alert alert" style="margin: 20px;padding: 40px;">
-            <div ng-show="vm.selection.name">
-                确定删除参数组{{vm.selection.name}}吗？
-            </div>
-            <!--根据name来取得表格中的内容-->
-            <div ng-show="!vm.selection.name">
-                请先选定一个参数组!
-            </div>
+        <div class="alert alert-error" style="margin: 20px;padding: 40px;">
+
+            确定删除该参数组吗？
+
+
         </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="vm.cancel()">关闭</button>
-        <button type="button" class="btn btn-primary" ng-disabled="!vm.selection.name" ng-click="vm.deleteConfigOk(vm.selection.id)">提交
+        <button type="button" class="btn btn-primary" ng-click="vm.deleteConfigOk(vm.selection.configid)">确定
         </button>
     </div>
 </script>

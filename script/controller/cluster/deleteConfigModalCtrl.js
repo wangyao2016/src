@@ -7,13 +7,9 @@ angular.module('mainAppCtrls') //删除参数组modal的控制器
             var data;
             //ok方法，点击确认触发
             vm.deleteConfigOk = function(id) {
-                if (id == "" || id == undefined) {
-                    data = "";
-                } else {
-                    data = {
-                        id: id
-                    };
-                }
+                data = {
+                    id: id
+                };
                 console.log("data: " + data);
                 $uibModalInstance.close({ data: data });
             };
