@@ -1,13 +1,13 @@
 <div class="rds-content-5-body">
-    <div ng-show="true" class="alert_div">
-        <div ng-repeat="alert in vm.alerts" ng-class="['repeat','alert', 'alert-dismissable', alert.type]">
-            <button type="button" class="close" ng-click="vm.closeAlert($index)">&times;</button> {{alert.msg}}
-        </div>
-    </div>
-    <div style="height: 8px"></div>
     <div class="row">
         <div class="col-md-12 col-xs-12 col-sm-12">
             <div class="rds-content  ie10_whole_width" id="rds-content-0">
+                <div ng-show="true" class="alert_div">
+                    <div ng-repeat="alert in vm.alerts" ng-class="['repeat','alert', 'alert-dismissable', alert.type]">
+                        <button type="button" class="close" ng-click="vm.closeAlert($index)">&times;</button> {{alert.msg}}
+                    </div>
+                </div>
+                <div style="height: 8px"></div>
                 <div id="mainn2" style="height: 300px; padding: 10px;"></div>
                 <div id="mainn" style="height: 300px; padding: 10px;"></div>
                 <div id="mainn3" style="height: 300px; padding: 10px;"></div>

@@ -31,7 +31,7 @@ angular.module('mainAppCtrls')
                         vm.basicInfo.cluster.instances.map(function(currentValue, index, arr) {
                             currentValue.flavor.addflavor = clusterInfo[currentValue.flavor.id]
                         });
-                        console.log(angular.fromJson(data.data.clusterDetail));
+                        console.log(angular.fromJson(vm.basicInfo.cluster));
                     } else {
                         console.log("get cluster basicInfo error");
                     }
