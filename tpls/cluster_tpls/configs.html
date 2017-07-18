@@ -17,7 +17,7 @@
             <tbody>
                 <tr>
                     <td>当前绑定的参数组</td>
-                    <td> {{vm.clusterbaseinfo.configId||'no configration'}}</td>
+                    <td> {{vm.clusterbaseinfo.configInitName||'no configration'}}</td>
                 </tr>
                 <tr>
                     <td>当前实例的数据库</td>
@@ -99,7 +99,7 @@
                     </a>-->
                     </td>
                     <td>
-                        <a type="button" class="rds-btn normal-btn" ng-click="vm.attachConfig(config.id)">
+                        <a type="button" class="rds-btn normal-btn" ng-click="vm.attachConfig(config.id,config.name)">
                             <span class="btn-icon new-bind"></span> 绑定参数组
                         </a>
                     </td>
@@ -143,10 +143,10 @@
     <!--解除绑定参数组模态框-->
     <div class="modal-header">
         <button type="button" class="close" ng-click="vm.cancel()">&times;</button>
-        <h3 class="modal-title" id="detachConfigModal-title">绑定参数组</h3>
+        <h3 class="modal-title" id="detachConfigModal-title">解绑定参数组</h3>
     </div>
     <div class="modal-body" id="detachConfigModal-body">
-        <div class="alert alert-danger" style="margin: 20px;padding: 40px;">
+        <div class="alert alert" style="margin: 20px;padding: 40px;">
             <div ng-show="vm.selection.configId && (!vm.configStatus.statusText)">
                 确认解绑该参数组吗？解绑后实例将会自动重启.
             </div>
@@ -169,7 +169,7 @@
         <h3 class="modal-title" id="deleteConfigsModal-title">删除参数组</h3>
     </div>
     <div class="modal-body" id="deleteConfigsModal-body">
-        <div class="alert alert-danger" style="margin: 20px;padding: 40px;">
+        <div class="alert alert" style="margin: 20px;padding: 40px;">
             <div ng-show="vm.selection.name">
                 确定删除参数组{{vm.selection.name}}吗？
             </div>

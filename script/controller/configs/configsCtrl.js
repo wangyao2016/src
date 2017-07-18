@@ -6,7 +6,8 @@ angular.module('mainAppCtrls')
             var id = dataService.getData();
             var dbversion = clusterDBInfoService.getVersion();
             var db = clusterDBInfoService.getDBType();
-            var configid = clusterDBInfoService.getStatus();
+            var configid = clusterDBInfoService.getId();
+            var configInitName = clusterDBInfoService.getConfigname();
             console.log('dbversion: ' + dbversion);
             var vm = $scope.vm = {};
             //设置tooltip展示方向
@@ -41,6 +42,7 @@ angular.module('mainAppCtrls')
             vm.clusterbaseinfo.version = dbversion;
             vm.clusterbaseinfo.db = db;
             vm.clusterbaseinfo.configId = configid;
+            vm.clusterbaseinfo.configInitName = configInitName;
             //参数组列表展示
 
             vm.configsList = function() {
@@ -97,12 +99,14 @@ angular.module('mainAppCtrls')
             /**
              * 绑定参数
              */
-            vm.attachConfig = function(configId, size, parentSelector) {
+            vm.attachConfig = function(configId, congfigName, size, parentSelector) {
                 console.log(configId);
                 vm.selection = {};
                 vm.selection.configId = configId;
-                vm.selection.id = id;
-                vm.selection.selectconfigid = vm.clusterbaseinfo.configId;
+                vm.selection.id = id; //cluster id
+                vm.selection.configname = congfigName; //选中cluster的名字
+                vm.selection.selectconfigid = vm.clusterbaseinfo.configId; //cluster中configration信息
+
                 var parentElem = parentSelector ?
                     angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
                 var attachConfigModalInstance = $uibModal.open({
@@ -120,9 +124,13 @@ angular.module('mainAppCtrls')
                     }
                 });
                 attachConfigModalInstance.result.then(function(result) {
-                    if (result.data) {
+                    console.log(result.data.length);
+                    console.log(!(result.data));
+                    if (result.data.length == undefined) {
                         console.log(result.data);
                         vm.clusterbaseinfo.configId = vm.selection.configId;
+                        vm.clusterbaseinfo.configInitName = vm.selection.configname;
+                        console.log(vm.clusterbaseinfo);
                     }
                 });
 
@@ -154,9 +162,11 @@ angular.module('mainAppCtrls')
                     }
                 });
                 detachConfigModalInstance.result.then(function(result) {
-                    if (result.data) {
+                    console.log(result);
+                    if (result.data.indexOf("解绑成功") != -1) {
                         console.log(result.data);
                         vm.clusterbaseinfo.configId = "";
+                        vm.clusterbaseinfo.configInitName = "";
                     }
                 });
 

@@ -21,12 +21,14 @@ angular.module('mainAppCtrls')
 
             httpService.getServiceResult("get", "rds/v1/mysql/clusters/" + id)
                 .then(function(data, status, headers, config) {
-                    console.log(data.data);
+
                     if (angular.fromJson(data.data.clusterDetail) != undefined) {
                         vm.basicInfo = angular.fromJson(data.data.clusterDetail);
+                        console.log(vm.basicInfo);
                         clusterDBInfoService.setVersion(vm.basicInfo.cluster.datastore.version);
                         clusterDBInfoService.setDBType(vm.basicInfo.cluster.datastore.type);
-                        clusterDBInfoService.setStatus(vm.basicInfo.cluster.instances[0].configuration.name);
+                        clusterDBInfoService.setId(vm.basicInfo.cluster.instances[0].configuration.id);
+                        clusterDBInfoService.setConfigname(vm.basicInfo.cluster.instances[0].configuration.name);
                         console.log(clusterDBInfoService.getVersion());
                         vm.basicInfo.cluster.instances.map(function(currentValue, index, arr) {
                             currentValue.flavor.addflavor = clusterInfo[currentValue.flavor.id]
