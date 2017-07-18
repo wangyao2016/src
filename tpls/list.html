@@ -4,7 +4,7 @@
             <a type="button" class="rds-btn buy-btn">
                 <span class="btn-icon new-buy"></span> 订购实例
             </a>
-            <a type="button" class="rds-btn buy-btn" ng-click="vm.openDesignModal()">
+            <a type="button" class="rds-btn buy-btn" ng-show="vm.designFlag" ng-click="vm.openDesignModal()">
                 <span class="btn-icon new-user"></span> 分配
             </a>
             <a ng-click="vm.reloadPage()" type="button" class="rds-btn normal-btn">
