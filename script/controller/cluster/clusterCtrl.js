@@ -30,6 +30,35 @@ angular.module('mainAppCtrls') //instance页面控制器
                     vm.alerts.splice(i - 1, 1);
                 }
             };
+
+            // var id = dataService.getData();
+            // httpService.getServiceResult("get", "rds/v1/mysql/clusters/" + id)
+            //     .then(function(data, status, headers, config) {
+
+            //         if (angular.fromJson(data.data.clusterDetail) != undefined) {
+            //             var basicInfo = angular.fromJson(data.data.clusterDetail);
+            //             console.log(basicInfo);
+            //             clusterDBInfoService.setVersion(basicInfo.cluster.datastore.version);
+            //             clusterDBInfoService.setDBType(basicInfo.cluster.datastore.type);
+            //             if (basicInfo.cluster.instances[0].configuration) {
+            //                 clusterDBInfoService.setId(basicInfo.cluster.instances[0].configuration.id);
+            //                 clusterDBInfoService.setConfigname(basicInfo.cluster.instances[0].configuration.name);
+            //             } else {
+            //                 clusterDBInfoService.setId('');
+            //                 clusterDBInfoService.setConfigname('');
+            //             }
+
+            //             console.log(angular.fromJson(basicInfo.cluster));
+            //         } else {
+            //             console.log("get cluster basicInfo error");
+            //         }
+            //     }).catch(function(data, status, headers, config) {
+            //         console.log("error load basicInfo.json");
+            //         console.log(data);
+            //     });
+
+
+
             //添加新警告
             vm.addAlert = function(type, msg) {
                 if (type === undefined || msg === undefined) {

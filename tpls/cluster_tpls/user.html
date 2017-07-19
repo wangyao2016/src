@@ -131,7 +131,7 @@
                 <label class="col-sm-3 control-label">新IP地址</label>
 
                 <div class="col-sm-9">
-                    <input type="text" name="resetIP" ng-model="vm.selection.ip" ng-pattern="vm.ipRegx" required="" class="form-control" placeholder="IP地址">
+                    <input type="text" name="resetIP" ng-model="vm.selection.ip" ng-pattern="/(^(%)$)|^(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(%|25[0-5]|2[0-4]\d|[01]?\d\d?)$/" required="" class="form-control" placeholder="IP地址">
 
                     <p class="glyphicon glyphicon-ok input_result input_success" ng-if="resetIP_form.resetIP.$valid">
                     </p>
@@ -300,7 +300,7 @@
                 <label class="col-sm-3 control-label">IP地址</label>
 
                 <div class="col-sm-9">
-                    <input type="text" required="" ng-pattern="vm.ipRegx" name="user_host" ng-model="vm.user_add.host" class="form-control" placeholder="请输入用户主机地址">
+                    <input type="text" required="" ng-pattern="/(^(%)$)|^(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(%|25[0-5]|2[0-4]\d|[01]?\d\d?)$/" name="user_host" ng-model="vm.user_add.host" class="form-control" placeholder="请输入用户主机地址">
 
                     <p class="glyphicon glyphicon-ok input_result input_success" ng-if="user_form.user_host.$valid">
                     </p>

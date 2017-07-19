@@ -2,12 +2,14 @@
     <a type="button" class="rds-btn buy-btn" ng-click="vm.openAddDbModal()">
         <span class="btn-icon new-user"></span> 添加数据库
     </a>
+
     <div ng-show="true" class="alert_div">
         <div ng-repeat="alert in vm.alerts" ng-class="['repeat','alert', 'alert-dismissable', alert.type]">
             <button type="button" class="close" ng-click="vm.closeAlert($index)">&times;</button> {{alert.msg}}
         </div>
     </div>
-    <div class="table-responsive">
+    <div style="height: 20px"></div>
+    <div class="table-responsive row">
         <table class="table table-hover">
             <thead>
                 <tr>
