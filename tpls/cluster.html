@@ -21,14 +21,14 @@
             </a>
         </div>
         <div class="col-sm-4 col-md-4">
-            <a type="button" class="rds-btn normal-btn" id="deleteInstance" data-toggle="modal" data-target="#deleteInstanceModal">
+            <a type="button" class="rds-btn normal-btn" id="deleteInstance" ng-click="vm.deleteCluster()">
                 <span class="btn-icon new-delete"></span> 终止实例
             </a>
             <button class="normal-btn rds-btn" id="restartInstance" ng-click="vm.resetCluster()">
                 <span class="btn-icon new-compare"></span>
                 重启实例
             </button>
-            <button class="normal-btn rds-btn" id="backupInstance" data-toggle="modal" data-target="#backupInstanceModal">
+            <button class="normal-btn rds-btn" id="backupInstance" ng-click="vm.backupCluster()">
                 <span class="btn-icon new-bind"></span>
                 备份实例
             </button>
@@ -188,26 +188,23 @@
     </div>
 </div>
 <!--删除实例模态框-->
-<div class="modal fade" id="deleteInstanceModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="deleteInstanceLabel">终止实例</h4>
-            </div>
-            <div class="modal-body">
-                确定终止实例吗？
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" ng-click="vm.submit()">提交
-                </button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            </div>
-        </div>
 
+<script type="text/ng-template" id="deleteInstanceModal.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="vm.cancel()">&times;</button>
+        <h3 class="modal-title" id="deleteInstanceModal-title">终止实例</h3>
     </div>
-
-</div>
+    <div class="modal-body" id="deleteInstanceModal-body">
+        <div class="alert alert" style="margin: 20px;padding: 40px;">
+            确定终止实例吗？
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="vm.cancel()">关闭</button>
+        <button type="button" class="btn btn-primary" ng-click="vm.deleteInstanceModalOK()">确定
+        </button>
+    </div>
+</script>
 <!--重启实例模态框-->
 <script type="text/ng-template" id="restartInstanceModal.html">
     <div class="modal-header">
@@ -226,23 +223,20 @@
     </div>
 </script>
 <!--备份实例模态框-->
-<div class="modal fade" id="backupInstanceModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="backupInstanceLabel">备份实例</h4>
-            </div>
-            <div class="modal-body">
-                确定备份实例吗？
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" ng-click="vm.submit()">提交
-                </button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            </div>
-        </div>
 
+<script type="text/ng-template" id="backupInstanceModal.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="vm.cancel()">&times;</button>
+        <h3 class="modal-title" id="backupInstanceModal-title">备份实例</h3>
     </div>
-
-</div>
+    <div class="modal-body" id="backupInstanceModal-body">
+        <div class="alert alert" style="margin: 20px;padding: 40px;">
+            确定备份实例吗？
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="vm.cancel()">关闭</button>
+        <button type="button" class="btn btn-primary" ng-click="vm.backupInstanceModaleOK()">确定
+        </button>
+    </div>
+</script>

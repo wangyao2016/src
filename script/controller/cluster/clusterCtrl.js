@@ -45,23 +45,19 @@ angular.module('mainAppCtrls') //instance页面控制器
                 }
             };
             /*警告框相关结束*/
-            vm.resetCluster = function(size, parentSelector) {
+            //终止实例
+            vm.deleteCluster = function(size, parentSelector) {
                 // rds/v1/mysql/clusters/"+clusterId+"/action
                 var parentElem = parentSelector ?
                     angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
                 var attachConfigModalInstance = $uibModal.open({
                     animation: true,
-                    ariaLabelledBy: 'restartInstanceModal-title',
-                    ariaDescribedBy: 'restartInstanceModal-body',
-                    templateUrl: 'restartInstanceModal.html',
-                    controller: 'restartInstanceModalCtrl',
+                    ariaLabelledBy: 'deleteInstanceModal-title',
+                    ariaDescribedBy: 'deleteInstanceModal-body',
+                    templateUrl: 'deleteInstanceModal.html',
+                    controller: 'deleteInstanceModalCtrl',
                     size: size,
-                    appendTo: parentElem,
-                    resolve: {
-                        selection: function() {
-                            return vm.selection;
-                        }
-                    }
+                    appendTo: parentElem
                 });
                 attachConfigModalInstance.result.then(function(result) {
                     console.log(result);
@@ -76,7 +72,65 @@ angular.module('mainAppCtrls') //instance页面控制器
 
                     }
 
-                })
-            }
+                });
+            };
+            //备份实例
+            vm.backupCluster = function(size, parentSelector) {
+                // rds/v1/mysql/clusters/"+clusterId+"/action
+                var parentElem = parentSelector ?
+                    angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
+                var attachConfigModalInstance = $uibModal.open({
+                    animation: true,
+                    ariaLabelledBy: 'backupInstanceModal-title',
+                    ariaDescribedBy: 'backupInstanceModal-body',
+                    templateUrl: 'backupInstanceModal.html',
+                    controller: 'backupInstanceModalCtrl',
+                    size: size,
+                    appendTo: parentElem
+                });
+                attachConfigModalInstance.result.then(function(result) {
+                    console.log(result);
+                    if (angular.fromJson(result.data.data.status).cluster.status === 'REBOOT') {
+                        $window.location.reload();
+                        // vm.addAlert("alert_success", "重启实例成功");
+                        // //删除警示框
+                        // $timeout(function() {
+                        //         vm.closeAllAlert(vm.alerts.length)
+                        //     },
+                        //     6000);
+
+                    }
+
+                });
+            };
+            //重启实例
+            vm.resetCluster = function(size, parentSelector) {
+                // rds/v1/mysql/clusters/"+clusterId+"/action
+                var parentElem = parentSelector ?
+                    angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
+                var attachConfigModalInstance = $uibModal.open({
+                    animation: true,
+                    ariaLabelledBy: 'restartInstanceModal-title',
+                    ariaDescribedBy: 'restartInstanceModal-body',
+                    templateUrl: 'restartInstanceModal.html',
+                    controller: 'restartInstanceModalCtrl',
+                    size: size,
+                    appendTo: parentElem
+                });
+                attachConfigModalInstance.result.then(function(result) {
+                    console.log(result);
+                    if (angular.fromJson(result.data.data.status).cluster.status === 'REBOOT') {
+                        $window.location.reload();
+                        // vm.addAlert("alert_success", "重启实例成功");
+                        // //删除警示框
+                        // $timeout(function() {
+                        //         vm.closeAllAlert(vm.alerts.length)
+                        //     },
+                        //     6000);
+
+                    }
+
+                });
+            };
         }
     ]);
