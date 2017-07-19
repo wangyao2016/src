@@ -30,6 +30,9 @@ angular.module('mainAppCtrls')
                         if (vm.basicInfo.cluster.instances[0].configuration) {
                             clusterDBInfoService.setId(vm.basicInfo.cluster.instances[0].configuration.id);
                             clusterDBInfoService.setConfigname(vm.basicInfo.cluster.instances[0].configuration.name);
+                        } else {
+                            clusterDBInfoService.setId('');
+                            clusterDBInfoService.setConfigname('');
                         }
 
 
