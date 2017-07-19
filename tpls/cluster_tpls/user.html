@@ -37,18 +37,32 @@
                     <td>{{user.name}}</td>
                     <td>{{user.databasesList}}</td>
                     <td>
-                        <a type="button" class="rds-sm-btn normal-btn" id="userResetIP" ng-click="vm.openResetIPModal(user.name,user.host)">
-                            <span class="btn-icon new-compare"></span>修改IP
+                        <a id="userResetIP" ng-click="vm.openResetIPModal(user.name,user.host)">
+                            修改IP
                         </a>
-                        <a type="button" class="rds-sm-btn normal-btn" id="GrantDB" ng-click="vm.openGrantDBModel(user.name,user.host)">
-                            <span class="btn-icon new-delete"></span> 数据库权限
+                        <a id="GrantDB" ng-click="vm.openGrantDBModel(user.name,user.host)">
+                            权限设置
                         </a>
-                        <a type="button" class="rds-sm-btn normal-btn" id="userPassword" ng-click="vm.openUserPasswordModal(user.name,user.host)">
-                            <span class="btn-icon new-compare"></span> 重置密码
+                        <a id="userPassword" ng-click="vm.openUserPasswordModal(user.name,user.host)">
+                            重置密码
                         </a>
-                        <a type="button" class="rds-sm-btn normal-btn" id="deleteUser" ng-click="vm.openDeleteUserModal(user.name,user.host)">
-                            <span class="btn-icon new-delete"></span> 删除用户
+                        <a id="deleteUser" ng-click="vm.openDeleteUserModal(user.name,user.host)">
+                            删除
                         </a>
+                        <!--<a type="button" class="rds-sm-btn normal-btn" id="userResetIP" ng-click="vm.openResetIPModal(user.name,user.host)">-->
+                            <!--<span class="btn-icon new-compare"></span>-->
+                            <!--修改IP-->
+                        <!--</a>-->
+                        <!--<a type="button" class="rds-sm-btn normal-btn" id="GrantDB" ng-click="vm.openGrantDBModel(user.name,user.host)">-->
+                            <!--<span class="btn-icon new-delete"></span> 数据库权限-->
+                        <!--</a>-->
+                        <!--<a type="button" class="rds-sm-btn normal-btn" id="userPassword" ng-click="vm.openUserPasswordModal(user.name,user.host)">-->
+                            <!--<span class="btn-icon new-compare"></span> 重置密码-->
+                        <!--</a>-->
+                        <!--<a type="button" class="rds-sm-btn normal-btn" id="deleteUser" ng-click="vm.openDeleteUserModal(user.name,user.host)">-->
+                            <!--<span class="btn-icon new-delete"></span> 删除用户-->
+                        <!--</a>-->
+
                     </td>
                 </tr>
             </tbody>

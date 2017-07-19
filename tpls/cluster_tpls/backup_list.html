@@ -37,9 +37,15 @@
                     <td>{{backup.updated.replace("T"," ")}}</td>
                     <td>{{backup.parent_id != null?'是':'否'}}</td>
                     <td>
-                        <a type="button" class="rds-sm-btn normal-btn" id="deleteBackup" ng-click="vm.openDeleteBackupModal()">
-                            <span class="btn-icon new-delete"></span> 删除
+                        <a ng-href="https://ecloud.10086.cn/product/{{vm.clusterId}}/rdsDetail/{{backup.id}}/recovery">
+                            克隆
                         </a>
+                        <a id="deleteBackup" ng-click="vm.openDeleteBackupModal()">
+                            删除
+                        </a>
+                        <!--<a type="button" class="rds-sm-btn normal-btn" id="deleteBackup" ng-click="vm.openDeleteBackupModal()">-->
+                            <!--<span class="btn-icon new-delete"></span> 删除-->
+                        <!--</a>-->
                     </td>
                 </tr>
             </tbody>

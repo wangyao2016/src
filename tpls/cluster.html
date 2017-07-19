@@ -15,23 +15,34 @@
 <div class="pane">
     <div class="instance-main-head clearfix">
         <div class="col-sm-8 col-md-8">
-            <p class="h2 pull-left" style="margin-right: 5px;">实例:{{vm.clusterName}}</p>
-            <a type="button" class="rds-btn cancel-btn" ui-sref="list" style="display: inline-block">
-                <span class="btn-icon new-return"></span> 返回列表
+            <p class="h2 pull-left" style="margin-right: 5px;">集群:{{vm.clusterName}}</p>
+        </div>
+        <div class="col-sm-8 col-md-8">
+            <a type="button" class="rds-btn normal-btn" ui-sref="list" style="display: inline-block">
+                <span class="btn-icon new-return"></span> 返回
             </a>
         </div>
         <div class="col-sm-4 col-md-4">
-            <a type="button" class="rds-btn normal-btn" id="deleteInstance" data-toggle="modal" data-target="#deleteInstanceModal">
-                <span class="btn-icon new-delete"></span> 终止实例
+            <!--<a type="button" class="rds-btn normal-btn" id="deleteInstance" data-toggle="modal" data-target="#deleteInstanceModal">-->
+                <!--<span class="btn-icon new-delete"></span> 终止实例-->
+            <!--</a>-->
+            <a ng-href="https://ecloud.10086.cn/product/{{vm.clusterId}}/rdsDetail" type="button" class="rds-btn normal-btn" id="replicaInstance">
+                <span class="btn-icon new-buy"></span> 读扩展
+            </a>
+            <a ng-href="https://ecloud.10086.cn/product/{{vm.clusterId}}/rdsBsFlavor" type="button" class="rds-btn normal-btn" id="replicaInstance">
+                <span class="btn-icon new-buy"></span> 规格变更
+            </a>
+            <a ng-href="https://ecloud.10086.cn/product/{{vm.clusterId}}/rdsBsExtend" type="button" class="rds-btn normal-btn" id="replicaInstance">
+                <span class="btn-icon new-buy"></span> 扩容
             </a>
             <button class="normal-btn rds-btn" id="restartInstance" ng-click="vm.resetCluster()">
                 <span class="btn-icon new-compare"></span>
-                重启实例
+                重启集群
             </button>
-            <button class="normal-btn rds-btn" id="backupInstance" data-toggle="modal" data-target="#backupInstanceModal">
-                <span class="btn-icon new-bind"></span>
-                备份实例
-            </button>
+            <!--<button class="normal-btn rds-btn" id="backupInstance" data-toggle="modal" data-target="#backupInstanceModal">-->
+                <!--<span class="btn-icon new-bind"></span>-->
+                <!--备份实例-->
+            <!--</button>-->
         </div>
     </div>
     <hr>

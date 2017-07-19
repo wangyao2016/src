@@ -2,6 +2,7 @@ angular.module('mainAppCtrls') //backup list页面控制器
     .controller('backupCtrl_backup', ['$scope', '$stateParams', '$timeout', '$uibModal', '$http', 'getService',
         function($scope, $stateParams, $timeout, $uibModal, $http, getService) {
             var vm = $scope.vm = {};
+            vm.clusterId = $stateParams.clusterId;
             vm.backupList = [];
             vm.activeBackupList = [];
             vm.selection = [];

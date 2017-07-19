@@ -97,12 +97,18 @@
                     </a>-->
                     </td>
                     <td>
-                        <a type="button" class="rds-btn normal-btn" ng-click="vm.attachConfig(config.id,config.name)">
-                            <span class="btn-icon new-bind"></span> 绑定参数组
+                        <a ng-click="vm.attachConfig(config.id,config.name)">
+                            绑定参数组
                         </a>
-                        <a type="button" class="rds-btn normal-btn" id="deleteConfigs" ng-click="vm.openDeleteConfigModal(config.id)">
-                            <span class="btn-icon new-delete"></span> 删除
+                        <a id="deleteConfigs" ng-click="vm.openDeleteConfigModal(config.id)">
+                            删除
                         </a>
+                        <!--<a type="button" class="rds-btn normal-btn" ng-click="vm.attachConfig(config.id,config.name)">-->
+                            <!--<span class="btn-icon new-bind"></span> 绑定参数组-->
+                        <!--</a>-->
+                        <!--<a type="button" class="rds-btn normal-btn" id="deleteConfigs" ng-click="vm.openDeleteConfigModal(config.id)">-->
+                            <!--<span class="btn-icon new-delete"></span> 删除-->
+                        <!--</a>-->
                     </td>
 
                 </tr>

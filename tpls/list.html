@@ -1,7 +1,7 @@
 <div class="pane">
     <div class="instance-main-head clearfix">
         <div class="col-sm-12 col-md-12 main">
-            <a type="button" class="rds-btn buy-btn">
+            <a ng-href="https://ecloud.10086.cn/product/buy/rdb" type="button" class="rds-btn buy-btn">
                 <span class="btn-icon new-buy"></span> 订购实例
             </a>
             <a type="button" class="rds-btn buy-btn" ng-show="vm.designFlag" ng-click="vm.openDesignModal()">
@@ -44,7 +44,7 @@
                             <td>{{cluster.datastore.type+' '+cluster.datastore.version}}</td>
                             <td>{{cluster.flavor}}</td>
                             <td>{{cluster.instances[0].volume.size}}GB</td>
-                            <td><a ng-href="https://ecloud.10086.cn/usercenter/orders/orderDetail?{clusterId:cluster.id}">退订实例</a></td>
+                            <td><a ng-href="https://ecloud.10086.cn/usercenter/orders/orderDetail?{instanceId:cluster.id}">查询订单</a></td>
                         </tr>
                     </tbody>
                 </table>
