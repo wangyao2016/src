@@ -5,8 +5,8 @@ angular.module('mainAppCtrls')
             var vm = $scope.vm = {};
             vm.clusters = [];
             vm.selection = [];
-
-            /*警告框相关开始*/
+            vm.designFlag = false;
+                /*警告框相关开始*/
             vm.alerts = [];
             //删除单条警告
             vm.closeAlert = function(index) {
@@ -75,7 +75,9 @@ angular.module('mainAppCtrls')
                         console.log(data.data.clusters);
                         vm.selection = [];
                         var datas = angular.fromJson(data.data.clusters).clusters;
-
+                        if(data.data.userName.indexOf("-")==-1){
+                            vm.designFlag = true;
+                        }
                         if (data.data.clusters) {
                             console.log(datas);
                             datas.map(function(currentValue, index, arr) {
