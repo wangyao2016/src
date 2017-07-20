@@ -8,11 +8,11 @@ angular.module('mainAppCtrls')
             var vm = $scope.vm = {};
             vm.accountNames = [];
             vm.selection = selection;
-            vm.clusterId = vm.selection.id;
-            console.log("vm.clusterId "+selection.id);
+            vm.clusterId = selection;
+            console.log("vm.clusterId "+vm.clusterId);
             var zTreeObj;
             //rds/v1/mysql/additional/userInfo/account   data/user_account.json
-            if(vm.clusterId!=undefined){
+            if(vm.clusterId!=undefined&&vm.clusterId!=""){
 
                 httpService.getServiceResult("get", "rds/v1/mysql/additional/userInfo/account")
                     .then(function(data, status, headers, config) {
@@ -91,7 +91,7 @@ angular.module('mainAppCtrls')
                 console.log("授权用户:"+name.substring(1)+"<<-->>资源Id:"+vm.clusterId);
                 var data = {
                     "name": name.substring(1),
-                    "instanceId": vm.clusterId
+                    "instanceId": vm.clusterId+""
                 };
                 httpService.getServiceResult("put", "rds/v1/mysql/additional/privilege/grant", angular.fromJson(data))
                     .then(function(data, status, headers, config) {

@@ -99,6 +99,31 @@ angular.module('mainAppCtrls')
             };
             vm.clusterList();
 
+
+            //用于存储选中的值
+            vm.selection = [];
+            $scope.selectedTags = [];
+            //更新事件
+            var updateSelected = function(action,id,name){
+                if(action == 'add' && vm.selection.indexOf(id) == -1){
+                    vm.selection.push(id);
+                    $scope.selectedTags.push(name);
+                }
+                if(action == 'remove' && vm.selection.indexOf(id)!=-1){
+                    var idx = vm.selection.indexOf(id);
+                    vm.selection.splice(idx,1);
+                    $scope.selectedTags.splice(idx,1);
+                }
+            }
+            //用于监控点击事件，checkbox选择了就更新
+            $scope.updateSelection = function($event, id){
+                var checkbox = $event.target;
+                var action = (checkbox.checked?'add':'remove');
+                updateSelected(action,id,checkbox.name);
+            }
+            //判断存储的变量中是否已包含该checkbox,vm.selection.indexOf(id)>=0是个布尔值
+            $scope.isSelected = function(id){ return vm.selection.indexOf(id)>=0; };
+
             /*触发分配用户modal 开始*/
             vm.openDesignModal = function(size, parentSelector) {
                 var parentElem = parentSelector ?
