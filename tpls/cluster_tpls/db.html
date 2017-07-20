@@ -1,6 +1,6 @@
 <div class="col-md-12  modal-demo">
     <a type="button" class="rds-btn buy-btn" ng-click="vm.openAddDbModal()">
-        <span class="btn-icon new-user"></span> 添加数据库
+        <span class="btn-icon new-new"></span> 创建数据库
     </a>
 
     <div ng-show="true" class="alert_div">
@@ -56,10 +56,10 @@
 <script type="text/ng-template" id="deleteDbModal.html">
     <div class="modal-header">
         <button type="button" class="close" ng-click="vm.cancel()">&times;</button>
-        <h3 class="modal-title" id="deleteDbModal-title">删除数据库</h3>
+        <h4 class="modal-title" id="deleteDbModal-title">删除数据库</h4>
     </div>
     <div class="modal-body" id="deleteDbModal-body">
-        <div class="alert alert-danger" style="margin: 20px;padding: 40px;">
+        <div class="alert alert-danger" >
             <div ng-show="vm.selection.dbname">
                 确定删除数据库{{vm.selection.dbname}}吗？
             </div>
@@ -71,7 +71,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="vm.cancel()">关闭</button>
-        <button type="button" class="btn btn-primary" ng-disabled="!vm.selection.dbname" ng-click="vm.deleteDBOk(vm.selection.dbname)">删除数据库
+        <button type="button" class="btn btn-primary" ng-disabled="!vm.selection.dbname" ng-click="vm.deleteDBOk(vm.selection.dbname)">确定
         </button>
     </div>
 </script>
@@ -80,7 +80,7 @@
 <script type="text/ng-template" id="addDbModal.html">
     <div class="modal-header">
         <button type="button" class="close" ng-click="vm.cancel()">&times;</button>
-        <h3 class="modal-title" id="addDbModal-title">创建数据库</h3>
+        <h4 class="modal-title" id="addDbModal-title">创建数据库</h4>
     </div>
     <div class="modal-body" id="addDbModal-body">
         <form class="form-horizontal user_form" role="form" id="db_form" name="db_form" novalidate="">
@@ -147,7 +147,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="vm.cancel()">关闭</button>
-        <button type="button" class="btn btn-primary" ng-disabled="user_form.$invalid" ng-click="vm.addUserOk()">添加数据库
+        <button type="button" class="btn btn-primary" ng-disabled="user_form.$invalid" ng-click="vm.addUserOk()">创建
         </button>
     </div>
 </script>

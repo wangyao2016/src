@@ -1,4 +1,29 @@
-<div class="col-md-8">
+<div class="col-md-11" style="width: 100%">
+    <div class="panel panel-default" ng-class="{hidden: vm.readInstance.hidden}">
+        <div class="panel-heading">只读实例
+            <span class="pull-right">
+                <span class="glyphicon"
+                      ng-class="vm.readInstance.collapsed?'glyphicon-chevron-down':'glyphicon-chevron-up'"
+                      ng-click="vm.readInstance.collapsed = !vm.readInstance.collapsed">
+                </span>
+            </span>
+            &nbsp;
+        </div>
+        <div class="panel-collapse collapse" ng-class="{in: !vm.readInstance.collapsed}">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <tbody>
+                    <tr>
+                        <td style="width:40%;">数量</td>
+                        <td>0个</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-11" style="width: 100%">
     <div class="panel panel-default" ng-class="{hidden: vm.basicInfo.hidden}">
         <div class="panel-heading">基本信息
             <span class="pull-right">
@@ -47,57 +72,6 @@
                         <tr>
                             <td>子网名称</td>
                             <td>{{vm.basicInfo.cluster.instances[0].networks.name}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="col-md-4">
-    <div class="panel panel-default" ng-class="{hidden: vm.readInstance.hidden}" style="margin-bottom: 68px;">
-        <div class="panel-heading">只读实例
-            <span class="pull-right">
-                <span class="glyphicon"
-                      ng-class="vm.readInstance.collapsed?'glyphicon-chevron-down':'glyphicon-chevron-up'"
-                      ng-click="vm.readInstance.collapsed = !vm.readInstance.collapsed">
-                </span>
-            </span>
-            &nbsp;
-        </div>
-        <div class="panel-collapse collapse" ng-class="{in: !vm.readInstance.collapsed}">
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <tbody>
-                        <tr>
-                            <td>0个</td>
-                        </tr>
-                        <tr>
-                            <td>添加只读实例</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="panel panel-default" ng-class="{hidden: vm.backupInstance.hidden}">
-        <div class="panel-heading">备份实例
-            <span class="pull-right">
-                <span class="glyphicon"
-                      ng-class="vm.backupInstance.collapsed?'glyphicon-chevron-down':'glyphicon-chevron-up'"
-                      ng-click="vm.backupInstance.collapsed = !vm.backupInstance.collapsed">
-                </span>
-            </span>
-        </div>
-        <div class="panel-collapse collapse" ng-class="{in: !vm.backupInstance.collapsed}">
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <tbody>
-                        <tr>
-                            <td>备份数 : {{vm.backupList.backups.length}}个</td>
-                        </tr>
-                        <tr>
-                            <td>创建备份</td>
                         </tr>
                     </tbody>
                 </table>

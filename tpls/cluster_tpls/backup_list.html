@@ -1,6 +1,6 @@
 <div class="col-md-12  modal-demo">
     <a type="button" class="rds-btn buy-btn" ng-click="vm.openAddBackupModal()">
-        <span class="btn-icon new-user"></span> 创建备份
+        <span class="btn-icon new-new"></span> 创建备份
     </a>
     <a class="search-label">
         <span class="btn-icon new-search"></span> 全局搜索
@@ -62,7 +62,7 @@
 <script type="text/ng-template" id="addBackupModal.html">
     <div class="modal-header">
         <button type="button" class="close" ng-click="vm.cancel()">&times;</button>
-        <h3 class="modal-title" id="addBackupModal-title">创建备份</h3>
+        <h4 class="modal-title" id="addBackupModal-title">创建备份</h4>
     </div>
     <div class="modal-body" id="addBackupModal-body">
         <form class="form-horizontal user_form" role="form" id="backup_form" name="backup_form" novalidate="">
@@ -107,10 +107,10 @@
 <script type="text/ng-template" id="deleteBackupModal.html">
     <div class="modal-header">
         <button type="button" class="close" ng-click="vm.cancel()">&times;</button>
-        <h3 class="modal-title" id="deleteBackupModal-title">删除备份</h3>
+        <h4 class="modal-title" id="deleteBackupModal-title">删除备份</h4>
     </div>
     <div class="modal-body" id="deleteBackupModal-body">
-        <div class="alert alert-danger" style="margin: 20px;padding: 40px;">
+        <div class="alert alert-danger" >
             <div ng-show="vm.selection.name">
                 确定删除备份{{vm.selection.name}}吗？
             </div>

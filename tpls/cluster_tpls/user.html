@@ -79,7 +79,7 @@
 <script type="text/ng-template" id="grantDBModal.html">
     <div class="modal-header">
         <button type="button" class="close" ng-click="vm.cancel()">&times;</button>
-        <h3 class="modal-title" id="grantDBModal-title">授权用户:&nbsp;{{vm.selection.username}}@{{vm.selection.host}}</h3>
+        <h4 class="modal-title" id="grantDBModal-title">授权用户:&nbsp;{{vm.selection.username}}@{{vm.selection.host}}</h4>
     </div>
     <div class="modal-body">
         <div class="grant-content row" style="width:90%;margin:0 auto;">
@@ -135,7 +135,7 @@
 <script type="text/ng-template" id="userResetIPModal.html">
     <div class="modal-header">
         <button type="button" class="close" ng-click="vm.cancel()">&times;</button>
-        <h3 class="modal-title" id="userResetIPModal-title">重置用户{{vm.selection.username}}的IP</h3>
+        <h4 class="modal-title" id="userResetIPModal-title">重置用户{{vm.selection.username}}的IP</h4>
     </div>
     <div class="modal-body">
 
@@ -183,7 +183,7 @@
 
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="vm.cancel()">关闭</button>
-        <button type="button" class="btn btn-primary" ng-disabled="resetIP_form.$invalid" ng-click="vm.resetIPOk(vm.selection.username,vm.selection.ip)">更改IP
+        <button type="button" class="btn btn-primary" ng-disabled="resetIP_form.$invalid" ng-click="vm.resetIPOk(vm.selection.username,vm.selection.ip)">确定
         </button>
     </div>
 </script>
@@ -194,11 +194,9 @@
 <script type="text/ng-template" id="userPasswordModal.html">
     <div class="modal-header">
         <button type="button" class="close" ng-click="vm.cancel()">&times;</button>
-        <h3 class="modal-title" id="userPasswordModal-title">重置用户{{vm.selection.username}}的密码</h3>
+        <h4 class="modal-title" id="userPasswordModal-title">重置用户{{vm.selection.username}}的密码</h4>
     </div>
     <div class="modal-body">
-
-
         <form class="form-horizontal user_form" role="form" id="changePsd_form" name="changePsd_form" novalidate="">
             <div class="form-group">
                 <label class="col-sm-3 control-label">新密码</label>
@@ -260,7 +258,7 @@
 
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="vm.cancel()">关闭</button>
-        <button type="button" class="btn btn-primary" ng-disabled="!vm.selection.username || changePsd_form.$invalid" ng-click="vm.changePsdOk(vm.selection.username,vm.changePsd.password)">更改密码
+        <button type="button" class="btn btn-primary" ng-disabled="!vm.selection.username || changePsd_form.$invalid" ng-click="vm.changePsdOk(vm.selection.username,vm.changePsd.password)">确定
         </button>
     </div>
 </script>
@@ -269,10 +267,10 @@
 <script type="text/ng-template" id="deleteUserModal.html">
     <div class="modal-header">
         <button type="button" class="close" ng-click="vm.cancel()">&times;</button>
-        <h3 class="modal-title" id="deleteUserModal-title">删除用户</h3>
+        <h4 class="modal-title" id="deleteUserModal-title">删除用户</h4>
     </div>
     <div class="modal-body" id="deleteUserModal-body">
-        <div class="alert alert-danger" style="margin: 20px;padding: 40px;">
+        <div class="alert alert-danger" >
             <div ng-show="vm.selection.username">
                 确定删除用户{{vm.selection.username}}吗？
             </div>
@@ -284,7 +282,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="vm.cancel()">关闭</button>
-        <button type="button" class="btn btn-primary" ng-disabled="!vm.selection.username" ng-click="vm.deleteUserOk(vm.selection.username,vm.selection.host)">删除用户
+        <button type="button" class="btn btn-primary" ng-disabled="!vm.selection.username" ng-click="vm.deleteUserOk(vm.selection.username,vm.selection.host)">确定
         </button>
     </div>
 </script>
@@ -293,7 +291,7 @@
 <script type="text/ng-template" id="addUserModal.html">
     <div class="modal-header">
         <button type="button" class="close" ng-click="vm.cancel()">&times;</button>
-        <h3 class="modal-title" id="addUserModal-title">添加用户</h3>
+        <h4 class="modal-title" id="addUserModal-title">添加用户</h4>
     </div>
     <div class="modal-body" id="addUserModal-body">
         <form class="form-horizontal user_form" role="form" id="user_form" name="user_form" novalidate="">
