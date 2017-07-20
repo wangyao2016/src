@@ -40,7 +40,7 @@
                         <a ng-href="https://ecloud.10086.cn/product/{{vm.clusterId}}/rdsDetail/{{backup.id}}/recovery">
                             克隆
                         </a>
-                        <a id="deleteBackup" ng-click="vm.openDeleteBackupModal()">
+                        <a id="deleteBackup" class="a_pointer" ng-click="vm.openDeleteBackupModal()">
                             删除
                         </a>
                         <!--<a type="button" class="rds-sm-btn normal-btn" id="deleteBackup" ng-click="vm.openDeleteBackupModal()">-->
@@ -122,7 +122,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="vm.cancel()">关闭</button>
-        <button type="button" class="btn btn-primary" ng-disabled="!vm.selection.name" ng-click="vm.deleteBackupOk(vm.selection.id)">删除备份
+        <button type="button" class="btn btn-primary" ng-disabled="!vm.selection.name" ng-click="vm.deleteBackupOk(vm.selection.id)">确定
         </button>
     </div>
 </script>

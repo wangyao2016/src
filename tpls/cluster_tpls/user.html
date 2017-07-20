@@ -37,16 +37,16 @@
                     <td>{{user.name}}</td>
                     <td>{{user.databasesList}}</td>
                     <td>
-                        <a id="userResetIP" ng-click="vm.openResetIPModal(user.name,user.host)">
+                        <a id="userResetIP" class="a_pointer" ng-click="vm.openResetIPModal(user.name,user.host)">
                             修改IP
                         </a>
-                        <a id="GrantDB" ng-click="vm.openGrantDBModel(user.name,user.host)">
+                        <a id="GrantDB" class="a_pointer" ng-click="vm.openGrantDBModel(user.name,user.host)">
                             权限设置
                         </a>
-                        <a id="userPassword" ng-click="vm.openUserPasswordModal(user.name,user.host)">
+                        <a id="userPassword" class="a_pointer"  ng-click="vm.openUserPasswordModal(user.name,user.host)">
                             重置密码
                         </a>
-                        <a id="deleteUser" ng-click="vm.openDeleteUserModal(user.name,user.host)">
+                        <a id="deleteUser" class="a_pointer"  ng-click="vm.openDeleteUserModal(user.name,user.host)">
                             删除
                         </a>
                         <!--<a type="button" class="rds-sm-btn normal-btn" id="userResetIP" ng-click="vm.openResetIPModal(user.name,user.host)">-->

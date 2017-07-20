@@ -366,3 +366,6 @@ body {
     font-style: italic;
     text-align: left;
 }
+.a_pointer {
+    cursor:pointer;
+}
