@@ -328,11 +328,11 @@ angular.module('mainAppCtrls') //instance.user页面控制器
                                 // currentValue.databasesList = "";
                                 if (currentValue.databases.length > 0) {
                                     currentValue.databasesList = currentValue.databases.reduce(function(previousValue, currentValue, index, array) {
-                                        return ',' + currentValue.name;
+                                        return previousValue+',' + currentValue.name;
                                     }, "");
                                     currentValue.databasesList = currentValue.databasesList.slice(1);
                                 }
-                                //console.log(currentValue.databasesList);
+                                //console.log("aaaa"+currentValue.databasesList);
                             });
 
 
