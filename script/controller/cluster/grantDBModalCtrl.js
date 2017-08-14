@@ -84,7 +84,8 @@ angular.module('mainAppCtrls') //删除用户modal的控制器
                     "activeDB": '[' + dbnames + ']'
                 };
                 console.log(grantdata.activeDB);
-                console.log("username: " + username + '@' + host);
+                username = username + '@' + host;
+                console.log("username: " + username);
                 httpService.getServiceResult("delete", "rds/v1/mysql/clusters/" + id + "/users/" + username + "/databases")
                     .then(function(data, status, headers, config) {
                         console.log('反馈信息');
